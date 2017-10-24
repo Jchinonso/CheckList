@@ -1,30 +1,31 @@
 
 import mongoose from 'mongoose';
 import titlize from 'mongoose-title-case';
+import uniqueValidator from 'mongoose-unique-validator';
 import validate from 'mongoose-validator';
 import bcrypt from 'bcrypt-nodejs';
+import {Todo} from './Todos';
 
 const nameValidator = [
   validate({
-      validator: 'matches',
-      arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/,
-      message: 'Name must be at least 3 characters, max 30, no special characters or numbers, must have space in between name.'
+    validator: 'isLength',
+    arguments: [3, 20],
+    message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
   }),
   validate({
-      validator: 'isLength',
-      arguments: [3, 20],
-      message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
+    validator: 'matches',
+    arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/,
+    message: 'Name must be at least 3 characters, max 30, no special characters or numbers, must have space in between name.'
   })
 ];
 
 
 const emailValidator = [
   validate({
-      validator: 'isEmail',
-      message: 'Email is Invalid'
+    validator: 'isEmail',
+    message: 'Email is Invalid'
   })
 ];
-
 
 const usernameValidator = [
   validate({
@@ -78,6 +79,10 @@ const UserSchema = new Schema({
      lowercase: true,
      validate: emailValidator
     },
+  todos: [{
+    type: Schema.Types.ObjectId,
+    ref: Todo
+  }],
   image: {
      type: Buffer
     },
@@ -108,6 +113,8 @@ UserSchema.pre('save', function(next) {
 UserSchema.plugin(titlize, {
   paths: ['name']
 });
+
+UserSchema.plugin(uniqueValidator);
 
 
 UserSchema.methods.comparePassword = function(password) {
