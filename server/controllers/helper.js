@@ -1,8 +1,8 @@
 
 const helper = {
 
-  validateServerError(err, res){
-    if (err.errors !== null && err.name !== 'MongoError') {
+  validateUserError(err, res) {
+    if (err.errors !== null ) {
         if (err.errors.name) {
             res.json({ success: false, message: err.errors.name.message });
         } else if (err.errors.email) {
@@ -16,6 +16,14 @@ const helper = {
         }
     }
   },
+
+  validateTodoError(err, res) {
+    if(err.errors !== null) {
+      if (err.errors.text) {
+        res.json({ success: false, message: err.errors.text.message });
+      }
+    }
+  }
 
 
 };
