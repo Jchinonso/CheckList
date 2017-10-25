@@ -22,6 +22,7 @@ const UserController = {
       User.findOne({username, email}).exec((err, userInstance) => {
         if(userInstance !== null) {
           return res.status(409).json({
+            success: false,
             message: 'User already exist'
           })
         } else {
@@ -63,16 +64,23 @@ const UserController = {
     .exec(function(err, user) {
       if (err) throw err;
       if (!user) {
-        res.status(404).send({message: 'User does not exist!'})
+        res.status(404).json({
+          success: false,
+          message: 'User does not exist!'
+        })
       }
       else if (user) {
         const validPassword = user.comparePassword(password);
         if (!validPassword) {
-          res.status(401).send({message: 'Incorrect Password'});
+          res.status(401).json({
+            success: false,
+            message: 'Incorrect Password'
+          });
         }
         else {
           const token = Auth.generateToken(user)
-          res.json({
+          res.status(200).json({
+            success: true,
             message: 'Successfully login!',
             token,
           })
