@@ -4,9 +4,9 @@ import Auth from '../middleware/Auth';
 const UserRoutes = (router) => {
 
   router.route('/user/signup')
-    .post(Auth.validateInputField, UsersController.signUp);
+    .post(Auth.validateSignupInputField, UsersController.signUp);
   router.route('/user/signin')
-    .post(Auth.validateInputField, UsersController.signIn);
+    .post(Auth.validateSigninInputField, UsersController.signIn);
 };
 
 export default UserRoutes;
