@@ -1,5 +1,6 @@
 import chai from 'chai';
 import supertest from 'supertest';
+import mongoose from 'mongoose';
 import app from '../app';
 import Todo from '../models/Todos';
 import User from '../models/Users';
@@ -184,8 +185,9 @@ describe('Todo Controller', () => {
     .end((err, res) => {
       expect(res.status).to.equal(200);
       expect(res.body.success).to.equal(true);
-      expect(res.body.message).to.equal('Successfully deleted')
+      expect(res.body.message).to.equal('Successfully deleted');
       done();
+      return app.close();
     });
    })
 })

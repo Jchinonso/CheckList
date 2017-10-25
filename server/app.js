@@ -1,4 +1,5 @@
 import path from 'path';
+import http from 'http';
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
@@ -39,4 +40,4 @@ app.use('/api/v1', router);
 
 app.get('*', (req, res) => res.status(200).send('Welcome to awesomeness'))
 
-module.exports = app;
+module.exports = http.createServer(app);

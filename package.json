@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-watch server.js",
-    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register ./server/tests/**/*.js --timeout 10000",
+    "test": "NODE_ENV=test nyc mocha ./server/tests/**/*.js --timeout 10000",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -55,6 +55,7 @@
     "supertest": "^3.0.0"
   },
   "devDependencies": {
+    "babel-preset-stage-0": "^6.24.1",
     "coveralls": "^3.0.0",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",

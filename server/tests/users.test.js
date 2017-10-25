@@ -1,5 +1,6 @@
 import chai from 'chai';
 import supertest from 'supertest';
+import mongoose from 'mongoose';
 import app from '../app';
 import User from '../models/Users';
 
@@ -213,6 +214,10 @@ describe('User Controller',() => {
       expect(res.status).to.equal(400)
       expect(res.body.message).to.equal('password is required')
       done();
+      mongoose.connection.close(function () {
+        console.log('Mongoose disconnected on app termination');
+      });
+      return app.close();
     });
   })
 })
