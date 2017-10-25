@@ -12,11 +12,6 @@ const nameValidator = [
     arguments: [3, 20],
     message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
   }),
-  validate({
-    validator: 'matches',
-    arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/,
-    message: 'Name must be at least 3 characters, max 30, no special characters or numbers, must have space in between name.'
-  })
 ];
 
 
@@ -33,10 +28,6 @@ const usernameValidator = [
       arguments: [3, 25],
       message: 'Username should be between {ARGS[0]} and {ARGS[1]} characters'
   }),
-  validate({
-      validator: 'isAlphanumeric',
-      message: 'Username must contain letters and numbers only'
-  })
 ];
 
 // Password Validator
