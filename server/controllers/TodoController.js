@@ -133,7 +133,10 @@ const TodoController = {
                   message: 'Internal server error'
                 })
               }
-              res.status(201).json(task)
+              res.status(201).json({
+                success: true,
+                task
+              })
             })
           ).then(() => {
             todo.tasks.push(newTask)
@@ -182,7 +185,7 @@ const TodoController = {
           todo.collaborators.push(user)
           todo.save((err, newTodo) => {
             if(err) throw err
-            res.status(201).json({
+            res.status(200).json({
               success: true,
               message: 'Collaborator have be successfully added',
             })
@@ -232,7 +235,7 @@ const TodoController = {
             message: 'Internal server error'
           })
         }
-        res.status(200).json({
+        res.status(201).json({
           success: true,
           editedTask
         });
@@ -260,7 +263,8 @@ const TodoController = {
           message: 'Internal server error'
         })
       }
-      res.json({
+      res.status(200).json({
+        success: true,
         message: 'Successfully deleted'
       })
     })
