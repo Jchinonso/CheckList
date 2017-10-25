@@ -5,17 +5,22 @@ import bodyParser from 'body-parser';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import Routes from './routes/index';
+require('dotenv').config();
+
+const { NODE_ENV, MONGODB_URL, TEST_URL } = process.env;
+if(NODE_ENV === 'test') {
+  mongoose.connect(TEST_URL)
+} else {
+  mongoose.connect(MONGODB_URL)
+}
 
 
-mongoose.connect('mongodb://localhost/CheckList')
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('database connected!' )
 });
 
-
-require('dotenv').config();
 
 /* eslint-disable no-console */
 const app = express();
