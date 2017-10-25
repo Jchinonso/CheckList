@@ -44,13 +44,13 @@ const Auth = {
     }, secret, { expiresIn: 60 * 60 * 24 });
   },
 
-  validateInputField(req, res, next) {
+  validateSignupInputField(req, res, next) {
     const { email, password, username, name } = req.body;
     if(email === undefined) {
-      return res.status(400).json({msg: 'email is required'})
+      return res.status(400).json({message: 'email is required'})
     } else if (password === undefined) {
       return res.status(400).json({
-        message: 'Password is required'
+        message: 'password is required'
       })
     } else if (name === undefined) {
       return res.status(400).json({
@@ -60,6 +60,17 @@ const Auth = {
       return res.status(400).json({
         message: 'username is required'
      })
+    }
+    next();
+  },
+  validateSigninInputField(req, res, next) {
+    const { email, password, username, name } = req.body;
+    if(email === undefined) {
+      return res.status(400).json({message: 'email is required'})
+    } else if (password === undefined) {
+      return res.status(400).json({
+        message: 'password is required'
+      })
     }
     next();
   }
