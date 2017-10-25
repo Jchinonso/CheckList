@@ -17,13 +17,6 @@ const helper = {
     }
   },
 
-  validateTodoError(err, res) {
-    if(err.errors !== null) {
-      if (err.errors.text) {
-        res.json({ success: false, message: err.errors.text.message });
-      }
-    }
-  }
 
 
 };
