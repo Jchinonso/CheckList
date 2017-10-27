@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/Jchinonso/WorkList.svg?branch=staging)](https://travis-ci.org/Jchinonso/WorkList)
+[![Coverage Status](https://coveralls.io/repos/github/Jchinonso/WorkList/badge.svg?branch=feature%2F%23152341151%2Fjwt-signin)](https://coveralls.io/github/Jchinonso/WorkList?branch=feature%2F%23152341151%2Fjwt-signin)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5a3d34911e09a90f7d8a/maintainability)](https://codeclimate.com/github/Jchinonso/WorkList/maintainability)
+
 # CheckList
 Worklist is a simple todo list application that allows users to create lists of tasks to be completed and track their progress on these tasks.
 
