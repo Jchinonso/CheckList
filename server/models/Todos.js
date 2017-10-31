@@ -1,19 +1,8 @@
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-// const textValidator = [
-//   validate({
-//       validator: 'isLength',
-//       arguments: [3, 25],
-//       message: 'Text should be between {ARGS[0]} and {ARGS[1]} characters'
-//   }),
-//   validate({
-//       validator: 'isString',
-//       message: 'Text must beletters'
-//   })
-// ];
 
 const TodoSchema = new Schema({
   text: {
@@ -32,7 +21,7 @@ const TodoSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Task'
   }]
-})
+});
 
 export const Todo = mongoose.model('Todo', TodoSchema);
 
@@ -53,8 +42,6 @@ const TaskSchema = new Schema({
     type: String,
     default: ''
   },
-})
+});
 
 export const Task = mongoose.model('Task', TaskSchema);
-
-

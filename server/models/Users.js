@@ -4,7 +4,7 @@ import titlize from 'mongoose-title-case';
 import uniqueValidator from 'mongoose-unique-validator';
 import validate from 'mongoose-validator';
 import bcrypt from 'bcrypt-nodejs';
-import {Todo} from './Todos';
+import { Todo } from './Todos';
 
 const nameValidator = [
   validate({
@@ -24,23 +24,23 @@ const emailValidator = [
 
 const usernameValidator = [
   validate({
-      validator: 'isLength',
-      arguments: [3, 25],
-      message: 'Username should be between {ARGS[0]} and {ARGS[1]} characters'
+    validator: 'isLength',
+    arguments: [3, 25],
+    message: 'Username should be between {ARGS[0]} and {ARGS[1]} characters'
   }),
 ];
 
 // Password Validator
 const passwordValidator = [
   validate({
-      validator: 'isLength',
-      arguments: [8, 35],
-      message: 'Password should be between {ARGS[0]} and {ARGS[1]} characters'
+    validator: 'isLength',
+    arguments: [8, 35],
+    message: 'Password should be between {ARGS[0]} and {ARGS[1]} characters'
   })
 ];
 
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -57,26 +57,26 @@ const UserSchema = new Schema({
     validate: usernameValidator
   },
   password: {
-     type: String,
-     required: true,
-     trim: true,
-     validate: passwordValidator,
-     select: false
-    },
+    type: String,
+    required: true,
+    trim: true,
+    validate: passwordValidator,
+    select: false
+  },
   email: {
-     type: String,
-     required: true,
-     unique: true,
-     lowercase: true,
-     validate: emailValidator
-    },
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    validate: emailValidator
+  },
   todos: [{
     type: Schema.Types.ObjectId,
     ref: Todo
   }],
   image: {
-     type: Buffer
-    },
+    type: Buffer
+  },
   created_at: {
     type: Date,
     default: Date.now()
@@ -88,15 +88,13 @@ const UserSchema = new Schema({
 });
 
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   const user = this;
-
   if (!user.isModified('password')) return next();
-
-  bcrypt.hash(user.password, null, null, function(err, hash) {
-      if (err) return next(err);
-      user.password = hash;
-      next();
+  bcrypt.hash(user.password, null, null, (err, hash) => {
+    if (err) return next(err);
+    user.password = hash;
+    next();
   });
 });
 
@@ -108,11 +106,10 @@ UserSchema.plugin(titlize, {
 UserSchema.plugin(uniqueValidator);
 
 
-UserSchema.methods.comparePassword = function(password) {
+UserSchema.methods.comparePassword = function (password) {
   const user = this;
   return bcrypt.compareSync(password, user.password);
 };
-
 
 
 const User = mongoose.model('User', UserSchema);

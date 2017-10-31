@@ -31,8 +31,8 @@ The following features make up the PostIt Application Api:
 ###### Todos
 - It allows new Todo to be created by user.  
 - It ensures Todos are accessible based on the permission specified.  
-- It allows creator of group to add collaborators to the todos
-- It ensures members of group can add and retrieve messages to group and from group 
+- It allows creator of todo to add collaborators to the todo
+- It ensures members can add task and retrieve task from todos
 
 
 ---
