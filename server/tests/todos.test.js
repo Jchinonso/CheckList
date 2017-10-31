@@ -26,10 +26,10 @@ describe('Todo Controller', () => {
       });
   });
   after((done) => {
-    Promise.resolve(User.remove({}, (err) => {
+    Promise.resolve(User.remove({}).exec((err) => {
       if (err) return done(err);
     })).then(() => {
-      Todo.remove({}, (err) => {
+      Todo.remove({}).exec((err) => {
         if (err) return done(err);
       });
     });
@@ -43,6 +43,7 @@ describe('Todo Controller', () => {
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       .end((err, res) => {
+        console.log(res.body);
         todoId = res.body.todo._id;
         expect(res.body).to.be.an('object');
         expect(res.status).to.equal(201);
@@ -83,6 +84,7 @@ describe('Todo Controller', () => {
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       .end((err, res) => {
+        console.log(res.body)
         taskId = res.body.task._id;
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
@@ -187,7 +189,6 @@ describe('Todo Controller', () => {
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Successfully deleted');
         done();
-        return app.close();
       });
   });
 });

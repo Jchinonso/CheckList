@@ -101,7 +101,7 @@ const TodoController = {
    * @returns {object} Returns new created Task for a Todo
    */
   addTask(req, res) {
-    const { todoId } = req.params.todoId;
+    const { todoId } = req.params;
     const { text, priority, completed } = req.body;
     if (text === undefined) {
       return res.status(400).json({

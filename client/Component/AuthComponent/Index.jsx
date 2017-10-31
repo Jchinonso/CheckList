@@ -143,7 +143,7 @@ class Authentication extends React.Component {
       <div>
         <nav className="indigo">
           <div className="nav-wrapper" >
-            <a href="#?" className="brand-logo center"> CHECKLIST</a>
+            <a href="#?" className="brand-logo center"> WORKLIST </a>
           </div>
         </nav>
         {
