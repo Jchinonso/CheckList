@@ -43,7 +43,6 @@ describe('Todo Controller', () => {
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       .end((err, res) => {
-        console.log(res.body);
         todoId = res.body.todo._id;
         expect(res.body).to.be.an('object');
         expect(res.status).to.equal(201);
@@ -84,7 +83,6 @@ describe('Todo Controller', () => {
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       .end((err, res) => {
-        console.log(res.body)
         taskId = res.body.task._id;
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
