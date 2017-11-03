@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import NavComponent from './NavComponent/Index.jsx';
 import SideBarComponent from './SideBarComponent/Index.jsx';
 import MainComponent from './MainComponent/Index.jsx';
-import MessageArea from './MessageArea/Index.jsx';
-import CreateGroupModal from './SideBarComponent/CreateGroupModal.jsx';
-import { getAllGroupMessages } from '../../actions/messageActions';
-import { selectGroup, createGroup } from '../../actions/groupActions';
-import { fetchGroupMembers } from '../../actions/memberActions';
+// import MessageArea from './MessageArea/Index.jsx';
+import CreateTodoModal from './SideBarComponent/CreateTodoModal.jsx';
+// import { getAllGroupMessages } from '../../actions/messageActions';
+import { selectTodo, createTodo } from '../../actions/todosActions';
+// import { fetchGroupMembers } from '../../actions/memberActions';
 import { signOut } from '../../actions/authActions';
 
 
@@ -18,7 +18,6 @@ import { signOut } from '../../actions/authActions';
  * @extends React.Component
  */
 class Dashboard extends React.Component {
-
   /**
  * @constructor
  * @extends React.Component
@@ -27,8 +26,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      description: ''
+      text: '',
     };
     this.handleSignOut = this.handleSignOut.bind(this);
     this.handleChangeGroup = this.handleChangeGroup.bind(this);
@@ -40,7 +38,7 @@ class Dashboard extends React.Component {
     $(document).ready(() => {
       $('.modal').modal();
       $('.tooltipped').tooltip({ delay: 50 });
-      $(".button-collapse").sideNav({
+      $('.button-collapse').sideNav({
         menuWidth: 250
       });
     });
@@ -66,22 +64,17 @@ class Dashboard extends React.Component {
    */
   handleOnClick(event) {
     event.preventDefault();
-    const { name, description } = this.state;
-    if (name !== undefined && description !== undefined) {
-      const groupName = name.trim();
-      const groupDescription = description.trim();
-      if (groupName.length === 0 && groupDescription.length === 0) {
+    const { text } = this.state;
+    if (text !== undefined) {
+      const newText = text.trim();
+      if (newText.length === 0) {
         return toastr.error('Group Credentials must be supplied');
       }
-      const group = {
-        name: groupName,
-        description: groupDescription
-      };
-      this.props.createGroup(group)
-      .then(() => {
-        this.setState({ name: '', description: '' }, () => {
+      this.props.createTodo(newText)
+        .then(() => {
+          this.setState({ text: '' }, () => {
+          });
         });
-      });
     }
   }
   /*
@@ -92,9 +85,9 @@ class Dashboard extends React.Component {
   * @returns {function} a function that changes group and dispatches some actions
   */
   handleChangeGroup(groupId) {
-    this.props.selectGroup((groupId));
-    this.props.getAllGroupMessages(groupId);
-    this.props.fetchGroupMembers(groupId);
+    this.props.selectTodo((groupId));
+    // this.props.getAllGroupMessages(groupId);
+    // this.props.fetchGroupMembers(groupId);
   }
 
   /**
@@ -122,9 +115,7 @@ class Dashboard extends React.Component {
           <NavComponent signOut={this.handleSignOut} />
           <SideBarComponent handleChangeGroup={this.handleChangeGroup} />
         </header>
-        <CreateGroupModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} description={description} name={name} />
-        <MainComponent />
-        <MessageArea />
+        <CreateTodoModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} text={this.state.text} />
       </div>
     );
   }
@@ -132,12 +123,11 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   signOut: PropTypes.func.isRequired,
-  getAllGroupMessages: PropTypes.func.isRequired,
-  selectGroup: PropTypes.func.isRequired,
-  fetchGroupMembers: PropTypes.func.isRequired,
-  createGroup: PropTypes.func.isRequired
+  selectTodo: PropTypes.func.isRequired,
+  createTodo: PropTypes.func.isRequired
 };
 
-export default connect(null,
-  { signOut, getAllGroupMessages, selectGroup, createGroup, fetchGroupMembers }
+export default connect(
+  null,
+  { signOut, selectTodo, createTodo }
 )(Dashboard);

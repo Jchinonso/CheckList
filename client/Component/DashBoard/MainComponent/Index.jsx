@@ -3,9 +3,9 @@ import * as ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import MessageBoardComponent from './MessageBoardComponent/Index.jsx';
-import AddGroupUser from './AddGroupUser/Index.jsx';
-import AddGroupUserModal from './AddGroupUser/AddGroupUserModal.jsx';
+import TodoBoardComponent from './TodoBoardComponent/Index.jsx';
+import AddCollaborator from './AddCollaborator/Index.jsx';
+// import AddGroupUserModal from './AddGroupUser/AddGroupUserModal.jsx';
 
 
 /**
@@ -45,17 +45,18 @@ class MainComponent extends React.Component {
     return (
       <main>
         { this.props.activeGroup ?
-          <AddGroupUser handleAddUserModal={this.handleAddUserModal} /> : null
+          <AddCollaborator handleAddUserModal={this.handleAddUserModal} /> : null
         }
         {this.props.groups.length === 0 ?
           <div id="no-messages">
             <p>Select a group or click the<q>plus</q> button to create group.</p>
           </div> : null
         }
-        <AddGroupUserModal />
-        <div className="container" style={{ paddingLeft: '30px', width: '90%' }}>
-          <div className="message-board" ref={(el) => { this.messageList = el; }} onScroll={this.onScroll} >
-            <MessageBoardComponent messages={this.props.messages} username={this.props.username} />
+        <div className="message-board" ref={(el) => { this.messageList = el; }} onScroll={this.onScroll} >
+          <div className="container" style={{ width: '90%' }}>
+            <ul id="task-card">
+              <TodoBoardComponent messages={this.props.messages} username={this.props.username} />
+            </ul>
           </div>
         </div>
       </main>
@@ -68,7 +69,6 @@ function mapStateToProps(state) {
     activeGroup: state.activeGroupReducer,
     messages: state.groupMessagesReducer.messages,
     username: state.authReducer.user.username,
-    groups: state.groupReducer.groups
   };
 }
 
@@ -76,7 +76,6 @@ MainComponent.defaultProps = {
   activeGroup: null
 };
 MainComponent.propTypes = {
-  groups: PropTypes.arrayOf(PropTypes.object).isRequired,
   activeGroup: PropTypes.number,
   username: PropTypes.string.isRequired,
   messages: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -85,4 +84,4 @@ MainComponent.propTypes = {
 
 
 export default
-  connect(mapStateToProps)(MainComponent);
+connect(mapStateToProps)(MainComponent);

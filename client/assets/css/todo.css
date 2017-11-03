@@ -229,3 +229,11 @@ footer {
   padding-top: 20px;
   padding-bottom: 20px
 }
+
+#user-dropdown {
+  width: 60px;
+  position: absolute;
+  top: 0px;
+  left: 940px;
+  opacity: 1;
+}

@@ -41,7 +41,6 @@ const TodoController = {
     })).then(() => {
       Todo.findOne({ text: req.body.text })
         .populate({ path: 'creator', select: ['name', 'username'] })
-        .populate({ path: 'collaborators', select: ['username'] })
         .exec((err, todo) => {
           if (err) {
             return res.status(500).json({
@@ -71,11 +70,11 @@ const TodoController = {
   retrieveAllTodos(req, res) {
     const { userId } = req.decoded;
     Todo.find({})
-      .populate({ path: 'creator', select: ['username', 'name'] }, )
+      .populate({ path: 'creator', select: ['username', 'name'] })
       .populate({ path: 'collaborators', select: ['username', 'name'] })
       .populate({ path: 'tasks' })
       .exec((err, todos) => {
-        const newTodo = todos.filter(todo => todo.collaborators.some((collab) => collab._id == userId));
+        const newTodo = todos.filter(todo => todo.collaborators.some(collab => collab._id == userId));
         if (err) {
           res.status(500).json({
             success: false,
