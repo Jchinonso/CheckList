@@ -10,15 +10,37 @@ const NavComponent = ({ signOut }) => (
             <i className="material-icons">menu</i>
           </a>
         </div>
-        <a href="#?" className="brand-logo">Post It</a>
+        <a href="#?" className="brand-logo">Work List</a>
         <a
+          className="right dropdown-button"
           href="#?"
-          className="sign-out"
-          onClick={signOut}
-          style={{ paddingRight: 10 }}
+          data-activates="user_dropdown"
         >
-          <i className="fa fa-sign-out fa-2x right" />
+          <i className=" material-icons">account_circle</i>
         </a>
+        <ul
+          className="dropdown-content"
+          id="user_dropdown"
+        >
+          <li>
+            <a
+              className="indigo-text"
+              href="#!"
+            >
+              Profile
+            </a>
+          </li>
+          <li>
+            <a
+              href="#?"
+              className="sign-out indigo-text"
+              onClick={signOut}
+              style={{ paddingRight: 10 }}
+            >
+              Log Out
+            </a>
+          </li>
+        </ul>
       </div>
     </nav>
   </div>

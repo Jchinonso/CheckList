@@ -1,9 +1,9 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
-import GroupListItem from './GroupListItem.jsx';
-import { fetchGroups, selectGroup } from '../../../actions/groupActions';
-import { getAllGroupMessages } from '../../../actions/messageActions';
+import TodoListItem from './TodoListItem.jsx';
+import { fetchTodos, selectTodo } from '../../../actions/todosActions';
+// import { getAllGroupMessages } from '../../../actions/messageActions';
 
 /**
  * @constructor
@@ -12,13 +12,13 @@ import { getAllGroupMessages } from '../../../actions/messageActions';
  */
 class SideBarComponent extends React.Component {
   componentDidMount() {
-    this.props.fetchGroups()
-      .then(() => {
-        if (this.props.groups.length > 0) {
-          this.props.selectGroup(this.props.groups[0].id);
-          this.props.getAllGroupMessages(this.props.groups[0].id);
-        }
-      });
+    this.props.fetchTodos();
+    // .then(() => {
+    //   if (this.props.groups.length > 0) {
+    //     this.props.selectGroup(this.props.groups[0].id);
+    //     this.props.getAllGroupMessages(this.props.groups[0].id);
+    //   }
+    // });
   }
   /**
  * render component
@@ -40,18 +40,18 @@ class SideBarComponent extends React.Component {
           </div>
         </li>
         <li id="dashboard">
-          <span>Groups</span>
+          <span>Todos</span>
           <a
             className="secondary-content  tooltipped modal-trigger"
             href="#modal1"
             data-position="right"
             data-delay="50"
-            data-tooltip="Create New Group"
+            data-tooltip="Create New Todo"
           >
             <span className="caption"> + </span>
           </a>
         </li>
-        <GroupListItem handleChangeGroup={this.props.handleChangeGroup} groups={this.props.groups} activeGroup={this.props.activeGroup} />
+        <TodoListItem handleChangeGroup={this.props.handleChangeGroup} todos={this.props.todos} activeGroup={this.props.activeGroup} />
       </ul>
     );
   }
@@ -60,8 +60,8 @@ class SideBarComponent extends React.Component {
 function mapStateToProps(state) {
   return {
     username: state.authReducer.user.username,
-    groups: state.groupReducer.groups,
-    activeGroup: state.activeGroupReducer
+    todos: state.todosReducer.todos,
+    activeGroup: state.activeTodoReducer
   };
 }
 
@@ -71,16 +71,16 @@ SideBarComponent.defaultProps = {
 
 SideBarComponent.propTypes = {
   activeGroup: Proptypes.number,
-  selectGroup: Proptypes.func.isRequired,
-  getAllGroupMessages: Proptypes.func.isRequired,
+  selectTodo: Proptypes.func.isRequired,
+  // getAllGroupMessages: Proptypes.func.isRequired,
   handleChangeGroup: Proptypes.func.isRequired,
-  groups: Proptypes.arrayOf(Proptypes.object).isRequired,
+  todos: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired,
-  fetchGroups: Proptypes.func.isRequired,
+  fetchTodos: Proptypes.func.isRequired,
 };
 
 
 export default connect(
-mapStateToProps,
-  { fetchGroups, selectGroup, getAllGroupMessages }
+  mapStateToProps,
+  { fetchTodos, selectTodo }
 )(SideBarComponent);

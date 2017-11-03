@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AddGroupUser = () =>
+const AddCollaborator = () =>
   (
     <div>
       <div className="fixed-action-btn vertical">
@@ -19,4 +19,4 @@ const AddGroupUser = () =>
   );
 
 
-export default AddGroupUser;
+export default AddCollaborator;
