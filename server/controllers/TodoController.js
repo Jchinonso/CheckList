@@ -230,6 +230,43 @@ const TodoController = {
       });
     });
   },
+  /** retrieveAllTasks
+   * @desc update todo task
+   *
+   * @method
+   *
+   * @memberof Todo controller
+   *
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   *
+   * @returns {object} Returns all tasks
+   */
+  retrieveAllTasks(req, res) {
+    const { text, completed } = req.body;
+    const id = req.params.todoId;
+    Todo.findById({ _id: id })
+      .populate({ path: 'tasks' })
+      .exec((err, todo) => {
+        if (todo) {
+          const { tasks } = todo;
+          res.status(200).json({
+            success: true,
+            tasks
+          });
+        } else if (todo === null) {
+          res.status(404).json({
+            success: false,
+            message: 'Todo does not exist'
+          });
+        } else if (err) {
+          res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+          });
+        }
+      });
+  },
   /** deleteTask
    * @desc delete todo task
    *

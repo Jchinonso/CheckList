@@ -1,24 +1,38 @@
 import React from 'react';
 import Proptypes from 'prop-types';
+import classNames from 'classnames';
 import moment from 'moment';
 
 const TodoBoardComponent = (props) => {
-  const { messages, username } = props;
+  const { tasks, username, handleCheckChange } = props;
   return (
     <div>
-      {messages && messages.length !== 0 && messages.map(message =>
-        (<li className="card" style={{ touchAction: 'pan-y', WebkitUserDrag: 'none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', padding: '10px 15px' }}>
+      {tasks && tasks.length !== 0 && tasks.map(task =>
+        (<li
+          className={classNames({
+            card: true,
+            'priority-normal': task.priority === 'normal',
+            'priority-urgent': task.priority === 'urgent',
+            'priority-critical': task.priority === 'critical',
+          })}
+          style={{ touchAction: 'pan-y', WebkitUserDrag: 'none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', padding: '10px 15px' }}
+          >
           <div className="row">
             <div className="col s4 m4">
-              <input type="checkbox" id="task1" />
-              <label htmlFor="task1" style={{ textDecoration: 'line-through' }}>Create Mobile App UI.</label>
+              <input
+                type="checkbox"
+                id={task._id}
+                onClick={handleCheckChange}
+                name="completed"
+              />
+              <label htmlFor={task._id}>{task.text}</label>
             </div>
             <div className="col s2 m2 right">
-              <div className="task-cat teal">Priority</div>
+              <div className="task-cat">{task.priority}</div>
               <div className="task-cat">Due date</div>
             </div>
             <div className="col s4 m4 right">
-              <div className="task-cat teal">Task completer</div>
+              <div className="task-cat">{task.task_completer}</div>
             </div>
           </div>
         </li>))}
@@ -27,7 +41,7 @@ const TodoBoardComponent = (props) => {
 };
 
 TodoBoardComponent.propTypes = {
-  messages: Proptypes.arrayOf(Proptypes.object).isRequired,
+  tasks: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired
 };
 
