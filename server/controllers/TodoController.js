@@ -102,7 +102,7 @@ const TodoController = {
   addTask(req, res) {
     const { todoId } = req.params;
     const { text, priority, completed } = req.body;
-    if (text === undefined) {
+    if (text === undefined || text === '') {
       return res.status(400).json({
         success: false,
         message: 'text is required',

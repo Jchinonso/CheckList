@@ -49,7 +49,7 @@ body {
 .message-board {
   margin: 0 0 130px 0;
   overflow-y: scroll;
-  height: 77vh;
+  height: 69vh;
 }
 div[data-priority=normal] {
   border-top-color: #59b300;
@@ -245,7 +245,7 @@ footer {
 }
 #right-input{
   border: 1px solid #9e9e9e;
-  width: 85px;
+  width: 130px;
 }
 #left-input {
   border: 1px solid #9e9e9e;
@@ -286,12 +286,20 @@ border-left: 2px solid green;
   width: 67%;
   margin-left: 78px
 }
+.strikethrough {
+	display: inline-block;
+	position: relative;
+	transition: all 0.5s cubic-bezier(.55, 0, .1, 1);
+}
 @media only screen and (min-device-width: 300px) and (max-device-width: 500px){
   .container {
     margin-left: 14px !important
   }
   .message-input {
     width: 123vw;
+  }
+  .message-board {
+    height: 66vh
   }
   .select-priority-2 {
     padding-left: 0 !important;
@@ -311,6 +319,9 @@ border-left: 2px solid green;
   #task-container {
     width: 93% !important;
   }
+  .react-datepicker-popper {
+    z-index: 7 !important
+  }
 }
 
 @media only screen and (min-device-width: 500px) and (max-device-width: 700px){
@@ -323,6 +334,7 @@ border-left: 2px solid green;
   #task-container {
     width: 95% !important;
   }
+
 }
 @media only screen and (min-device-width: 700px) and (max-device-width: 900px){
   .message-input {
@@ -358,4 +370,11 @@ border-left: 2px solid green;
   #task-container {
     width: 86% !important;
   }
+}
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view--down-arrow {
+  margin-left: 85px !important;
+  position: absolute;
+}
+.react-datepicker-popper {
+  left: -138px !important;
 }

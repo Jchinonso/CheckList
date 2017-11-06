@@ -4,11 +4,13 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 const TodoBoardComponent = (props) => {
-  const { tasks, username, handleCheckChange } = props;
+  const { tasks, username, handleCheckChange, completed } = props;
+
   return (
     <div>
       {tasks && tasks.length !== 0 && tasks.map(task =>
         (<li
+          key={task._id}
           className={classNames({
             card: true,
             'priority-normal': task.priority === 'normal',
@@ -16,7 +18,7 @@ const TodoBoardComponent = (props) => {
             'priority-critical': task.priority === 'critical',
           })}
           style={{ touchAction: 'pan-y', WebkitUserDrag: 'none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', padding: '10px 15px' }}
-          >
+        >
           <div className="row">
             <div className="col s4 m4">
               <input
@@ -25,7 +27,14 @@ const TodoBoardComponent = (props) => {
                 onClick={handleCheckChange}
                 name="completed"
               />
-              <label htmlFor={task._id}>{task.text}</label>
+              <label
+                id={task._id}
+                className={classNames({
+                  strikethrough: completed === true
+                })}
+                htmlFor={task._id}
+              >{task.text}
+              </label>
             </div>
             <div className="col s2 m2 right">
               <div className="task-cat">{task.priority}</div>

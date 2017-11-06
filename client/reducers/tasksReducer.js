@@ -18,7 +18,7 @@ export default function groupReducer(state = intialState, action) {
     return { ...state, errorMsg: action.error };
   }
   case ADD_TASK_SUCCESS: {
-    return { ...state, tasks: [...state.tasks, action.task] };
+    return { ...state, tasks: [action.task, ...state.tasks] };
   }
   case ADD_TASK_FAILURE: {
     return { ...state, errorMsg: action.error };

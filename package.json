@@ -55,6 +55,7 @@
     "logger": "0.0.1",
     "materialize": "^1.0.0",
     "materialize-css": "^0.100.2",
+    "moment": "^2.19.1",
     "mongoose": "^4.12.3",
     "mongoose-title-case": "0.0.4",
     "mongoose-unique-validator": "^1.0.6",
