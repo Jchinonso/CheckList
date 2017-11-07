@@ -3,7 +3,7 @@ import Proptypes from 'prop-types';
 import classNames from 'classnames';
 
 const TodoListItem = (props) => {
-  const { handleChangeGroup, todos, activeGroup } = props;
+  const { handleChangeTodo, todos, activeTodo } = props;
   return (
     <ul>
       {todos.length !== 0 && todos.map(todo =>
@@ -12,9 +12,9 @@ const TodoListItem = (props) => {
             id={todo._id}
             className={classNames({
               card: true,
-              'indigo lighten-5': todo._id === activeGroup
+              'indigo lighten-5': todo._id === activeTodo
             })}
-            onClick={() => { handleChangeGroup(group._id); }}
+            onClick={() => { handleChangeTodo(todo._id); }}
             href="#?"
           ><span>{ todo.text}</span>
           </a>
@@ -24,13 +24,13 @@ const TodoListItem = (props) => {
   );
 };
 TodoListItem.defaultProps = {
-  activeGroup: null
+  activeTodo: ''
 };
 
 TodoListItem.propTypes = {
   todos: Proptypes.arrayOf(Proptypes.object).isRequired,
-  handleChangeGroup: Proptypes.func.isRequired,
-  activeGroup: Proptypes.number
+  handleChangeTodo: Proptypes.func.isRequired,
+  activeTodo: Proptypes.string
 };
 
 export default TodoListItem;

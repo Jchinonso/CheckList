@@ -42,9 +42,9 @@ export function addTaskSuccess(task) {
 */
 
 export function createTask(todoId, taskObject) {
-  return dispatch => axios.get(`/api/v1/todos/${todoId}/task`)
+  return dispatch => axios.post(`/api/v1/todos/${todoId}/task`, taskObject)
     .then((response) => {
-      dispatch(addTaskSuccess(response.data.newTodo));
+      dispatch(addTaskSuccess(response.data.task));
     })
     .catch((error) => {
       dispatch(addTaskFailure(error.response.data.message));
@@ -89,10 +89,10 @@ export function receiveTasksFailure(error) {
  * @returns {function} asynchronous action
  */
 
-export function fetchTasks() {
-  return dispatch => axios.get('/api/v1/todos')
+export function fetchTasks(todoId) {
+  return dispatch => axios.get(`/api/v1/todos/${todoId}/task`)
     .then((response) => {
-      dispatch(receiveTasksSuccess(response.data.newTodo));
+      dispatch(receiveTasksSuccess(response.data.tasks));
     })
     .catch((error) => {
       dispatch(receiveTasksFailure(error.response.data));

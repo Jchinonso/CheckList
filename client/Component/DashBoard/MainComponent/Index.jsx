@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import CreateTaskComponent from '../MainComponent/CreateTaskComponent/Index.jsx';
 import TodoBoardComponent from './TodoBoardComponent/Index.jsx';
 import AddCollaborator from './AddCollaborator/Index.jsx';
 // import AddGroupUserModal from './AddGroupUser/AddGroupUserModal.jsx';
@@ -17,12 +18,20 @@ class MainComponent extends React.Component {
     super(props);
     this.state = {
       selectedGroup: null,
-      priority: 'normal'
+      priority: 'normal',
+      completed: false
     };
+    this.handleCheckChange = this.handleCheckChange.bind(this);
   }
 
   componentDidUpdate() {
     this.scrollToBottom();
+  }
+
+  handleCheckChange(event) {
+    this.setState((prev, props) => Object.assign({}, prev, {
+      completed: !prev.completed
+    }));
   }
 
   scrollToBottom() {
@@ -30,7 +39,7 @@ class MainComponent extends React.Component {
     const scrollHeight = messageList.scrollHeight;
     const height = messageList.clientHeight;
     const maxScrollTop = scrollHeight - height;
-    ReactDOM.findDOMNode(messageList).scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+    ReactDOM.findDOMNode(messageList).scrollBottom = 0;
   }
 
   /**
@@ -40,22 +49,28 @@ class MainComponent extends React.Component {
    * @returns {object} component
    */
   render() {
-    $('#add-user').modal()
-    $('.tooltipped').tooltip({delay: 50});
+    $('#add-user').modal();
+    $('.tooltipped').tooltip({ delay: 50 });
     return (
       <main>
-        { this.props.activeGroup ?
+        { this.props.activeTodo ?
           <AddCollaborator handleAddUserModal={this.handleAddUserModal} /> : null
         }
-        {this.props.groups.length === 0 ?
+        <CreateTaskComponent />
+        {this.props.todos.length === 0 ?
           <div id="no-messages">
             <p>Select a group or click the<q>plus</q> button to create group.</p>
           </div> : null
         }
-        <div className="message-board" ref={(el) => { this.messageList = el; }} onScroll={this.onScroll} >
-          <div className="container" style={{ width: '90%' }}>
+        <div className="message-board" ref={(el) => { this.messageList = el; }} >
+          <div className="container" id="task-container" >
             <ul id="task-card">
-              <TodoBoardComponent messages={this.props.messages} username={this.props.username} />
+              <TodoBoardComponent
+                handleCheckChange={this.handleCheckChange}
+                tasks={this.props.tasks}
+                completed={this.state.completed}
+                username={this.props.username}
+              />
             </ul>
           </div>
         </div>
@@ -66,19 +81,21 @@ class MainComponent extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    activeGroup: state.activeGroupReducer,
-    messages: state.groupMessagesReducer.messages,
+    todos: state.todosReducer.todos,
+    activeTodo: state.activeTodoReducer,
+    tasks: state.tasksReducer.tasks,
     username: state.authReducer.user.username,
   };
 }
 
 MainComponent.defaultProps = {
-  activeGroup: null
+  activeTodo: ''
 };
 MainComponent.propTypes = {
-  activeGroup: PropTypes.number,
+  todos: PropTypes.arrayOf(PropTypes.object).isRequired,
+  activeTodo: PropTypes.string,
   username: PropTypes.string.isRequired,
-  messages: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
 
 };
 
