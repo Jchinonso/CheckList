@@ -22,7 +22,7 @@ const SignIn = ({
             <div className="col s12 m12 l12 center">
               <div className="container" id="google-button">
                 <GoogleLogin
-                  clientId={'682330105302-4frgtepd1nj81n3gd82e97usq6ul0ier.apps.googleusercontent.com'}
+                  clientId={'646249820676-l4i5hlkoicoiqdiq3gt9oskortf2b3bk.apps.googleusercontent.com'}
                   onSuccess={responseGoogle}
                   id="google-login"
                   onFailure={responseGoogle}

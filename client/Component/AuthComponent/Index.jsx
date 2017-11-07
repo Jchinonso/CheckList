@@ -55,8 +55,8 @@ class Authentication extends React.Component {
   handleSignUpOnSubmit(event) {
     event.preventDefault();
     const {
-       email, password, username, name
-      } = this.state;
+      email, password, username, name
+    } = this.state;
     const userObj = {
       password,
       email,
@@ -103,12 +103,12 @@ class Authentication extends React.Component {
    * @returns {function} a function that sign's in a user with their google account
    */
   responseGoogle(response) {
-    const { email, givenName, familyName } = response.profileObj;
+    const { email, givenName, familyName, name } = response.profileObj;
     const userObj = {
       username: givenName,
       email,
-      password: familyName,
-      phoneNumber: '08139308818',
+      password: name,
+      name
     };
     this.props.googleSignIn(userObj);
   }
