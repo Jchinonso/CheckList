@@ -51,7 +51,7 @@ class SideBarComponent extends React.Component {
             <span className="caption"> + </span>
           </a>
         </li>
-        <TodoListItem handleChangeGroup={this.props.handleChangeGroup} todos={this.props.todos} activeGroup={this.props.activeGroup} />
+        <TodoListItem handleChangeTodo={this.props.handleChangeTodo} todos={this.props.todos} activeTodo={this.props.activeTodo} />
       </ul>
     );
   }
@@ -61,19 +61,20 @@ function mapStateToProps(state) {
   return {
     username: state.authReducer.user.username,
     todos: state.todosReducer.todos,
-    activeGroup: state.activeTodoReducer
+    activeTodo: state.activeTodoReducer
   };
 }
 
+
 SideBarComponent.defaultProps = {
-  activeGroup: null
+  activeTodo: ''
 };
 
 SideBarComponent.propTypes = {
-  activeGroup: Proptypes.number,
+  activeTodo: Proptypes.string,
   selectTodo: Proptypes.func.isRequired,
   // getAllGroupMessages: Proptypes.func.isRequired,
-  handleChangeGroup: Proptypes.func.isRequired,
+  handleChangeTodo: Proptypes.func.isRequired,
   todos: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired,
   fetchTodos: Proptypes.func.isRequired,

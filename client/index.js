@@ -7,6 +7,7 @@ import 'jquery/dist/jquery';
 import 'materialize-css/dist/css/materialize.css';
 import 'materialize-css/dist/js/materialize';
 import 'toastr/build/toastr.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import { setCurrentUser } from './actions/authActions';
 import store from './store';
 import setAuthorizationToken from './utils/setAuthorizationToken';

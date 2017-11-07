@@ -7,7 +7,7 @@ import SideBarComponent from './SideBarComponent/Index.jsx';
 import MainComponent from './MainComponent/Index.jsx';
 // import MessageArea from './MessageArea/Index.jsx';
 import CreateTodoModal from './SideBarComponent/CreateTodoModal.jsx';
-// import { getAllGroupMessages } from '../../actions/messageActions';
+import { fetchTasks } from '../../actions/tasksActions';
 import { selectTodo, createTodo } from '../../actions/todosActions';
 // import { fetchGroupMembers } from '../../actions/memberActions';
 import { signOut } from '../../actions/authActions';
@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
       text: '',
     };
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.handleChangeGroup = this.handleChangeGroup.bind(this);
+    this.handleChangeTodo = this.handleChangeTodo.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
   }
@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
     if (text !== undefined) {
       const newText = text.trim();
       if (newText.length === 0) {
-        return toastr.error('Group Credentials must be supplied');
+        return toastr.error('Todo Credentials must be supplied');
       }
       this.props.createTodo(newText)
         .then(() => {
@@ -77,16 +77,16 @@ class Dashboard extends React.Component {
         });
     }
   }
-  /*
-  * Handle Change Group
+  /**
+  * Handle Change Todo
   * @method handleChangeGroup
   * @member MainComponent
-  * @param {object} groupId
+  * @param {object} todoId
   * @returns {function} a function that changes group and dispatches some actions
   */
-  handleChangeGroup(groupId) {
-    this.props.selectTodo((groupId));
-    // this.props.getAllGroupMessages(groupId);
+  handleChangeTodo(todoId) {
+    this.props.selectTodo((todoId));
+    this.props.fetchTasks(todoId);
     // this.props.fetchGroupMembers(groupId);
   }
 
@@ -98,6 +98,7 @@ class Dashboard extends React.Component {
    * @returns {function} a function that dispatch signOut action
    */
   handleSignOut(event) {
+    event.preventDefault();
     this.props.signOut();
   }
 
@@ -113,9 +114,10 @@ class Dashboard extends React.Component {
       <div>
         <header>
           <NavComponent signOut={this.handleSignOut} />
-          <SideBarComponent handleChangeGroup={this.handleChangeGroup} />
+          <SideBarComponent handleChangeTodo={this.handleChangeTodo} />
         </header>
         <CreateTodoModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} text={this.state.text} />
+        <MainComponent />
       </div>
     );
   }
@@ -124,10 +126,11 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   signOut: PropTypes.func.isRequired,
   selectTodo: PropTypes.func.isRequired,
+  fetchTasks: PropTypes.func.isRequired,
   createTodo: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
-  { signOut, selectTodo, createTodo }
+  { signOut, selectTodo, fetchTasks, createTodo }
 )(Dashboard);

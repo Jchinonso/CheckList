@@ -8,14 +8,14 @@ import * as types from '../constants/actionTypes';
  *
  * @function selectTodo
  *
- * @param {string} TodoId
+ * @param {string} todoId
  *
- * @returns {object} action: type and TodoId
+ * @returns {object} action: type and todoId
  */
-export function selectTodo(TodoId) {
+export function selectTodo(todoId) {
   return {
     type: types.SELECT_TODO,
-    TodoId
+    todoId
   };
 }
 /**
