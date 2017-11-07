@@ -1,13 +1,18 @@
 import jwt from 'jsonwebtoken';
 
+require('dotenv').config();
 
-const secret = process.env.JWT_SECRET_TOKEN || 'keepmysecret'
+const secret = process.env.JWT_SECRET_TOKEN;
 
 const Auth = {
 
   /**
    * verify authentication token
-   * @param {Object} user object
+   *
+   * @param {Object} request object
+   * @param {Object} response object
+   * @param {Object} next object
+   *
    * @returns {Object} message based on the response object
    */
   verifyToken(request, response, next) {
@@ -46,31 +51,31 @@ const Auth = {
 
   validateSignupInputField(req, res, next) {
     const { email, password, username, name } = req.body;
-    if(email === undefined) {
-      return res.status(400).json({message: 'email is required'})
+    if (email === undefined) {
+      return res.status(400).json({message: 'email is required'});
     } else if (password === undefined) {
       return res.status(400).json({
         message: 'password is required'
-      })
+      });
     } else if (name === undefined) {
       return res.status(400).json({
         message: 'name is required'
-      })
+      });
     } else if (username === undefined) {
       return res.status(400).json({
         message: 'username is required'
-     })
+      });
     }
     next();
   },
   validateSigninInputField(req, res, next) {
     const { email, password, username, name } = req.body;
     if(email === undefined) {
-      return res.status(400).json({message: 'email is required'})
+      return res.status(400).json({message: 'email is required'});
     } else if (password === undefined) {
       return res.status(400).json({
         message: 'password is required'
-      })
+      });
     }
     next();
   }

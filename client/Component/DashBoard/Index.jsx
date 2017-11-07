@@ -36,6 +36,7 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     $(document).ready(() => {
+      $('.dropdown-button').dropdown();
       $('.modal').modal();
       $('.tooltipped').tooltip({ delay: 50 });
       $('.button-collapse').sideNav({

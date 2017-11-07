@@ -170,7 +170,7 @@ describe('Todo Controller', () => {
     }
   );
   it('should update a task ', (done) => {
-    request.put(`/api/v1/todos/task/${taskId}`)
+    request.put(`/api/v1/todos/${todoId}/task/${taskId}`)
       .send({
         text: 'go to get goceries',
       })
@@ -185,7 +185,7 @@ describe('Todo Controller', () => {
       });
   });
   it('should update task completer when completed is true', (done) => {
-    request.put(`/api/v1/todos/task/${taskId}`)
+    request.put(`/api/v1/todos/${todoId}/task/${taskId}`)
       .send({
         text: 'go to get goceries',
         completed: 'true'
@@ -201,7 +201,7 @@ describe('Todo Controller', () => {
       });
   });
   it('should delete a task', (done) => {
-    request.delete(`/api/v1/todos/task/${taskId}`)
+    request.delete(`/api/v1/todos/${todoId}/task/${taskId}`)
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       .end((err, res) => {

@@ -162,8 +162,7 @@ export function googleSignIn(user) {
  * @returns {function} asynchronous action
  */
 export function forgotPassword(email) {
-  return (dispatch => axios.post('/api/v1/user/forgotPassword', {
-    email })
+  return (dispatch => axios.post('/api/v1/user/forgotPassword', { email })
     .then((response) => {
       toastr.success(response.data.message);
       browserHistory.push('/');

@@ -27,6 +27,7 @@ class MainComponent extends React.Component {
   componentDidUpdate() {
     this.scrollToBottom();
   }
+
   handleCheckChange(event) {
     this.setState((prev, props) => Object.assign({}, prev, {
       completed: !prev.completed

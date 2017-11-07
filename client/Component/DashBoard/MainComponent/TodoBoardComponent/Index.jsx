@@ -24,11 +24,10 @@ const TodoBoardComponent = (props) => {
               <input
                 type="checkbox"
                 id={task._id}
-                onClick={handleCheckChange}
+                onChange={handleCheckChange}
                 name="completed"
               />
               <label
-                id={task._id}
                 className={classNames({
                   strikethrough: completed === true
                 })}
