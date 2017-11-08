@@ -2,6 +2,8 @@ import UsersController from '../controllers/UserController';
 import Auth from '../middleware/Auth';
 
 const UserRoutes = (router) => {
+  router.route('/users')
+    .get(UsersController.retrieveAllUsers);
   router.route('/user/signup')
     .post(Auth.validateSignupInputField, UsersController.signUp);
   router.route('/user/signin')

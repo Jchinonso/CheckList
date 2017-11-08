@@ -9,7 +9,7 @@ import MainComponent from './MainComponent/Index.jsx';
 import CreateTodoModal from './SideBarComponent/CreateTodoModal.jsx';
 import { fetchTasks } from '../../actions/tasksActions';
 import { selectTodo, createTodo } from '../../actions/todosActions';
-// import { fetchGroupMembers } from '../../actions/memberActions';
+import { fetchCollaborators } from '../../actions/collaboratorsAction';
 import { signOut } from '../../actions/authActions';
 
 
@@ -88,7 +88,7 @@ class Dashboard extends React.Component {
   handleChangeTodo(todoId) {
     this.props.selectTodo((todoId));
     this.props.fetchTasks(todoId);
-    // this.props.fetchGroupMembers(groupId);
+    this.props.fetchCollaborators(todoId);
   }
 
   /**
@@ -128,10 +128,11 @@ Dashboard.propTypes = {
   signOut: PropTypes.func.isRequired,
   selectTodo: PropTypes.func.isRequired,
   fetchTasks: PropTypes.func.isRequired,
-  createTodo: PropTypes.func.isRequired
+  createTodo: PropTypes.func.isRequired,
+  fetchCollaborators: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
-  { signOut, selectTodo, fetchTasks, createTodo }
+  { signOut, selectTodo, fetchCollaborators, fetchTasks, createTodo }
 )(Dashboard);

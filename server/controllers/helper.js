@@ -2,7 +2,7 @@
 const helper = {
 
   validateUserError(err, res) {
-    if (err.errors !== null ) {
+    if (err.errors !== null) {
       if (err.errors.name) {
         res.status(400).json({ success: false, message: err.errors.name.message });
       } else if (err.errors.email) {

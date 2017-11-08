@@ -3,10 +3,11 @@ import * as ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { updateTasks } from '../../../actions/tasksActions';
 import CreateTaskComponent from '../MainComponent/CreateTaskComponent/Index.jsx';
 import TodoBoardComponent from './TodoBoardComponent/Index.jsx';
 import AddCollaborator from './AddCollaborator/Index.jsx';
-// import AddGroupUserModal from './AddGroupUser/AddGroupUserModal.jsx';
+import AddCollaboratorModal from './AddCollaborator/AddCollaboratorModal.jsx';
 
 
 /**
@@ -28,10 +29,10 @@ class MainComponent extends React.Component {
     this.scrollToBottom();
   }
 
-  handleCheckChange(event) {
-    this.setState((prev, props) => Object.assign({}, prev, {
-      completed: !prev.completed
-    }));
+  handleCheckChange(taskId) {
+    console.log(this.state.completed, '==========>');
+    this.setState({ completed: !this.state.completed },
+      () => this.props.updateTasks(this.props.activeTodo, taskId, this.state.completed));
   }
 
   scrollToBottom() {
@@ -62,6 +63,7 @@ class MainComponent extends React.Component {
             <p>Select a group or click the<q>plus</q> button to create group.</p>
           </div> : null
         }
+        <AddCollaboratorModal />
         <div className="message-board" ref={(el) => { this.messageList = el; }} >
           <div className="container" id="task-container" >
             <ul id="task-card">
@@ -101,4 +103,5 @@ MainComponent.propTypes = {
 
 
 export default
-connect(mapStateToProps)(MainComponent);
+connect(mapStateToProps, { updateTasks })(MainComponent);
+

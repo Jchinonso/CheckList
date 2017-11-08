@@ -22,7 +22,7 @@ describe('Todo Controller', () => {
       })
       .end((err, res) => {
         token = res.body.token;
-        done();
+        return done();
       });
   });
   after((done) => {
@@ -33,7 +33,7 @@ describe('Todo Controller', () => {
         if (err) return done(err);
       });
     });
-    done();
+    return done();
   });
   it('should create new Todo', (done) => {
     request.post('/api/v1/todo')
@@ -48,7 +48,7 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(201);
         expect(res.body.success).to.equal(true);
         expect(res.body.todo).to.be.an('object');
-        done();
+        return done();
       });
   });
   it('should validate text input', (done) => {
@@ -60,7 +60,7 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('text is required');
-        done();
+        return done();
       });
   });
   it('should retrieve all todos', (done) => {
@@ -72,7 +72,8 @@ describe('Todo Controller', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.success).to.equal(true);
         expect(res.body.newTodo).to.be.an('array');
-        done();
+        expect(res.body.newTodo.length).to.equal(1);
+        return done();
       });
   });
   it('should add tasks to todo', (done) => {
@@ -87,7 +88,7 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
         expect(res.body.success).to.equal(true);
-        done();
+        return done();
       });
   });
   it('should retrieve all tasks that belong to todo', (done) => {
@@ -99,7 +100,8 @@ describe('Todo Controller', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.success).to.equal(true);
         expect(res.body.tasks).to.be.an('array');
-        done();
+        expect(res.body.tasks.length).to.equal(1);
+        return done();
       });
   });
   it('should not retrieve tasks if the todoId is incorrect', (done) => {
@@ -109,7 +111,7 @@ describe('Todo Controller', () => {
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body.message).to.equal('Todo does not exist');
-        done();
+        return done();
       });
   });
   it('should not add task if Todo doesnot exist', (done) => {
@@ -123,7 +125,7 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(409);
         expect(res.body.message).to.equal('Todo does not exist');
         expect(res.body.success).to.equal(false);
-        done();
+        return done();
       });
   });
   it('should vadidate text input', (done) => {
@@ -135,7 +137,7 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('text is required');
-        done();
+        return done();
       });
   });
   it('should add collaborators to Todo', (done) => {
@@ -149,7 +151,19 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Collaborator have be successfully added');
-        done();
+        return done();
+      });
+  });
+  it('should retrieve all collaborators in Todo', (done) => {
+    request.get(`/api/v1/todos/${todoId}/collaborator`)
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.success).to.equal(true);
+        expect(res.body.collaborators).to.be.an('array');
+        expect(res.body.collaborators.length).to.equal(1);
+        return done();
       });
   });
   it(
@@ -165,7 +179,7 @@ describe('Todo Controller', () => {
           expect(res.status).to.equal(404);
           expect(res.body.success).to.equal(false);
           expect(res.body.message).to.equal('User does not exist');
-          done();
+          return done();
         });
     }
   );
@@ -181,7 +195,7 @@ describe('Todo Controller', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.success).to.equal(true);
         expect(res.body.editedTask).to.be.an('object');
-        done();
+        return done();
       });
   });
   it('should update task completer when completed is true', (done) => {
@@ -197,7 +211,7 @@ describe('Todo Controller', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.success).to.equal(true);
         expect(res.body.editedTask.task_completer).to.equal('kool4life');
-        done();
+        return done();
       });
   });
   it('should delete a task', (done) => {
@@ -208,7 +222,7 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Successfully deleted');
-        done();
+        return done();
       });
   });
 });

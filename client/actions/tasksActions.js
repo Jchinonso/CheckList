@@ -20,6 +20,22 @@ export function addTaskFailure(error) {
   };
 }
 /**
+* @desc update tasks success action
+*
+* @function updateTaskSuccess
+*
+* @param {object} task
+*
+* @returns {object} action: type and task
+*/
+
+export function updateTaskSuccess(task) {
+  return {
+    type: types.UPDATE_TASK_SUCCESS,
+    task
+  };
+}
+/**
 * @desc add tasks action: add task success
 *
 * @function addTaskSuccess
@@ -100,3 +116,17 @@ export function fetchTasks(todoId) {
     });
 }
 
+/**
+* @desc async helper function: fetches all tasks
+* @returns {function} asynchronous action
+*/
+
+export function updateTasks(todoId, taskId, { taskObj }) {
+  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`)
+    .then((response) => {
+      dispatch(updateTaskSuccess(response.data.editedTask));
+    })
+    .catch((error) => {
+      toastr.error(error.response.data.message);
+    });
+}

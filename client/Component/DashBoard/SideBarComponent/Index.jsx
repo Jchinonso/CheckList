@@ -30,12 +30,16 @@ class SideBarComponent extends React.Component {
     return (
       <ul id="nav-mobile"className="side-nav fixed">
         <li className="center no-padding">
-          <div className="indigo darken-2 white-text" style={{ height: 180 }}>
+          <div className="top-nav darken-2 indigo" style={{ height: 180 }}>
             <div className="row">
-              <i className="fa fa-user-circle fa-4x" style={{ marginTop: '5%' }} width={100} height={100} aria-hidden="true" />
-              <p>
-                {this.props.username }
-              </p>
+              <div className="col s12 m12" style={{ paddingTop: 10 }}>
+                <img src="https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg" alt className="circle responsive-img valign profile-image" style={{width: 130, height: 120}} />
+              </div>
+              <div className="col s12 m12" style={{ marginTop: '-35px' }}>
+                <p>
+                  {this.props.username}
+                </p>
+              </div>
             </div>
           </div>
         </li>

@@ -217,6 +217,16 @@ describe('User Controller',() => {
           done();
         });
     });
+  it('should fetch all users',
+    (done) => {
+      request.get('/api/v1/users')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.allUsers).to.be.an('array');
+          done();
+        });
+    });
   it('should signin with google', (done) => {
     request.post('/api/v1/user/googleLogin')
       .send({
