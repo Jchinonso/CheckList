@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TodoListItem from './TodoListItem.jsx';
 import { fetchTodos, selectTodo } from '../../../actions/todosActions';
 import { fetchTasks } from '../../../actions/tasksActions';
+import { fetchCollaborators, fetchUsers } from '../../../actions/collaboratorsAction';
 
 /**
  * @constructor
@@ -17,6 +18,8 @@ class SideBarComponent extends React.Component {
         if (this.props.todos.length > 0) {
           this.props.selectTodo(this.props.todos[0]._id);
           this.props.fetchTasks(this.props.todos[0]._id);
+          this.props.fetchCollaborators(this.props.todos[0]._id)
+          this.props.fetchUsers();
         }
       });
   }
@@ -77,15 +80,17 @@ SideBarComponent.defaultProps = {
 SideBarComponent.propTypes = {
   activeTodo: Proptypes.string,
   selectTodo: Proptypes.func.isRequired,
-  // getAllGroupMessages: Proptypes.func.isRequired,
   handleChangeTodo: Proptypes.func.isRequired,
   todos: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired,
   fetchTodos: Proptypes.func.isRequired,
+  fetchTasks: Proptypes.func.isRequired,
+  fetchUsers: Proptypes.func.isRequired,
+  fetchCollaborators: Proptypes.func.isRequired
 };
 
 
 export default connect(
   mapStateToProps,
-  { fetchTodos, selectTodo, fetchTasks }
+  { fetchTodos, selectTodo, fetchCollaborators, fetchUsers, fetchTasks }
 )(SideBarComponent);
