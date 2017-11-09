@@ -1,7 +1,7 @@
 import UsersController from '../controllers/UserController';
 import Auth from '../middleware/Auth';
 
-const UserRoutes = (router) => {
+const userRoutes = (router) => {
   router.route('/users')
     .get(UsersController.retrieveAllUsers);
   router.route('/user/signup')
@@ -16,4 +16,4 @@ const UserRoutes = (router) => {
     .post(UsersController.googleSignIn);
 };
 
-export default UserRoutes;
+export default userRoutes;

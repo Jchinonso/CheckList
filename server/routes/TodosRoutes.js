@@ -1,7 +1,7 @@
 import TodosController from '../controllers/TodoController';
 import Auth from '../middleware/Auth';
 
-const TodosRoutes = (router) => {
+const todosRoutes = (router) => {
   router.route('/todo')
     .post(Auth.verifyToken, TodosController.createTodos)
     .get(Auth.verifyToken, TodosController.retrieveAllTodos);
@@ -16,4 +16,4 @@ const TodosRoutes = (router) => {
     .get(Auth.verifyToken, TodosController.retrieveAllColaborators);
 };
 
-export default TodosRoutes;
+export default todosRoutes;
