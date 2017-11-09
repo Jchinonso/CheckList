@@ -271,16 +271,13 @@ input::placeholder {
 }
 .priority-normal{
   border-bottom: 2px solid blue;
-  border-left: 2px solid blue;
 }
 
 .priority-urgent{
 border-bottom: 2px solid green;
-border-left: 2px solid green;
 }
 .priority-critical{
   border-bottom: 2px solid red;
-  border-left: 2px solid red;
 }
 #task-container {
   width: 67%;

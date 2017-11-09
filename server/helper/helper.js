@@ -1,5 +1,13 @@
 
 const helper = {
+  /**
+   * validate Database errors
+   *
+   * @param {Object} req object
+   * @param {Object} res object
+   *
+   * @returns {Object} validation error
+   */
 
   validateUserError(err, res) {
     if (err.errors !== null) {

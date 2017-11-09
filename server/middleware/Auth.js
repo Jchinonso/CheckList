@@ -7,7 +7,7 @@ const secret = process.env.JWT_SECRET_TOKEN;
 const Auth = {
 
   /**
-   * verify authentication token
+   * @description verify authentication token
    *
    * @param {Object} request object
    * @param {Object} response object
@@ -37,9 +37,13 @@ const Auth = {
     }
   },
   /**
-   * generateToken generates token for authentication
+   * @description generateToken generates token for authentication
+   *
+   * @member Auth
+   *
    * @param {Object} user object
    * @returns {Object} jwt
+   *
    */
   generateToken(user) {
     return jwt.sign({
@@ -48,32 +52,59 @@ const Auth = {
       email: user.email,
     }, secret, { expiresIn: 60 * 60 * 24 });
   },
-
+  /**
+   * validate signup input field
+   *
+   * @param {Object} req object
+   * @param {Object} res object
+   * @param {Object} next object
+   *
+   * @returns {Object} validation error
+   */
   validateSignupInputField(req, res, next) {
     const { email, password, username, name } = req.body;
     if (email === undefined) {
-      return res.status(400).json({message: 'email is required'});
+      return res.status(400).json({
+        success: false,
+        message: 'email is required'
+      });
     } else if (password === undefined) {
       return res.status(400).json({
+        success: false,
         message: 'password is required'
       });
     } else if (name === undefined) {
       return res.status(400).json({
+        success: false,
         message: 'name is required'
       });
     } else if (username === undefined) {
       return res.status(400).json({
+        success: false,
         message: 'username is required'
       });
     }
     next();
   },
+  /**
+   * validate signin input field
+   *
+   * @param {Object} req object
+   * @param {Object} res object
+   * @param {Object} next object
+   *
+   * @returns {Object} validation error
+   */
   validateSigninInputField(req, res, next) {
     const { email, password, username, name } = req.body;
     if(email === undefined) {
-      return res.status(400).json({message: 'email is required'});
+      return res.status(400).json({
+        success: false,
+        message: 'email is required'
+      });
     } else if (password === undefined) {
       return res.status(400).json({
+        success: false,
         message: 'password is required'
       });
     }

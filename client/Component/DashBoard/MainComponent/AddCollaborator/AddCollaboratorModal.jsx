@@ -106,13 +106,14 @@ class AddCollaboratorModal extends React.Component {
   }
 }
 AddCollaboratorModal.defaultProps = {
-  activeTodo: null
+  activeTodo: '',
+  collaborators: []
 };
 AddCollaboratorModal.propTypes = {
-  activeTodo: PropTypes.number,
+  activeTodo: PropTypes.string,
   addCollaboratorTodo: PropTypes.func.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  collaborators: PropTypes.arrayOf(PropTypes.object).isRequired,
+  collaborators: PropTypes.arrayOf(PropTypes.object)
 };
 
 
