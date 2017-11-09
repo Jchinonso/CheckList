@@ -9,7 +9,7 @@ const intialState = {
   errorMsg: '',
   collborators: [],
 };
-export default function addMembersReducer(state = intialState, action) {
+export default function collaboratorReducer(state = intialState, action) {
   switch (action.type) {
   case ADD_COLLABORATOR_SUCCESS: {
     return { ...state, successMsg: action.message };
@@ -18,7 +18,7 @@ export default function addMembersReducer(state = intialState, action) {
     return { ...state, errorMsg: action.error };
   }
   case FETCH_COLLABORATOR_SUCCESS: {
-    return { ...state, users: action.users };
+    return { ...state, collaborators: action.collaborators };
   }
   default:
     return state;

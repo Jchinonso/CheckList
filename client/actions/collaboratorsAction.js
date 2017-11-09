@@ -78,7 +78,7 @@ export function addCollaboratorFailure(error) {
  */
 export function addCollaboratorTodo(todoId, collaborator) {
   return (dispatch) => {
-    axios.post(`/api/v1/group/${todoId}/collaborator`, collaborator)
+    axios.post(`/api/v1/todos/${todoId}/collaborator`, collaborator)
       .then((response) => {
         toastr.success(response.data.message);
         dispatch(addCollaboratorSuccess(response.data.message));

@@ -9,7 +9,7 @@ const intialState = {
   tasks: [],
   errorMsg: '',
 };
-export default function groupReducer(state = intialState, action) {
+export default function tasksReducer(state = intialState, action) {
   switch (action.type) {
   case RECEIVE_TASKS_SUCCESS: {
     return { ...state, tasks: action.tasks };

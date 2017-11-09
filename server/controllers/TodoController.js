@@ -160,7 +160,7 @@ const TodoController = {
    */
   addColaborator(req, res) {
     const { todoId } = req.params;
-    const members = [].concat(req.body.username);
+    const members = [].concat(req.body);
     User.find({ username: members }).select(['username']).exec((err, user) => {
       if (user.length !== 0) {
         Todo.findById({ _id: todoId })

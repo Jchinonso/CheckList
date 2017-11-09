@@ -20,7 +20,7 @@ class MainComponent extends React.Component {
     this.state = {
       selectedGroup: null,
       priority: 'normal',
-      completed: false
+      completed: true
     };
     this.handleCheckChange = this.handleCheckChange.bind(this);
   }
@@ -30,7 +30,6 @@ class MainComponent extends React.Component {
   }
 
   handleCheckChange(taskId) {
-    console.log(this.state.completed, '==========>');
     this.setState({ completed: !this.state.completed },
       () => this.props.updateTasks(this.props.activeTodo, taskId, this.state.completed));
   }

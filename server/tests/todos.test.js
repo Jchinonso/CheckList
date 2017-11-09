@@ -142,9 +142,7 @@ describe('Todo Controller', () => {
   });
   it('should add collaborators to Todo', (done) => {
     request.post(`/api/v1/todos/${todoId}/collaborator`)
-      .send({
-        username: 'kool4life'
-      })
+      .send(['kool4life'])
       .set('x-access-token', token)
       .set('Accept', 'application/json')
       .end((err, res) => {
@@ -166,23 +164,6 @@ describe('Todo Controller', () => {
         return done();
       });
   });
-  it(
-    'should not add collaborators to Todo if user does not exist',
-    (done) => {
-      request.post(`/api/v1/todos/${todoId}/collaborator`)
-        .send({
-          username: 'jane4real'
-        })
-        .set('x-access-token', token)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.body.success).to.equal(false);
-          expect(res.body.message).to.equal('User does not exist');
-          return done();
-        });
-    }
-  );
   it('should update a task ', (done) => {
     request.put(`/api/v1/todos/${todoId}/task/${taskId}`)
       .send({
@@ -195,22 +176,6 @@ describe('Todo Controller', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.success).to.equal(true);
         expect(res.body.editedTask).to.be.an('object');
-        return done();
-      });
-  });
-  it('should update task completer when completed is true', (done) => {
-    request.put(`/api/v1/todos/${todoId}/task/${taskId}`)
-      .send({
-        text: 'go to get goceries',
-        completed: 'true'
-      })
-      .set('x-access-token', token)
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        expect(res.status).to.equal(201);
-        expect(res.body).to.be.an('object');
-        expect(res.body.success).to.equal(true);
-        expect(res.body.editedTask.task_completer).to.equal('kool4life');
         return done();
       });
   });

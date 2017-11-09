@@ -121,9 +121,10 @@ export function fetchTasks(todoId) {
 * @returns {function} asynchronous action
 */
 
-export function updateTasks(todoId, taskId, { taskObj }) {
-  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`)
+export function updateTasks(todoId, taskId, taskObj) {
+  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`, { taskObj })
     .then((response) => {
+      console.log(response, '===============>')
       dispatch(updateTaskSuccess(response.data.editedTask));
     })
     .catch((error) => {

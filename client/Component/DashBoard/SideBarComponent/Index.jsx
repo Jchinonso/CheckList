@@ -3,7 +3,7 @@ import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
 import TodoListItem from './TodoListItem.jsx';
 import { fetchTodos, selectTodo } from '../../../actions/todosActions';
-// import { getAllGroupMessages } from '../../../actions/messageActions';
+import { fetchTasks } from '../../../actions/tasksActions';
 
 /**
  * @constructor
@@ -12,13 +12,13 @@ import { fetchTodos, selectTodo } from '../../../actions/todosActions';
  */
 class SideBarComponent extends React.Component {
   componentDidMount() {
-    this.props.fetchTodos();
-    // .then(() => {
-    //   if (this.props.groups.length > 0) {
-    //     this.props.selectGroup(this.props.groups[0].id);
-    //     this.props.getAllGroupMessages(this.props.groups[0].id);
-    //   }
-    // });
+    this.props.fetchTodos()
+      .then(() => {
+        if (this.props.todos.length > 0) {
+          this.props.selectTodo(this.props.todos[0]._id);
+          this.props.fetchTasks(this.props.todos[0]._id);
+        }
+      });
   }
   /**
  * render component
@@ -87,5 +87,5 @@ SideBarComponent.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchTodos, selectTodo }
+  { fetchTodos, selectTodo, fetchTasks }
 )(SideBarComponent);

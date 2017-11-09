@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Chips from 'react-chips';
-import { addCollaboratorTodo, fetchUsers } from '../../../../actions/collaboratorsAction';
+import { addCollaboratorTodo } from '../../../../actions/collaboratorsAction';
 
 /**
- * @class AddGroupUserModal
+ * @class AddCollaboratorModal
  * @extends React.Component
  */
-class AddGroupUserModal extends React.Component {
+class AddCollaboratorModal extends React.Component {
   /**
    * @constructor
    * @extends React.Component
@@ -23,14 +23,15 @@ class AddGroupUserModal extends React.Component {
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
-  componentDidMount() {
-    this.props.fetchUsers();
-  }
   /**
-   * Handle onChange events on form inputs
+   * @description Handle onChange events on form inputs
+   *
    * @method handleOnChange
+   *
    * @member SignUp
+   *
    * @param {object} chips
+   *
    * @returns {function} a function that handles change event on react-chips
    */
   handleOnChange(chips) {
@@ -38,24 +39,31 @@ class AddGroupUserModal extends React.Component {
       members: chips
     });
   }
-   /**
+  /**
    * Handle onSubmit events on form inputs
+   *
    * @method handleOnClick
-   * @member AddGroupUserModal
+   *
+   * @member AddCollaboratorsModal
+   *
    * @param {object} event
+   *
    * @returns {function} a function that handles onClick event on a form
    */
   handleOnClick(event) {
     event.preventDefault();
     if (this.state.members.length > 0) {
-      this.props.addMemberToGroup(this.props.activeGroup, this.state);
+      this.props.addCollaboratorTodo(this.props.activeTodo, this.state.members);
       this.setState({ members: [] });
     }
   }
   /**
    * render component
+   *
    * @method render
-   * @member AddGroupUserModal
+   *
+   * @member AddCollaboratorsModal
+   *
    * @returns {object} component
    */
   render() {
@@ -91,26 +99,24 @@ class AddGroupUserModal extends React.Component {
             className="modal-action modal-close waves-effect waves-green btn-flat"
           >
             Add
-            <i className="material-icons right">send</i>
           </a>
         </div>
       </div>
     );
   }
 }
-AddGroupUserModal.defaultProps = {
-  activeGroup: null
+AddCollaboratorModal.defaultProps = {
+  activeTodo: null
 };
-AddGroupUserModal.propTypes = {
-  activeGroup: PropTypes.number,
-  addMemberToGroup: PropTypes.func.isRequired,
+AddCollaboratorModal.propTypes = {
+  activeTodo: PropTypes.number,
+  addCollaboratorTodo: PropTypes.func.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  groupMembers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fetchUsers: PropTypes.func.isRequired
+  collaborators: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 
-function mapStateToProp(state) {
+function mapStateToProps(state) {
   return {
     activeTodo: state.activeTodoReducer,
     allUsers: state.userReducer.users,
@@ -119,5 +125,5 @@ function mapStateToProp(state) {
 }
 
 
-export default connect(mapStateToProp,
-  { addCollaboratorTodo, fetchUsers })(AddGroupUserModal);
+export default connect(mapStateToProps,
+  { addCollaboratorTodo })(AddCollaboratorModal);

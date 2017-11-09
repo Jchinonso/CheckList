@@ -1,5 +1,5 @@
 import {
-  FETCH_USER_SUCCESS,
+  FETCH_USERS_SUCCESS,
 } from '../constants/actionTypes';
 
 const intialState = {
@@ -7,9 +7,9 @@ const intialState = {
   errorMsg: '',
   users: [],
 };
-export default function addMembersReducer(state = intialState, action) {
+export default function userReducer(state = intialState, action) {
   switch (action.type) {
-  case FETCH_USER_SUCCESS: {
+  case FETCH_USERS_SUCCESS: {
     return { ...state, users: action.users };
   }
   default:

@@ -24,16 +24,17 @@ const TodoBoardComponent = (props) => {
               <button
                 className="btn indigo waves-effect waves-light left"
                 type="submit"
+                id={task._id}
                 name="action"
-                onClick={() => { handleCheckChange(task._id) }}
+                onClick={() => { handleCheckChange(task._id);}}
               >
-                {completed ? 'Undo' : 'Complete'}
+                {task.completed ? 'Undo' : 'Complete'}
               </button>
             </div>
             <div className="col s4 m4">
               <div className="col s2 m2">
                 <p
-                  style={{ textDecoration: completed ? 'line-through' : 'none' }}
+                  style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
                 >
                   {task.text}
                 </p>
@@ -53,7 +54,8 @@ TodoBoardComponent.propTypes = {
   tasks: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired,
   handleCheckChange: Proptypes.func.isRequired,
-  completed: Proptypes.bool.isRequired
+  completed: Proptypes.bool.isRequired,
+  handleCheckOnClick: Proptypes.func.isRequired
 };
 
 
