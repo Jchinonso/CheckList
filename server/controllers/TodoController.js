@@ -75,16 +75,22 @@ const TodoController = {
       .populate({ path: 'tasks' })
       .exec((err, todos) => {
         const newTodo = todos.filter(todo => todo.collaborators.some(collab => collab._id == userId));
-        if (err) {
+        if (todos.length === 0) {
+          res.status(404).json({
+            success: false,
+            message: 'No todos found'
+          });
+        } else if (todos.length > 0) {
+          res.status(200).json({
+            success: true,
+            newTodo
+          });
+        } else {
           res.status(500).json({
             success: false,
             message: 'Internal Server error'
           });
         }
-        res.status(200).json({
-          success: true,
-          newTodo
-        });
       });
   },
   /** addTask
@@ -139,7 +145,7 @@ const TodoController = {
           });
         });
       } else if (!todo) {
-        res.status(409).json({
+        res.status(404).json({
           success: false,
           message: 'Todo does not exist'
         });
