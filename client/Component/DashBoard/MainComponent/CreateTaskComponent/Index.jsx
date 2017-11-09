@@ -8,7 +8,7 @@ import PriorityComponent from './PriorityComponent.jsx';
 
 
 /**
- * @class MessageComposer
+ * @class CreateTaskComponent
  * @extends {Component}
  */
 class CreateTaskComponent extends Component {
@@ -28,8 +28,11 @@ class CreateTaskComponent extends Component {
   /**
    *
    * @method setPriority
-   * @memberof ChatArea
+   *
+   * @memberof CreateTaskComponent
+   *
    * @param {Object} event
+   *
    * @returns {void}
    */
   setPriority(event) {
@@ -42,8 +45,11 @@ class CreateTaskComponent extends Component {
   /**
    *
    * @method handleSubmitMessage
+   *
    * @returns {void}
-   * @memberof MessageArea
+   *
+   * @memberof CreateTaskComponent
+   *
    * @param {any} event
    * @param {Function} callback
    */
@@ -62,18 +68,23 @@ class CreateTaskComponent extends Component {
   /**
    *
    * @method handleInputChange
-   * @memberof MessageArea
+   *
+   * @memberof CreateTaskComponent
+   *
    * @param {any} event
+   *
    * @returns {void}
    */
   handleOnChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
   /**
+   * @method handleDateChange
    *
-   * @method handleInputChange
-   * @memberof MessageArea
-   * @param {any} event
+   * @memberof CreateTaskComponent
+   *
+   * @param {any} date
+   *
    * @returns {void}
    */
   handleDateChange(date) {
@@ -84,8 +95,10 @@ class CreateTaskComponent extends Component {
   /**
    *
    * @method render
-   * @memberof MessageArea
-   * @returns {object} a chat area component
+   *
+   * @memberof CreateTaskComponent
+   *
+   * @returns {object} a Create Task Component
   */
 
   render() {

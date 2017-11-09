@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 const TodoBoardComponent = (props) => {
-  const { tasks, username, handleCheckChange, completed } = props;
+  const { tasks, username, handleCheckChange, completed, handleCheckOnClick } = props;
 
   return (
     <div>
@@ -21,26 +21,28 @@ const TodoBoardComponent = (props) => {
         >
           <div className="row">
             <div className="col s4 m4">
-              <input
-                type="checkbox"
+              <button
+                className="btn indigo waves-effect waves-light left"
+                type="submit"
                 id={task._id}
-                onChange={handleCheckChange}
-                name="completed"
-              />
-              <label
-                className={classNames({
-                  strikethrough: completed === true
-                })}
-                htmlFor={task._id}
-              >{task.text}
-              </label>
+                name="action"
+                onClick={() => { handleCheckChange(task._id);}}
+              >
+                {task.completed ? 'Undo' : 'Complete'}
+              </button>
+            </div>
+            <div className="col s4 m4">
+              <div className="col s2 m2">
+                <p
+                  style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
+                >
+                  {task.text}
+                </p>
+              </div>
             </div>
             <div className="col s2 m2 right">
               <div className="task-cat">{task.priority}</div>
               <div className="task-cat">Due date</div>
-            </div>
-            <div className="col s4 m4 right">
-              <div className="task-cat">{task.task_completer}</div>
             </div>
           </div>
         </li>))}
@@ -50,7 +52,10 @@ const TodoBoardComponent = (props) => {
 
 TodoBoardComponent.propTypes = {
   tasks: Proptypes.arrayOf(Proptypes.object).isRequired,
-  username: Proptypes.string.isRequired
+  username: Proptypes.string.isRequired,
+  handleCheckChange: Proptypes.func.isRequired,
+  completed: Proptypes.bool.isRequired,
+  handleCheckOnClick: Proptypes.func.isRequired
 };
 
 

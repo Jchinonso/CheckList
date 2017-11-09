@@ -79,7 +79,7 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: Todo
   }],
-  image: {
+  imageUrl: {
     type: Buffer
   },
   created_at: {

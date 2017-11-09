@@ -9,7 +9,7 @@ const intialState = {
   todos: [],
   errorMsg: '',
 };
-export default function groupReducer(state = intialState, action) {
+export default function todosReducer(state = intialState, action) {
   switch (action.type) {
   case RECEIVE_TODOS_SUCCESS: {
     return { ...state, todos: action.todos };
