@@ -12,7 +12,8 @@ const TodosRoutes = (router) => {
     .put(Auth.verifyToken, TodosController.updateTask)
     .delete(Auth.verifyToken, TodosController.deleteTask);
   router.route('/todos/:todoId/collaborator')
-    .post(Auth.verifyToken, TodosController.addColaborator);
+    .post(Auth.verifyToken, TodosController.addColaborator)
+    .get(Auth.verifyToken, TodosController.retrieveAllColaborators);
 };
 
 export default TodosRoutes;

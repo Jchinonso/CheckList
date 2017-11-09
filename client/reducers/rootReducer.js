@@ -3,13 +3,17 @@ import authReducer from './authReducer';
 import todosReducer from './todosReducer';
 import tasksReducer from './tasksReducer';
 import activeTodoReducer from './activeTodoReducer';
+import collaboratorReducer from './collaboratorReducer';
+import userReducer from './userReducer';
 import { SIGNOUT_USER_SUCCESS } from '../constants/actionTypes';
 
 const appReducer = combineReducers({
   authReducer,
   todosReducer,
   tasksReducer,
-  activeTodoReducer
+  activeTodoReducer,
+  collaboratorReducer,
+  userReducer
 });
 
 const rootReducer = (state, action) => {

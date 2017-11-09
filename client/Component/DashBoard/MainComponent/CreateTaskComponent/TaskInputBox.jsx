@@ -47,7 +47,8 @@ const TaskInputBox = (props) => {
 
 TaskInputBox.propTypes = {
   handleOnChange: Proptypes.func.isRequired,
-  text: Proptypes.string.isRequired
+  text: Proptypes.string.isRequired,
+  handleDateChange: Proptypes.func.isRequired,
 };
 
 

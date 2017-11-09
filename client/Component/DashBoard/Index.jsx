@@ -9,12 +9,12 @@ import MainComponent from './MainComponent/Index.jsx';
 import CreateTodoModal from './SideBarComponent/CreateTodoModal.jsx';
 import { fetchTasks } from '../../actions/tasksActions';
 import { selectTodo, createTodo } from '../../actions/todosActions';
-// import { fetchGroupMembers } from '../../actions/memberActions';
+import { fetchCollaborators, fetchUsers } from '../../actions/collaboratorsAction';
 import { signOut } from '../../actions/authActions';
 
 
 /**
- * @class AddGroupUserModal
+ * @class Dashboard
  * @extends React.Component
  */
 class Dashboard extends React.Component {
@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
   /**
    * Handle onChange events on form inputs
    * @method handleInputChange
-   * @member SignUp
+   * @member Dashboard
    * @param {object} event
    * @returns {function} a function that handles change event on inputs
    */
@@ -59,7 +59,7 @@ class Dashboard extends React.Component {
   /**
    * Handle onClick events on form inputs
    * @method handleOnClick
-   * @member CreateGroupModal
+   * @member Dashboard
    * @param {object} event
    * @returns {function} a function that handles onClick event on inputs
    */
@@ -81,14 +81,15 @@ class Dashboard extends React.Component {
   /**
   * Handle Change Todo
   * @method handleChangeGroup
-  * @member MainComponent
+  * @member Dashboard
   * @param {object} todoId
   * @returns {function} a function that changes group and dispatches some actions
   */
   handleChangeTodo(todoId) {
     this.props.selectTodo((todoId));
     this.props.fetchTasks(todoId);
-    // this.props.fetchGroupMembers(groupId);
+    this.props.fetchCollaborators(todoId);
+    this.props.fetchUsers();
   }
 
   /**
@@ -128,10 +129,12 @@ Dashboard.propTypes = {
   signOut: PropTypes.func.isRequired,
   selectTodo: PropTypes.func.isRequired,
   fetchTasks: PropTypes.func.isRequired,
-  createTodo: PropTypes.func.isRequired
+  fetchUsers: PropTypes.func.isRequired,
+  createTodo: PropTypes.func.isRequired,
+  fetchCollaborators: PropTypes.func.isRequired
 };
 
 export default connect(
   null,
-  { signOut, selectTodo, fetchTasks, createTodo }
+  { signOut, selectTodo, fetchCollaborators, fetchTasks, fetchUsers, createTodo }
 )(Dashboard);

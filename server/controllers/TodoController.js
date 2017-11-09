@@ -160,25 +160,33 @@ const TodoController = {
    */
   addColaborator(req, res) {
     const { todoId } = req.params;
-    const { username } = req.body;
-    User.findOne({ username }).select(['username']).exec((err, user) => {
-      if (user) {
-        Todo.findById({ _id: todoId }).exec((err, todo) => {
-          if (err) {
-            res.status(500).json({
-              success: false,
-              message: 'Internal server error'
-            });
-          }
-          todo.collaborators.push(user);
-          todo.save((err, newTodo) => {
-            if (err) throw err;
-            res.status(200).json({
-              success: true,
-              message: 'Collaborator have be successfully added',
-            });
+    const members = [].concat(req.body);
+    User.find({ username: members }).select(['username']).exec((err, user) => {
+      if (user.length !== 0) {
+        Todo.findById({ _id: todoId })
+          .populate({ path: 'collaborators', select: ['username'] })
+          .exec((err, todo) => {
+            if (err) {
+              res.status(500).json({
+                success: false,
+                message: 'Internal server error'
+              });
+            } else {
+              const collaborators = user.filter((newUser) => {
+                return !todo.collaborators.find((collab) => {
+                  return collab.username === newUser.username; });
+              });
+              todo.collaborators = [...todo.collaborators, ...collaborators];
+              todo.save((err, newTodo) => {
+                if (err) throw err;
+                res.status(200).json({
+                  success: true,
+                  message: 'Collaborator have be successfully added',
+                  newTodo
+                });
+              });
+            }
           });
-        });
       } else {
         res.status(404).json({
           success: false,
@@ -186,6 +194,43 @@ const TodoController = {
         });
       }
     });
+  },
+  /** retrieveAllColaborators
+   * @desc get all Collaborators that belong to Todo
+   *
+   * @method
+   *
+   * @memberof Todo controller
+   *
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   *
+   * @returns {object} Returns a all collaborators
+   */
+  retrieveAllColaborators(req, res) {
+    const { text, completed } = req.body;
+    const id = req.params.todoId;
+    Todo.findById({ _id: id })
+      .populate({ path: 'collaborators', select: ['username'] })
+      .exec((err, todo) => {
+        if (todo) {
+          const { collaborators } = todo;
+          res.status(200).json({
+            success: true,
+            collaborators
+          });
+        } else if (todo === null) {
+          res.status(404).json({
+            success: false,
+            message: 'Todo does not exist'
+          });
+        } else if (err) {
+          res.status(500).json({
+            success: false,
+            message: 'Internal server error'
+          });
+        }
+      });
   },
   /** updateTask
    * @desc update todo task
@@ -209,24 +254,19 @@ const TodoController = {
           message: 'Internal server error'
         });
       }
-      if (completed === 'true') {
-        task.task_completer = req.decoded.username;
-      } else {
-        task.task_completer = '';
-      }
       task.completed = completed;
-      task.text = text;
       task.save((err, editedTask) => {
         if (err) {
           res.status(500).json({
             success: false,
             message: 'Internal server error'
           });
+        } else {
+          res.status(201).json({
+            success: true,
+            editedTask
+          });
         }
-        res.status(201).json({
-          success: true,
-          editedTask
-        });
       });
     });
   },
