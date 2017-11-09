@@ -1,11 +1,11 @@
-import usersRoutes from './userRoutes';
-import todosRoutes from './todosRoutes';
+import UsersRoutes from './UserRoutes';
+import TodosRoutes from './TodosRoutes';
 
 
 // setup routes using router
 const Routes = (router) => {
-  usersRoutes(router);
-  todosRoutes(router);
+  UsersRoutes(router);
+  TodosRoutes(router);
 };
 
 export default Routes;
