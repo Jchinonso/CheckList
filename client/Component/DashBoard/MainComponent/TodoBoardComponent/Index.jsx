@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 const TodoBoardComponent = (props) => {
-  const { tasks, username, handleCheckChange, completed, handleCheckOnClick } = props;
+  const { tasks, username, handleCheckChange, handleCheckOnClick } = props;
 
   return (
     <div>
@@ -22,22 +22,23 @@ const TodoBoardComponent = (props) => {
           <div className="row">
             <div className="col s4 m4">
               <button
-                className="btn indigo waves-effect waves-light left"
+                className="btn waves-effect waves-light left"
                 type="submit"
                 id={task._id}
                 name="action"
-                onClick={() => { handleCheckChange(task._id);}}
+                style={{ backgroundColor: '#F5F5DC', color: 'black' }}
+                onClick={() => { handleCheckChange(task._id, !task.completed); }}
               >
                 {task.completed ? 'Undo' : 'Complete'}
               </button>
             </div>
             <div className="col s4 m4">
               <div className="col s2 m2">
-                <p
+                <h5
                   style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
                 >
                   {task.text}
-                </p>
+                </h5>
               </div>
             </div>
             <div className="col s2 m2 right">

@@ -29,10 +29,11 @@ export function addTaskFailure(error) {
 * @returns {object} action: type and task
 */
 
-export function updateTaskSuccess(task) {
+export function updateTaskSuccess(taskId, completed) {
   return {
     type: types.UPDATE_TASK_SUCCESS,
-    task
+    taskId,
+    completed
   };
 }
 /**
@@ -121,11 +122,11 @@ export function fetchTasks(todoId) {
 * @returns {function} asynchronous action
 */
 
-export function updateTasks(todoId, taskId, taskObj) {
-  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`, { taskObj })
+export function updateTasks(todoId, taskId, completed) {
+  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`, { completed })
     .then((response) => {
-      console.log(response, '===============>')
-      dispatch(updateTaskSuccess(response.data.editedTask));
+      dispatch(updateTaskSuccess(taskId, completed));
+      // dispatch(updateTaskSuccess(response.data.editedTask));
     })
     .catch((error) => {
       toastr.error(error.response.data.message);

@@ -20,7 +20,7 @@ class MainComponent extends React.Component {
     this.state = {
       selectedGroup: null,
       priority: 'normal',
-      completed: true
+      completed: false
     };
     this.handleCheckChange = this.handleCheckChange.bind(this);
   }
@@ -29,9 +29,8 @@ class MainComponent extends React.Component {
     this.scrollToBottom();
   }
 
-  handleCheckChange(taskId) {
-    this.setState({ completed: !this.state.completed },
-      () => this.props.updateTasks(this.props.activeTodo, taskId, this.state.completed));
+  handleCheckChange(taskId, completed) {
+    this.props.updateTasks(this.props.activeTodo, taskId, completed);
   }
 
   scrollToBottom() {
@@ -69,7 +68,6 @@ class MainComponent extends React.Component {
               <TodoBoardComponent
                 handleCheckChange={this.handleCheckChange}
                 tasks={this.props.tasks}
-                completed={this.state.completed}
                 username={this.props.username}
               />
             </ul>
@@ -85,6 +83,7 @@ function mapStateToProps(state) {
     todos: state.todosReducer.todos,
     activeTodo: state.activeTodoReducer,
     tasks: state.tasksReducer.tasks,
+    completed: state.tasksReducer.completed,
     username: state.authReducer.user.username,
   };
 }
