@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 const TodoBoardComponent = (props) => {
-  const { tasks, username, handleCheckChange, handleCheckOnClick } = props;
+  const { tasks, username, handleCheckChange } = props;
 
   return (
     <div>
@@ -55,8 +55,6 @@ TodoBoardComponent.propTypes = {
   tasks: Proptypes.arrayOf(Proptypes.object).isRequired,
   username: Proptypes.string.isRequired,
   handleCheckChange: Proptypes.func.isRequired,
-  completed: Proptypes.bool.isRequired,
-  handleCheckOnClick: Proptypes.func.isRequired
 };
 
 

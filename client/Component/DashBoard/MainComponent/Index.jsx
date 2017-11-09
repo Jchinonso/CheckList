@@ -96,7 +96,6 @@ MainComponent.propTypes = {
   activeTodo: PropTypes.string,
   username: PropTypes.string.isRequired,
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
-
 };
 
 
