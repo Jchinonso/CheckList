@@ -245,7 +245,7 @@ const TodoController = {
    * @returns {object} Returns edited task
    */
   updateTask(req, res) {
-    const { text, completed } = req.body;
+    const { completed } = req.body;
     const id = req.params.taskId;
     Task.findById({ _id: id }).exec((err, task) => {
       if (err) {
