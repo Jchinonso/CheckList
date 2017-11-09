@@ -10,8 +10,18 @@ engines:
       - javascript
       - python
       - php
+      checks:
+        Similar code:
+          enabled: false
   eslint:
     enabled: true
+  checks:
+     import/extensions:
+       enabled: false
+     no-multiple-empty-lines:
+       enabled: true
+     linebreak-style:
+       enabled: true
   fixme:
     enabled: true
 ratings:
