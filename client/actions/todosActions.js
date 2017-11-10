@@ -64,7 +64,7 @@ export function createTodo(text) {
   return dispatch => axios.post('/api/v1/todo', { text })
     .then((response) => {
       dispatch(createTodoSuccess(response.data.todo));
-      toastr.success('Group Successfully Created');
+      toastr.success('Todo Successfully Created');
     })
     .catch((error) => {
       dispatch(createTodoFailure(error.response.data.message));
