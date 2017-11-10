@@ -90,59 +90,50 @@ const UserController = {
         }
       });
   },
-  //   /**
-  //  * @description: update profile picture through the route
-  //  *
-  //  * @param {Object} req request object
-  //  * @param {Object} res response object
-  //  *
-  //  * @return {Object} response containing the updated todo
-  //  */
-  // uploadProfilePicture(req, res) {
-  //   cloudinary.config({
-  //     cloud_name: process.env.CLOUD_NAME,
-  //     api_key: process.env.API_KEY,
-  //     api_secret: process.env.API_SECRET
-  //   });
-  //   if (!req.files) {
-  //     return apiResponse(res, 400, 'No image found', false);
-  //   }
-  //   const uploadDir = 'server/uploads';
-  //   if (!fs.existsSync(uploadDir)) {
-  //     fs.mkdirSync(uploadDir);
-  //   }
-
-  //   const { file } = req.files;
-  //   file.mv(`${uploadDir}/${file.name}`).then(() => {
-  //     cloudinary.v2.uploader.upload(`${uploadDir}/${file.name}`)
-  //       .then((cloudinaryImage) => {
-  //         const { url } = cloudinaryImage;
-  //         user.findOne(
-  //           { _id: req.currentUser.currentUser._id },
-  //           (err, currentUser) => {
-  //             if (err) {
-  //               return apiResponse(res, 500, 'Internal server error', false);
-  //             }
-  //             currentUser.imageUrl = url;
-  //             currentUser.save((err, updatedUser) => {
-  //               if (err) {
-  //                 return apiResponse(res, 500, 'Internal server error', false);
-  //               }
-  //               return apiResponse(
-  //                 res, 200, 'token', true,
-  //                 generateToken(removePassword(updatedUser), secret)
-  //               );
-  //             });
-  //           }
-  //         );
-  //       });
-  //   }).catch(() => {
-  //     apiResponse(
-  //       res, 500,
-  //       'An error occured while uploading image', false
-  //     );
-  //   });
-  // }
+  /** updateProfile
+   * @description update a user
+   *
+   * @method
+   *
+   * @memberof Usercontroller
+   *
+   * @param {Object} req Request Object
+   * @param {Object} res Response Object
+   *
+   * @returns {object} Returns updated user
+   */
+  updateProfile(req, res) {
+    const { username, email, name } = res.body;
+    User.findOne({
+      email
+    }).select(['email', 'username', 'name'])
+      .exec((err, user) => {
+        if (!user) {
+          res.status(404).json({
+            success: false,
+            message: 'User does not exist!'
+          });
+        } else if (user) {
+          user.email = email;
+          user.username = username;
+          user.name = name;
+          user.save((err, updatedUser) => {
+            if (err) {
+              res.status(500).json({
+                success: false,
+                message: 'User unable to update',
+              });
+            } else {
+              res.status(201).json({
+                success: true,
+                message: 'successfully updated',
+                updatedUser
+              });
+            }
+          });
+        }
+      });
+  },
   /** retrieveAllUsers
    * @desc retrieve all users
    *
