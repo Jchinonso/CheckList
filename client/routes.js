@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './Component/App.jsx';
-import AuthenticationPage from './Component/AuthComponent/index.jsx';
+import AuthenticationPage from './Component/AuthComponent/Index.jsx';
 import ForgotPassword from './Component/AuthComponent/ForgotPassword.jsx';
 import ResetPassword from './Component/AuthComponent/ResetPassword.jsx';
-import DashBoard from './Component/DashBoard/Index.jsx';
+import DashBoard from './Component/DashBoard/Dashboard.jsx';
 
 const onEnter = (next, replace, cb) => {
   if (localStorage.getItem('tokenize') !== null && next.location.pathname === '/') {

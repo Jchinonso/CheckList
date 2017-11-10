@@ -2,7 +2,9 @@
   "exclude": [
     "server/migrations",
     "server/seeders",
-    "server/tests/"
+    "server/tests/",
+    "dist",
+    "client"
   ],
   "include": [
     "server"
