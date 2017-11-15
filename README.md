@@ -82,7 +82,7 @@ Technologies Used
 * [Javascript ES6:](https://en.wikipedia.org/wiki/ECMAScript) ES6 is the sixth major release of the javascript language specification. It enables features like constants, arrow functions, template literals, spread opeartor, etc.
 * [React:](https://facebook.github.io/react/tutorial/tutorial.html) Facebook open source, efficient, javascript library for building front-end projects.
 * [MongoDB:](https://www.mongodb.com/) PostgreSQL is a powerful, open source object-relational database system (ORDBMS) that offers modern database features such as complex queries, foreign keys, etc.
-* [Sequelize:](http://docs.sequelizejs.com/) Sequelize is a promise-based ORM for Node.js that supports different dialects such PostgreSQL, MySQL, and SQLite.
+* [Mongoose:](http://mongoosejs.com/) Sequelize is a promise-based ORM for Node.js that supports different dialects such PostgreSQL, MySQL, and SQLite.
 * [Babel:](https://babeljs.io/)  Babel transpiles es6 codes to es5.
 * [Webpack:](https://webpack.github.io/docs/what-is-webpack.html) Webpack is used to bundle modules and does tasks automation.
 * [Axios:](https://www.npmjs.com/package/axios) Axios is an http client library used in consuming API.
@@ -90,8 +90,8 @@ Technologies Used
 Installation
 ------------
 1.  Ensure you have NodeJs and postgres installed
-2.  Clone the repository `https://github.com/jchinonso/PostIt`
-3.  Change your directory `cd PostIt`
+2.  Clone the repository `https://github.com/jchinonso/WorkList`
+3.  Change your directory `cd WorkList`
 4.  Install all dependencies `npm install`
 5.  Start the app `npm run start:dev` for development Or
 6.  Run `npm start` to use transpiled code
@@ -104,8 +104,8 @@ Tests
 
 Limitations
 -----------
-- Group creator cannot remove users from groups
-- Users cannot update their profile
+- Todo creator cannot remove collaborators from todos
+- Users cannot delete Todos
 - Users cannot deactivate their accounts
 
 Coding Style
