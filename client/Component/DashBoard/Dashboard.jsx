@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
+
 import NavComponent from './NavComponent/Index.jsx';
 import SideBarComponent from './SideBarComponent/Index.jsx';
 import MainComponent from './MainComponent/Index.jsx';
-// import MessageArea from './MessageArea/Index.jsx';
+import EditProfileComponent from './EditProfileComonent/Index.jsx';
 import CreateTodoModal from './SideBarComponent/CreateTodoModal.jsx';
 import { fetchTasks } from '../../actions/tasksActions';
 import { selectTodo, createTodo } from '../../actions/todosActions';
@@ -64,7 +65,6 @@ class Dashboard extends React.Component {
    * @returns {function} a function that handles onClick event on inputs
    */
   handleOnClick(event) {
-    event.preventDefault();
     const { text } = this.state;
     if (text !== undefined) {
       const newText = text.trim();
@@ -118,6 +118,7 @@ class Dashboard extends React.Component {
           <SideBarComponent handleChangeTodo={this.handleChangeTodo} />
         </header>
         <CreateTodoModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} text={this.state.text} />
+        <EditProfileComponent />
         <MainComponent />
       </div>
     );

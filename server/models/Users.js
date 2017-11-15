@@ -10,7 +10,7 @@ const nameValidator = [
   validate({
     validator: 'matches',
     arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/,
-    message: 'Name must be at least 3 characters, max 30, no special characters or numbers, must have space in between name.'
+    message: 'Name must be between 3 to 30 characters, no special characters or numbers, must have firstname and lastname.'
   }),
   validate({
     validator: 'isLength',
@@ -80,7 +80,9 @@ const UserSchema = new Schema({
     ref: Todo
   }],
   imageUrl: {
-    type: Buffer
+    type: String,
+    unique: false,
+    default: 'http://res.cloudinary.com/dbczzmftw/image/upload/v1509127904/pojdk9ajmdgase3esgg2.png'
   },
   created_at: {
     type: Date,

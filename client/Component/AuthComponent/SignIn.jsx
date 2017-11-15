@@ -1,103 +1,175 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
+import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import GoogleLogin from 'react-google-login';
 
+import
+{ isValidEmail, isValidName, isValidPassword, isValidUsername } from '../../helper/clientSideValidation';
+import { signIn, googleSignIn } from '../../actions/authActions';
 
-const SignIn = ({
-  responseGoogle,
-  handleOnSubmit,
-  handleInputChange,
-  showSignup,
-  email,
-  password,
-}) =>
-  (
-    <div className="card auth">
-      <div className="col s12 m12 l6">
-        <div className="card-panel">
-          <h4 className="header2 center" style={{ fontFamily: 'Bree Serif' }}>Sign In</h4>
-          <div className="row">
-            <div className="col s12 m12 l12 center">
-              <div className="container" id="google-button">
-                <GoogleLogin
-                  clientId={'646249820676-l4i5hlkoicoiqdiq3gt9oskortf2b3bk.apps.googleusercontent.com'}
-                  onSuccess={responseGoogle}
-                  id="google-login"
-                  onFailure={responseGoogle}
-                  style={{ width: '100%', }}
-                  className="btn red waves-effect waves-light left"
-                >
-                  <i className="fa fa-google-plus-official fa-4x" aria-hidden="true" />
-                  <span> Login with Google</span>
-                </GoogleLogin>
+
+class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.responseGoogle = this.responseGoogle.bind(this);
+  }
+  /**
+   * Handle onChange events on form inputs
+   *
+   * @method handleInputChange
+   *
+   * @member SignIn
+   *
+   * @param {object} event
+   *
+   * @returns {function} a function that handles change event on inputs
+   */
+  handleInputChange(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+  /**
+   * Handle onSubmit events on form inputs
+   *
+   * @method handleOnSubmit
+   *
+   * @member SignIn
+   *
+   * @param {object} event
+   *
+   * @returns {function} a function that handles submit event on inputs
+   */
+
+  handleOnSubmit(event) {
+    const { email, password } = this.state;
+    event.preventDefault();
+    if (!isValidEmail(email)) {
+      toastr.error('Invalid Email');
+    } else if (!isValidPassword(password)) {
+      toastr.error('Password should contain at least 8 characters including one number and alphabet');
+    } else {
+      const userObj = {
+        password,
+        email
+      };
+      this.props.signIn(userObj);
+    }
+  }
+  /**
+   * Handle google response event
+   *
+   * @method responseGoogle
+   *
+   * @member Authentication
+   *
+   * @param {object} response
+   *
+   * @returns {function} a function that sign's in a user with their google account
+   */
+  responseGoogle(response) {
+    const { email, givenName, familyName, name } = response.profileObj;
+    const userObj = {
+      username: givenName,
+      email,
+      password: name,
+      name
+    };
+    this.props.googleSignIn(userObj);
+  }
+  render() {
+    const { email, password } = this.state;
+    const { showSignup } = this.props;
+    return (
+      <div className="card auth">
+        <div className="col s12 m12 l6">
+          <div className="card-panel">
+            <h4 className="header2 center" style={{ fontFamily: 'Bree Serif' }}>Sign In</h4>
+            <div className="row">
+              <div className="col s12 m12 l12 center">
+                <div className="container" id="google-button">
+                  <GoogleLogin
+                    clientId={'646249820676-l4i5hlkoicoiqdiq3gt9oskortf2b3bk.apps.googleusercontent.com'}
+                    onSuccess={this.responseGoogle}
+                    id="google-login"
+                    onFailure={this.responseGoogle}
+                    style={{ width: '100%', }}
+                    className="btn red waves-effect waves-light left"
+                  >
+                    <i className="fa fa-google-plus-official fa-4x" aria-hidden="true" />
+                    <span> Login with Google</span>
+                  </GoogleLogin>
+                </div>
+                <div className="col s12 m12 l12 center" style={{ paddingTop: '10px' }}> Or </div>
               </div>
-              <div className="col s12 m12 l12 center" style={{ paddingTop: '10px' }}> Or </div>
             </div>
-          </div>
-          <div className="row " style={{ paddingTop: '10px' }}>
-            <form className="col s12" onSubmit={handleOnSubmit}>
-              <div className="row">
-                <div className="input-field col s12" style={{ margin: 0 }}>
-                  <i className="material-icons prefix">email</i>
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    onChange={handleInputChange}
-                    className="validate"
-                    value={email}
-                    required="true"
-                  />
-                  <label htmlFor="email">Email</label>
-                </div>
-              </div>
-              <div className="row">
-                <div className="input-field col s12" style={{ margin: 0 }}>
-                  <i className="material-icons prefix">lock_outline</i>
-                  <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    onChange={handleInputChange}
-                    className="validate"
-                    value={password}
-                    required="true"
-                  />
-                  <label htmlFor="password">Password</label>
-                </div>
-              </div>
-              <div className="row">
+            <div className="row " style={{ paddingTop: '10px' }}>
+              <form className="col s12" onSubmit={this.handleOnSubmit}>
                 <div className="row">
-                  <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
-                    <button
-                      className="btn indigo waves-effect waves-light left"
-                      type="submit"
-                      name="action"
-                    >
-                      <i className="material-icons right">send</i>
-                      Submit
-                    </button>
+                  <div className="input-field col s12" style={{ margin: 0 }}>
+                    <i className="material-icons prefix">email</i>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      onChange={this.handleInputChange}
+                      className="validate"
+                      value={email}
+                      required="true"
+                    />
+                    <label htmlFor="email">Email</label>
                   </div>
-                  <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <Link to="/forgot-password">Forgot Password</Link></div>
                 </div>
-              </div>
-              <div className="center">Don&apos;t have a PostIt account? <a href="#?" onClick={showSignup}>Sign Up</a></div>
-            </form>
+                <div className="row">
+                  <div className="input-field col s12" style={{ margin: 0 }}>
+                    <i className="material-icons prefix">lock_outline</i>
+                    <input
+                      id="password"
+                      type="password"
+                      name="password"
+                      onChange={this.handleInputChange}
+                      className="validate"
+                      value={password}
+                      required="true"
+                    />
+                    <label htmlFor="password">Password</label>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="row">
+                    <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
+                      <button
+                        className="btn indigo waves-effect waves-light left"
+                        type="submit"
+                        name="action"
+                      >
+                        <i className="material-icons right">send</i>
+                        Submit
+                      </button>
+                    </div>
+                    <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <Link to="/forgot-password">Forgot Password</Link></div>
+                  </div>
+                </div>
+                <div className="center">Don&apos;t have a WorkList account? <a href="#?" onClick={showSignup}>Sign Up</a></div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+}
 
 SignIn.propTypes = {
-  responseGoogle: PropTypes.func.isRequired,
   showSignup: PropTypes.func.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  handleOnSubmit: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired
+  signIn: PropTypes.func.isRequired,
+  googleSignIn: PropTypes.func.isRequired
 };
 
-export default SignIn;
+export default connect(null, { signIn, googleSignIn })(SignIn);

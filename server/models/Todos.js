@@ -28,7 +28,6 @@ export const Todo = mongoose.model('Todo', TodoSchema);
 const TaskSchema = new Schema({
   text: {
     type: String,
-    required: true,
   },
   completed: {
     type: Boolean,
@@ -37,10 +36,6 @@ const TaskSchema = new Schema({
   priority: {
     type: String,
     default: 'normal'
-  },
-  task_completer: {
-    type: String,
-    default: ''
   },
   dueDate: {
     type: Date,

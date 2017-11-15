@@ -101,7 +101,7 @@ class ForgetPassword extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="center">Don&apos;t have a PostIt account? <Link to="/">Sign In</Link></div>
+                  <div className="center">Don&apos;t have a WorkList account? <Link to="/">Sign In</Link></div>
                 </form>
               </div>
             </div>

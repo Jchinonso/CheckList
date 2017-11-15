@@ -78,7 +78,7 @@ export function addCollaboratorFailure(error) {
  */
 export function addCollaboratorTodo(todoId, collaborator) {
   return (dispatch) => {
-    axios.post(`/api/v1/todos/${todoId}/collaborator`, collaborator)
+    return axios.post(`/api/v1/todos/${todoId}/collaborator`, collaborator)
       .then((response) => {
         toastr.success(response.data.message);
         dispatch(addCollaboratorSuccess(response.data.message));
@@ -99,7 +99,7 @@ export function addCollaboratorTodo(todoId, collaborator) {
  */
 export function fetchUsers() {
   return (dispatch) => {
-    axios.get('/api/v1/users')
+    return axios.get('/api/v1/users')
       .then((response) => {
         dispatch(fetchUserSuccess(response.data.allUsers));
       })
@@ -119,7 +119,7 @@ export function fetchUsers() {
  */
 export function fetchCollaborators(todoId) {
   return (dispatch) => {
-    axios.get(`/api/v1/todos/${todoId}/collaborator`)
+    return axios.get(`/api/v1/todos/${todoId}/collaborator`)
       .then((response) => {
         dispatch(fetchCollaboratorSuccess(response.data.collaborators));
       })

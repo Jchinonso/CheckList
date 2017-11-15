@@ -1,6 +1,7 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import TodoListItem from './TodoListItem.jsx';
 import { fetchTodos, selectTodo } from '../../../actions/todosActions';
 import { fetchTasks } from '../../../actions/tasksActions';
@@ -25,8 +26,11 @@ class SideBarComponent extends React.Component {
   }
   /**
  * render component
+ *
  * @method render
+ *
  * @member SideBarComponent
+ *
  * @returns {object} component
  */
   render() {
@@ -36,10 +40,15 @@ class SideBarComponent extends React.Component {
           <div className="top-nav darken-2 indigo" style={{ height: 180 }}>
             <div className="row">
               <div className="col s12 m12" style={{ paddingTop: 10 }}>
-                <img src="https://cdn.pixabay.com/photo/2013/04/06/11/50/image-editing-101040_1280.jpg" alt className="circle responsive-img valign profile-image" style={{width: 130, height: 120}} />
+                <img
+                  src={this.props.imageUrl}
+                  alt="profile-pics"
+                  className="circle responsive-img valign profile-image"
+                  style={{width: 130, height: 120}}
+                />
               </div>
               <div className="col s12 m12" style={{ marginTop: '-35px' }}>
-                <p>
+                <p style={{ color: 'white' }}>
                   {this.props.username}
                 </p>
               </div>
@@ -67,6 +76,7 @@ class SideBarComponent extends React.Component {
 function mapStateToProps(state) {
   return {
     username: state.authReducer.user.username,
+    imageUrl: state.authReducer.user.imageUrl,
     todos: state.todosReducer.todos,
     activeTodo: state.activeTodoReducer
   };

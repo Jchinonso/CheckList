@@ -1,5 +1,5 @@
 
-const helper = {
+const errorHandler = {
   /**
    * validate Database errors
    *
@@ -27,4 +27,4 @@ const helper = {
 
 };
 
-export default helper;
+export default errorHandler;

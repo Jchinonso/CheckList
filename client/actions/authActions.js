@@ -21,21 +21,35 @@ export function setCurrentUser(user) {
   };
 }
 /**
-* @desc create action:signup user failure
-
-* @function signUpFailure
-
-* @param {object} error
-
-* @returns {object} action: type and error
-*/
-export function logError(error) {
+ * @desc update action: update current user
+ *
+ * @function updateCurrentUserSuccess
+ *
+ * @param {object} user
+ *
+ * @returns {object} action: type and user
+ */
+export function updateCurrentUserSuccess(user) {
   return {
-    type: types.LOG_ERROR,
-    error
+    type: types.UPDATE_CURRENT_USER,
+    user
   };
 }
-
+/**
+ * @desc update action: update current user pics
+ *
+ * @function updateCurrentUserPicSuccess
+ *
+ * @param {object} user
+ *
+ * @returns {object} action: type and imageUrl
+ */
+export function updateCurrentUserPicSuccess(user) {
+  return {
+    type: types.UPDATE_CURRENT_USER_PICTURE,
+    user
+  };
+}
 /**
 * @desc create action:signout user success
 *
@@ -82,21 +96,21 @@ export function signOut() {
 */
 
 export function signUp(user) {
-  return dispatch => axios.post('/api/v1/user/signup', user)
-    .then((response) => {
-      if (response.status === 201) {
-        const { token } = response.data;
-        window.localStorage.setItem('tokenize', token);
-        setAuthorizationToken(token);
-        dispatch(setCurrentUser(jwtDecode(token)));
-        toastr.success('Registration successful');
-        browserHistory.push('/dashboard');
-      }
-    })
-    .catch((error) => {
-      toastr.error(error.response.data.message);
-      dispatch(logError(error.response.data.message));
-    });
+  return (dispatch) => {
+    return axios.post('/api/v1/user/signup', user)
+      .then((response) => {
+        if (response.status === 201) {
+          const { token } = response.data;
+          setAuthorizationToken(token);
+          dispatch(setCurrentUser(response.data.userObject));
+          toastr.success('Registration successful');
+          browserHistory.push('/dashboard');
+        }
+      })
+      .catch((error) => {
+        toastr.error(error.response.data.message);
+      });
+  };
 }
 
 /**
@@ -115,15 +129,59 @@ export function signIn(user) {
     .then((response) => {
       if (response.status === 200) {
         const { token } = response.data;
-        window.localStorage.setItem('tokenize', token);
         setAuthorizationToken(token);
-        dispatch(setCurrentUser(jwtDecode(token)));
+        dispatch(setCurrentUser(response.data.userObject));
         toastr.success('Signed in Succesfully');
         browserHistory.push('/dashboard');
       }
     }).catch((err) => {
       toastr.error(err.response.data.message);
-      dispatch(logError(err.response.data.message));
+    })
+  );
+}
+/**
+ * @desc async helper function: update a user
+ *
+ * @function UpdateUser
+ *
+ * @param {string} username
+ * @param {string} password
+ * @param {string} name
+ *
+ * @returns {function} asynchronous action
+ */
+
+export function updateUser(user) {
+  return (dispatch => axios.put('api/v1/user', user)
+    .then((response) => {
+      const { token } = response.data;
+      setAuthorizationToken(token);
+      dispatch(updateCurrentUserSuccess(response.data.updatedUser));
+      toastr.success('Profile updated');
+    }).catch((err) => {
+      toastr.error(err.response.data.message);
+    })
+  );
+}
+/**
+ * @desc async helper function: update a user profile pics
+ *
+ * @function UpdateUserProfilePics
+ *
+ * @param {string} imageUrl
+ *
+ * @returns {function} asynchronous action
+ */
+
+export function updateUserProfilePics(imageUrl) {
+  return (dispatch => axios.put('api/v1/user/updateProfile', { imageUrl })
+    .then((response) => {
+      const { token } = response.data;
+      setAuthorizationToken(token);
+      dispatch(updateCurrentUserPicSuccess(response.data.updatedUser));
+      toastr.success('Profile updated');
+    }).catch((err) => {
+      toastr.error(err.response.data.message);
     })
   );
 }
@@ -141,9 +199,8 @@ export function googleSignIn(user) {
   return (dispatch => axios.post('api/v1/user/googleLogin', user)
     .then((response) => {
       const { token } = response.data;
-      window.localStorage.setItem('tokenize', token);
       setAuthorizationToken(token);
-      dispatch(setCurrentUser(jwtDecode(token)));
+      dispatch(setCurrentUser(response.data.userObject));
       toastr.success('Signed in Succesfully');
       browserHistory.push('/dashboard');
     }).catch((err) => {

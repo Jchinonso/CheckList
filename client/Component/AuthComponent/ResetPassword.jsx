@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
+
 import { resetPassword } from '../../actions/authActions';
 
 /**
@@ -114,7 +115,7 @@ class ResetPassword extends React.Component {
                       </button>
                     </div>
                   </div>
-                  <div className="center">Don&apos;t have a PostIt account? <Link to="/">Sign In</Link></div>
+                  <div className="center">Don&apos;t have a WorkList account? <Link to="/">Sign In</Link></div>
                 </form>
               </div>
             </div>

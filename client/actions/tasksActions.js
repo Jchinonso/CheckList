@@ -29,11 +29,44 @@ export function addTaskFailure(error) {
 * @returns {object} action: type and task
 */
 
-export function updateTaskSuccess(taskId, completed) {
+export function updateTaskSuccess(taskId, userObject) {
   return {
     type: types.UPDATE_TASK_SUCCESS,
     taskId,
+    userObject,
+  };
+}
+/**
+* @desc update task status success action
+*
+* @function updateTaskStatusSuccess
+*
+* @param {object} task
+*
+* @returns {object} action: type and completed
+*/
+
+export function updateTaskStatusSuccess(taskId, completed) {
+  return {
+    type: types.UPDATE_TASK_STATUS,
+    taskId,
     completed
+  };
+}
+/**
+* @desc delete task success action
+*
+* @function deleteTaskSuccess
+*
+* @param {object} task
+*
+* @returns {object} action: type and task
+*/
+
+export function deleteTaskSuccess(taskId, deletedTask) {
+  return {
+    type: types.DELETE_TASK_SUCCESS,
+    taskId
   };
 }
 /**
@@ -78,7 +111,7 @@ export function createTask(todoId, taskObject) {
  * @returns {object} action: type and tasks
  */
 
-export function receiveTasksSuccess(tasks) {
+function receiveTasksSuccess(tasks) {
   return {
     type: types.RECEIVE_TASKS_SUCCESS,
     tasks
@@ -118,15 +151,42 @@ export function fetchTasks(todoId) {
 }
 
 /**
-* @desc async helper function: fetches all tasks
+* @desc async helper function: update task
 * @returns {function} asynchronous action
 */
 
-export function updateTasks(todoId, taskId, completed) {
-  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`, { completed })
+export function updateTask(todoId, task) {
+  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${task._id}`, task)
     .then((response) => {
-      dispatch(updateTaskSuccess(taskId, completed));
-      // dispatch(updateTaskSuccess(response.data.editedTask));
+      dispatch(updateTaskSuccess(task._id, response.data.editedTask));
+    })
+    .catch((error) => {
+      toastr.error(error.response.data.message);
+    });
+}
+/**
+* @desc async helper function: update task
+* @returns {function} asynchronous action
+*/
+
+export function updateTaskStatus(todoId, task) {
+  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${task._id}`, { completed: !task.completed })
+    .then((response) => {
+      dispatch(updateTaskStatusSuccess(task._id, !task.completed));
+    })
+    .catch((error) => {
+      toastr.error(error.response.data.message);
+    });
+}
+/**
+* @desc async helper function: delete task
+* @returns {function} asynchronous action
+*/
+
+export function deleteTask(todoId, taskId) {
+  return dispatch => axios.delete(`/api/v1/todos/${todoId}/task/${taskId}`)
+    .then((response) => {
+      dispatch(deleteTaskSuccess(taskId));
     })
     .catch((error) => {
       toastr.error(error.response.data.message);

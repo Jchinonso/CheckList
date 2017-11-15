@@ -21,7 +21,6 @@ const TodoController = {
     const { text } = req.body;
     if (text === undefined) {
       return res.status(400).json({
-        success: false,
         message: 'text is required',
       });
     }
@@ -34,7 +33,6 @@ const TodoController = {
     Promise.resolve(newTodo.save((err, createdTodo) => {
       if (err) {
         return res.status(500).json({
-          success: false,
           message: 'Internal Server Error'
         });
       }
@@ -44,12 +42,10 @@ const TodoController = {
         .exec((err, todo) => {
           if (err) {
             return res.status(500).json({
-              success: false,
               message: 'Internal Server Error'
             });
           }
           return res.status(201).json({
-            success: true,
             todo
           });
         });
@@ -82,12 +78,10 @@ const TodoController = {
           });
         } else if (todos.length > 0) {
           res.status(200).json({
-            success: true,
             newTodo
           });
         } else {
           res.status(500).json({
-            success: false,
             message: 'Internal Server error'
           });
         }
@@ -125,12 +119,10 @@ const TodoController = {
         Promise.resolve(newTask.save((err, task) => {
           if (err) {
             res.status(500).json({
-              success: false,
               message: 'Internal server error'
             });
           }
           res.status(201).json({
-            success: true,
             task
           });
         })).then(() => {
@@ -138,7 +130,6 @@ const TodoController = {
           todo.save((err, newTodo) => {
             if (err) {
               res.status(500).json({
-                success: false,
                 message: 'Internal server error'
               });
             }
@@ -146,7 +137,6 @@ const TodoController = {
         });
       } else if (!todo) {
         res.status(404).json({
-          success: false,
           message: 'Todo does not exist'
         });
       }
@@ -172,12 +162,7 @@ const TodoController = {
         Todo.findById({ _id: todoId })
           .populate({ path: 'collaborators', select: ['username'] })
           .exec((err, todo) => {
-            if (err) {
-              res.status(500).json({
-                success: false,
-                message: 'Internal server error'
-              });
-            } else {
+            if (todo) {
               const collaborators = user.filter((newUser) => {
                 return !todo.collaborators.find((collab) => {
                   return collab.username === newUser.username; });
@@ -186,16 +171,23 @@ const TodoController = {
               todo.save((err, newTodo) => {
                 if (err) throw err;
                 res.status(200).json({
-                  success: true,
                   message: 'Collaborator have be successfully added',
                   newTodo
                 });
+              });
+            } else if (!todo) {
+              res.status(404).json({
+                message: 'Todo Not found'
+              });
+            } else {
+              res.status(500).json({
+                success: false,
+                message: 'Internal server error'
               });
             }
           });
       } else {
         res.status(404).json({
-          success: false,
           message: 'User does not exist'
         });
       }
@@ -222,17 +214,14 @@ const TodoController = {
         if (todo) {
           const { collaborators } = todo;
           res.status(200).json({
-            success: true,
             collaborators
           });
         } else if (todo === null) {
           res.status(404).json({
-            success: false,
             message: 'Todo does not exist'
           });
         } else if (err) {
           res.status(500).json({
-            success: false,
             message: 'Internal server error'
           });
         }
@@ -251,25 +240,23 @@ const TodoController = {
    * @returns {object} Returns edited task
    */
   updateTask(req, res) {
-    const { completed } = req.body;
     const id = req.params.taskId;
     Task.findById({ _id: id }).exec((err, task) => {
       if (err) {
         res.status(500).json({
-          success: false,
           message: 'Internal server error'
         });
       }
-      task.completed = completed;
+      const { completed, text } = req.body;
+      task.completed = completed !== undefined ? completed : task.completed;
+      task.text = text || task.text;
       task.save((err, editedTask) => {
         if (err) {
           res.status(500).json({
-            success: false,
             message: 'Internal server error'
           });
         } else {
           res.status(201).json({
-            success: true,
             editedTask
           });
         }
@@ -297,17 +284,14 @@ const TodoController = {
         if (todo) {
           const { tasks } = todo;
           res.status(200).json({
-            success: true,
             tasks
           });
         } else if (todo === null) {
           res.status(404).json({
-            success: false,
             message: 'Todo does not exist'
           });
         } else if (err) {
           res.status(500).json({
-            success: false,
             message: 'Internal server error'
           });
         }
@@ -328,16 +312,20 @@ const TodoController = {
   deleteTask(req, res) {
     const id = req.params.taskId;
     Task.findByIdAndRemove({ _id: id }, (err, task) => {
-      if (err) {
+      if (task) {
+        res.status(200).json({
+          message: 'Successfully deleted',
+          task
+        });
+      } else if (!task) {
+        res.status(404).json({
+          message: 'Task not found'
+        });
+      } else {
         res.status(500).json({
-          success: false,
           message: 'Internal server error'
         });
       }
-      res.status(200).json({
-        success: true,
-        message: 'Successfully deleted'
-      });
     });
   }
 };

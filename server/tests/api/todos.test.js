@@ -34,7 +34,6 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.body.success).to.equal(false);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('No todos found');
         return done();
@@ -43,7 +42,7 @@ describe('Todo Controller', () => {
   it('should create new Todo', (done) => {
     request.post('/api/v1/todo')
       .send({
-        text: 'NewTOdo'
+        text: 'NewTodo'
       })
       .set('x-access-token', token)
       .set('Accept', 'application/json')
@@ -51,9 +50,8 @@ describe('Todo Controller', () => {
         todoId = res.body.todo._id;
         expect(res.body).to.be.an('object');
         expect(res.status).to.equal(201);
-        expect(res.body.success).to.equal(true);
         expect(res.body.todo).to.be.an('object');
-        expect(res.body.todo).to.have.property('text');
+        expect(res.body.todo.text).to.equal('NewTodo');
         return done();
       });
   });
@@ -64,7 +62,6 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('text is required');
         return done();
       });
@@ -76,10 +73,9 @@ describe('Todo Controller', () => {
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
-        expect(res.body.success).to.equal(true);
         expect(res.body).to.have.property('newTodo');
         expect(res.body.newTodo).to.be.an('array');
-        expect(res.body.newTodo[0].text).to.equal('NewTOdo');
+        expect(res.body.newTodo[0].text).to.equal('NewTodo');
         return done();
       });
   });
@@ -96,7 +92,7 @@ describe('Todo Controller', () => {
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('task');
-        expect(res.body.success).to.equal(true);
+        expect(res.body.task.text).to.equal('myTask');
         return done();
       });
   });
@@ -107,7 +103,6 @@ describe('Todo Controller', () => {
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
-        expect(res.body.success).to.equal(true);
         expect(res.body.tasks).to.be.an('array');
         expect(res.body.tasks[0].text).to.equal('myTask');
         return done();
@@ -133,7 +128,6 @@ describe('Todo Controller', () => {
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body.message).to.equal('Todo does not exist');
-        expect(res.body.success).to.equal(false);
         return done();
       });
   });
@@ -144,7 +138,6 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('text is required');
         return done();
       });
@@ -156,8 +149,29 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Collaborator have be successfully added');
+        return done();
+      });
+  });
+  it('should not add collaborators if Todo does not exist', (done) => {
+    request.post('/api/v1/todos/2/collaborator')
+      .send(['kool4life'])
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.equal('Todo Not found');
+        return done();
+      });
+  });
+  it('should not add collaborators if user does not exist', (done) => {
+    request.post('/api/v1/todos/2/collaborator')
+      .send(['Jigbowu'])
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.equal('User does not exist');
         return done();
       });
   });
@@ -167,9 +181,9 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.success).to.equal(true);
         expect(res.body.collaborators).to.be.an('array');
-        expect(res.body.collaborators[0]).to.have.property('username');
+        expect(res.body.collaborators[0].username).to.equal('kool4life');
+        expect(res.body.collaborators.length).to.equal(1);
         return done();
       });
   });
@@ -183,9 +197,23 @@ describe('Todo Controller', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
-        expect(res.body.success).to.equal(true);
         expect(res.body.editedTask).to.be.an('object');
-        expect(res.body.editedTask).to.have.property('text');
+        expect(res.body.editedTask.text).to.equal('go to get goceries');
+        return done();
+      });
+  });
+  it('should update a task status ', (done) => {
+    request.put(`/api/v1/todos/${todoId}/task/${taskId}`)
+      .send({
+        completed: true,
+      })
+      .set('x-access-token', token)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body).to.be.an('object');
+        expect(res.body.editedTask).to.be.an('object');
+        expect(res.body.editedTask.completed).to.equal(true);
         return done();
       });
   });
@@ -195,7 +223,6 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Successfully deleted');
         return done();
       });

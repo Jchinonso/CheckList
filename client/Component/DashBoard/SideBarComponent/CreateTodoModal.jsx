@@ -20,17 +20,15 @@ const CreateGroupModal = ({
               value={text}
             />
           </div>
-        </form>
-      </div>
-      <div className="modal-footer">
-        <a
-          href="#!"
-          onClick={handleOnClick}
-          className="modal-action modal-close waves-effect waves-green btn-flat"
-        >
+          <button
+            href="#!"
+            onClick={handleOnClick}
+            className="modal-action modal-close waves-effect waves-green btn-flat right"
+          >
             Create
-          <i className="material-icons right">send</i>
-        </a>
+            <i className="material-icons right">send</i>
+          </button>
+        </form>
       </div>
     </div>
   );

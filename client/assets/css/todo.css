@@ -1,5 +1,5 @@
 body {
-  font-family: Bree Serif Acme Zilla Slab;
+  font-family: Bree, Serif, "Acme Zilla Slab";
   background: #EEEEEE;
   overflow: hidden;
 }
@@ -41,15 +41,15 @@ body {
 
 .modal.modal-fixed-footer{
   margin: auto;
-  width: 40%;
-  height: 40%;
+  width: 30%;
+  height: 21%;
   min-width: 300px;
   min-height: 300px
 }
 .message-board {
   margin: 0 0 130px 0;
   overflow-y: scroll;
-  height: 69vh;
+  height: 62vh;
 }
 div[data-priority=normal] {
   border-top-color: #59b300;
@@ -249,8 +249,7 @@ footer {
 }
 #left-input {
   border: 1px solid #9e9e9e;
-  width: 100%;
-  border-right: none;
+  width: 97%;
   background-color: white !important;
 }
 td, th {
@@ -270,14 +269,14 @@ input::placeholder {
   padding-left: 10px
 }
 .priority-normal{
-  border-bottom: 2px solid blue;
+  border-bottom: 4px solid blue;
 }
 
 .priority-urgent{
-border-bottom: 2px solid green;
+border-bottom: 4px solid green;
 }
 .priority-critical{
-  border-bottom: 2px solid red;
+  border-bottom: 4px solid red;
 }
 #task-container {
   width: 67%;
@@ -305,8 +304,11 @@ border-bottom: 2px solid green;
     float: right !important;
     margin-left: 8px !important;
   }
-  .btn {
+  .create-btn {
     width: 73px !important;
+  }
+  .tas-btn {
+    padding-top: 25px !important;
   }
   #btn-input {
     padding-left: 5px !important
@@ -376,3 +378,16 @@ border-bottom: 2px solid green;
 .react-datepicker-popper {
   left: -138px !important;
 }
+.hidden {
+  display: none;
+}
+
+.btn-task {
+  margin-left: 5px;
+}
+ .newspan {
+   font-weight: normal;
+   font-size: 20px
+ }
+
+
