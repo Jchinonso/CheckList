@@ -1,6 +1,7 @@
 import chai from 'chai';
 import supertest from 'supertest';
 import mongoose from 'mongoose';
+
 import app from '../../app';
 import Todo from '../../models/Todos';
 import User from '../../models/Users';
@@ -34,7 +35,6 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(404);
-        expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('No todos found');
         return done();
       });
@@ -72,8 +72,6 @@ describe('Todo Controller', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('newTodo');
         expect(res.body.newTodo).to.be.an('array');
         expect(res.body.newTodo[0].text).to.equal('NewTodo');
         return done();
@@ -91,7 +89,6 @@ describe('Todo Controller', () => {
         taskId = res.body.task._id;
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('task');
         expect(res.body.task.text).to.equal('myTask');
         return done();
       });

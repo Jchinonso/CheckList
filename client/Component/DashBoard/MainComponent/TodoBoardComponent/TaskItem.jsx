@@ -13,7 +13,10 @@ export class TaskItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isOpen: false,
       edited: false,
+      dueDate: moment(),
+      date: '',
       text: this.props.task.text
     };
     this.toggleCancel = this.toggleCancel.bind(this);
@@ -22,6 +25,8 @@ export class TaskItem extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleCheckChange = this.handleCheckChange.bind(this);
     this.handleUpdateTask = this.handleUpdateTask.bind(this);
+    this.toggleCalendar = this.toggleCalendar.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
   toggleEdit(event) {
     this.setState({
@@ -103,7 +108,14 @@ export class TaskItem extends React.Component {
       });
     });
   }
-
+  handleDateChange(date) {
+    this.setState({ dueDate: date });
+    this.toggleCalendar();
+  }
+  toggleCalendar(event) {
+    event && event.preventDefault();
+    this.setState({ isOpen: !this.state.isOpen });
+  }
   /**
   * Toggle cancel
   *
@@ -132,7 +144,9 @@ export class TaskItem extends React.Component {
           'priority-urgent': task.priority === 'urgent',
           'priority-critical': task.priority === 'critical',
         })}
-        style={{touchAction: 'pan-y', WebkitUserDrag: 'none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', padding: '10px 15px' }}
+        style={{
+          touchAction: 'pan-y', WebkitUserDrag: 'none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', padding: '10px 15px'
+        }}
       >
         <form>
           <div className={classNames({
@@ -216,7 +230,24 @@ export class TaskItem extends React.Component {
                   <i className="material-icons">delete</i>
                 </a>
               </div>
-              <div className="task-cat btn right">Due date</div>
+              <div>
+                <button
+                  className="task-cat btn right"
+                  onClick={this.toggleCalendar}
+                >
+                  {this.state.dueDate.format('DD-MM-YYYY')}
+                </button>
+                {
+                  this.state.isOpen && (
+                    <DatePicker
+                      selected={this.state.dueDate}
+                      onChange={this.handleDateChange}
+                      withPortal
+                      inline
+                    />
+                  )
+                }
+              </div>
             </div>
           </div>
         </form>
