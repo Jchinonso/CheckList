@@ -1,0 +1,234 @@
+import React from 'react';
+import classNames from 'classnames';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import
+{ updateTask, updateTaskStatus, deleteTask }
+  from '../../../../actions/tasksActions';
+
+export class TaskItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      edited: false,
+      text: this.props.task.text
+    };
+    this.toggleCancel = this.toggleCancel.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleCheckChange = this.handleCheckChange.bind(this);
+    this.handleUpdateTask = this.handleUpdateTask.bind(this);
+  }
+  toggleEdit(event) {
+    this.setState({
+      edited: true
+    });
+  }
+
+  /**
+   * Handle task status change based on the completed value
+   *
+   * @method handCheckChange
+   *
+   * @member TaskItem
+   *
+   * @param {void} void
+   *
+   * @returns {function} dispatch updateTaskStatus Action
+   */
+
+  handleCheckChange() {
+    const { task, todoId } = this.props;
+    this.props.updateTaskStatus(todoId, task);
+  }
+
+  /**
+   * Handle onChange events on form inputs
+   *
+   * @method handleOnChange
+   *
+   * @member TaskItem
+   *
+   * @param {object} event
+   *
+   * @returns {function} a function that handles change event on inputs
+   */
+
+  handleOnChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  /**
+  * Delete task
+  *
+  * @method handleDelete
+  *
+  * @member TaskItem
+  *
+  * @param {event} event
+  *
+  * @returns {function} dispatch deleteTask Action
+  */
+
+  handleDelete(event) {
+    const { task, todoId } = this.props;
+    this.props.deleteTask(todoId, task._id);
+  }
+
+  /**
+  * Update task
+  *
+  * @method handleUpdateTask
+  *
+  * @member TaskItem
+  *
+  * @param {event} event
+  *
+  * @returns {function} dispatch updateTask Action
+  */
+
+  handleUpdateTask(event) {
+    event.preventDefault();
+    const { task, todoId } = this.props;
+    const { text, edited } = this.state;
+    this.props.updateTask(todoId, { ...task, text }).then(() => {
+      this.setState({
+        edited: !edited
+      });
+    });
+  }
+
+  /**
+  * Toggle cancel
+  *
+  * @method toggleCancel
+  *
+  * @member TaskItem
+  *
+  * @param {event} event
+  *
+  * @returns {function} new set state
+  */
+  toggleCancel(event) {
+    this.setState({
+      edited: false
+    });
+  }
+  render() {
+    const { task } = this.props;
+    return (
+      <li
+        key={task._id}
+        id={task._id}
+        className={classNames({
+          card: true,
+          'priority-normal': task.priority === 'normal',
+          'priority-urgent': task.priority === 'urgent',
+          'priority-critical': task.priority === 'critical',
+        })}
+        style={{touchAction: 'pan-y', WebkitUserDrag: 'none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', padding: '10px 15px' }}
+      >
+        <form>
+          <div className={classNames({
+            row: true,
+            hidden: !this.state.edited
+          })}
+          >
+            <div className="col s12 m6">
+              <input
+                type="text"
+                name="text"
+                onChange={this.handleOnChange}
+                value={this.state.text}
+              />
+            </div>
+            <div className="col s4 m3">
+              <button
+                className="task-cat btn"
+                onClick={this.handleUpdateTask}
+              >Save
+              </button>
+            </div>
+            <div className="col s3 m3 right">
+              <div className="task-cat ">
+                <a
+                  className="btn-floating waves-effect waves-light red"
+                  href="#?"
+                  id={task._id}
+                  onClick={this.toggleCancel}
+                >
+                  <i className="material-icons">close</i>
+
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className={classNames({
+            row: true,
+            hidden: this.state.edited
+          })}
+          >
+            <div className="col s8 m8">
+              <span
+                htmlFor="task1"
+                className={classNames({
+                  newspan: true,
+                  strikethrough: task.completed
+                })}
+              >
+                {task.text}
+              </span>
+            </div>
+            <div className="col s12 m4 tas-btn ">
+              <div className="task-cat right" style={{ marginBottom: '10px' }}>
+                <a
+                  className="btn-floating waves-effect waves-light btn-task blue"
+                  href="#?"
+                  onClick={this.toggleEdit}
+                >
+                  <i className="material-icons">
+                    create
+                  </i>
+                </a>
+                <a
+                  className="btn-floating waves-effect waves-light btn-task teal"
+                  style={{ paddingRight: '10px' }}
+                  href="#?"
+                  onClick={this.handleCheckChange}
+                >
+                  {task.completed ?
+                    <i className="material-icons">check_circle</i> :
+                    <i className="material-icons">check_box_outline_blank</i>
+                  }
+                </a>
+                <a
+                  className="btn-floating waves-effect waves-light btn-task red"
+                  style={{ paddingRight: '10px' }}
+                  href="#?"
+                  onClick={this.handleDelete}
+                >
+                  <i className="material-icons">delete</i>
+                </a>
+              </div>
+              <div className="task-cat btn right">Due date</div>
+            </div>
+          </div>
+        </form>
+      </li>);
+  }
+}
+
+TaskItem.propTypes = {
+  updateTaskStatus: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  todoId: PropTypes.string.isRequired
+};
+export default
+connect(null, { updateTask, updateTaskStatus, deleteTask })(TaskItem);

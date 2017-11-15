@@ -121,7 +121,7 @@ class CreateTaskComponent extends Component {
                   />
                   <div id="btn-input" style={{ paddingLeft: 20 }}>
                     <button
-                      className="btn indigo waves-effect waves-light left"
+                      className="btn indigo waves-effect waves-light create-btn left"
                       type="submit"
                       onClick={this.handleOnSubmit}
                       name="action"

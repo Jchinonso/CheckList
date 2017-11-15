@@ -49,7 +49,9 @@ const Auth = {
     return jwt.sign({
       username: user.username,
       userId: user._id,
+      name: user.name,
       email: user.email,
+      imageUrl: user.imageUrl
     }, secret, { expiresIn: 60 * 60 * 24 });
   },
   /**

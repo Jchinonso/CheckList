@@ -22,14 +22,7 @@ const NavComponent = ({ signOut }) => (
           className="dropdown-content"
           id="user_dropdown"
         >
-          <li>
-            <a
-              className="indigo-text"
-              href="#!"
-            >
-              Profile
-            </a>
-          </li>
+          <li><a className="indigo-text modal-trigger" href="#modal2">Edit Profile</a></li>
           <li>
             <a
               href="#?"

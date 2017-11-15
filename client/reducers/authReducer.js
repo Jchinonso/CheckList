@@ -1,13 +1,13 @@
 import {
   SET_CURRENT_USER,
-  LOG_ERROR,
+  UPDATE_CURRENT_USER,
+  UPDATE_CURRENT_USER_PICTURE,
   SIGNOUT_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = {
   isAuthenticated: false,
-  user: {},
-  errorMsg: ''
+  user: { },
 };
 
 export default function authReducer(state = initialState, action) {
@@ -18,16 +18,22 @@ export default function authReducer(state = initialState, action) {
       isAuthenticated: true,
       user: action.user
     };
+  case UPDATE_CURRENT_USER:
+    return {
+      ...state,
+      isAuthenticated: true,
+      user: action.user
+    };
+  case UPDATE_CURRENT_USER_PICTURE:
+    return {
+      ...state,
+      isAuthenticated: true,
+      user: action.user
+    };
   case SIGNOUT_SUCCESS:
     return {
       ...state,
       isAuthenticated: false
-    };
-  case LOG_ERROR:
-    return {
-      ...state,
-      isAuthenticated: false,
-      errorMsg: action.error
     };
   default:
     return state;
