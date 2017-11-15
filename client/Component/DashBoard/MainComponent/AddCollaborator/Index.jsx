@@ -10,6 +10,7 @@ const AddCollaborator = () =>
           className="btn-floating blue btn tooltipped modal-trigger"
           data-position="left"
           data-delay="50"
+          id="collaborator"
           data-tooltip="Add user"
         >
           <i className="material-icons">group_add</i>
