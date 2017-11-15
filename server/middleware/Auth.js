@@ -67,22 +67,18 @@ const Auth = {
     const { email, password, username, name } = req.body;
     if (email === undefined) {
       return res.status(400).json({
-        success: false,
         message: 'email is required'
       });
     } else if (password === undefined) {
       return res.status(400).json({
-        success: false,
         message: 'password is required'
       });
     } else if (name === undefined) {
       return res.status(400).json({
-        success: false,
         message: 'name is required'
       });
     } else if (username === undefined) {
       return res.status(400).json({
-        success: false,
         message: 'username is required'
       });
     }
@@ -101,12 +97,10 @@ const Auth = {
     const { email, password, username, name } = req.body;
     if(email === undefined) {
       return res.status(400).json({
-        success: false,
         message: 'email is required'
       });
     } else if (password === undefined) {
       return res.status(400).json({
-        success: false,
         message: 'password is required'
       });
     }

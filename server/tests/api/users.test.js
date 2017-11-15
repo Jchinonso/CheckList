@@ -1,6 +1,8 @@
 import chai from 'chai';
 import supertest from 'supertest';
 import mongoose from 'mongoose';
+
+
 import app from '../../app';
 import User from '../../models/Users';
 
@@ -72,10 +74,6 @@ describe('User Controller', () => {
       .end((err, res) => {
         expect(res.body.userObject).to.be.an('object');
         expect(res.status).to.equal(201);
-        expect(res.body.userObject).to.have.property('email');
-        expect(res.body.userObject).to.have.property('username');
-        expect(res.body.userObject).to.have.property('name');
-        expect(res.body).to.have.property('token');
         expect(res.body.userObject.name).to.equal('john onyeabor');
         expect(res.body.userObject.email).to.equal('joe@gmail.com');
         expect(res.body.userObject.username).to.equal('jchinonso');
@@ -108,7 +106,6 @@ describe('User Controller', () => {
       })
       .set('Accept', 'application/json')
       .end((err, res) => {
-        expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('Error, expected `username` to be unique. Value: `jchinonso`');
         done();
       });
@@ -124,7 +121,6 @@ describe('User Controller', () => {
         })
         .set('Accept', 'application/json')
         .end((err, res) => {
-          expect(res.body.success).to.equal(false);
           expect(res.body.message).to.equal('Username should be between 3 and 25 characters');
           done();
         });
@@ -140,7 +136,6 @@ describe('User Controller', () => {
         })
         .set('Accept', 'application/json')
         .end((err, res) => {
-          expect(res.body.success).to.equal(false);
           expect(res.body.message).to.equal('Password should be between 8 and 35 characters');
           done();
         });
@@ -171,7 +166,6 @@ describe('User Controller', () => {
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('token');
           expect(res.body.message).to.equal('Successfully login!');
           done();
         });
@@ -212,7 +206,6 @@ describe('User Controller', () => {
         })
         .set('Accept', 'application/json')
         .end((err, res) => {
-          expect(res.body.success).to.equal(false);
           expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('email is required');
           done();
@@ -226,7 +219,6 @@ describe('User Controller', () => {
         })
         .set('Accept', 'application/json')
         .end((err, res) => {
-          expect(res.body.success).to.equal(false);
           expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('password is required');
           done();
