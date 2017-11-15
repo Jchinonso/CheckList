@@ -51,7 +51,7 @@ class SignUp extends React.Component {
       toastr.error('Invalid Email');
     } else if (!isValidUsername(username)) {
       toastr.error('username must contain an alphabet and must not begin with a number');
-    } else if (!isValidPassword) {
+    } else if (!isValidPassword(password)) {
       toastr.error('Password should contain at least 8 characters including one number and alphabet');
     } else {
       const userObj = {
@@ -77,7 +77,7 @@ class SignUp extends React.Component {
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">account_circle</i>
                     <input
-                      id="icon_telephone"
+                      id="name"
                       type="text"
                       name="name"
                       onChange={this.handleInputChange}
@@ -92,7 +92,7 @@ class SignUp extends React.Component {
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">account_circle</i>
                     <input
-                      id="name4"
+                      id="username"
                       onChange={this.handleInputChange}
                       type="text"
                       name="username"
@@ -107,7 +107,7 @@ class SignUp extends React.Component {
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">email</i>
                     <input
-                      id="email4"
+                      id="email"
                       type="email"
                       name="email"
                       onChange={this.handleInputChange}
@@ -122,7 +122,7 @@ class SignUp extends React.Component {
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">lock_outline</i>
                     <input
-                      id="password5"
+                      id="password"
                       type="password"
                       name="password"
                       onChange={this.handleInputChange}

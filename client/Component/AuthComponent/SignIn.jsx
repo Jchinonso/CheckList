@@ -74,12 +74,13 @@ class SignIn extends React.Component {
    * @returns {function} a function that sign's in a user with their google account
    */
   responseGoogle(response) {
-    const { email, givenName, familyName, name } = response.profileObj;
+    const { email, givenName, familyName, name, imageUrl } = response.profileObj;
     const userObj = {
       username: givenName,
       email,
       password: name,
-      name
+      name,
+      imageUrl,
     };
     this.props.googleSignIn(userObj);
   }
@@ -148,6 +149,7 @@ class SignIn extends React.Component {
                         className="btn indigo waves-effect waves-light left"
                         type="submit"
                         name="action"
+                        id="btn-click"
                       >
                         <i className="material-icons right">send</i>
                         Submit
@@ -156,7 +158,7 @@ class SignIn extends React.Component {
                     <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <Link to="/forgot-password">Forgot Password</Link></div>
                   </div>
                 </div>
-                <div className="center">Don&apos;t have a WorkList account? <a href="#?" onClick={showSignup}>Sign Up</a></div>
+                <div className="center">Don&apos;t have a WorkList account? <a href="#?" id="toggle-signup" onClick={showSignup}>Sign Up</a></div>
               </form>
             </div>
           </div>
