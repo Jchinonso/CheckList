@@ -80,7 +80,7 @@ export function addCollaboratorTodo(todoId, collaborator) {
   return (dispatch) => {
     return axios.post(`/api/v1/todos/${todoId}/collaborator`, collaborator)
       .then((response) => {
-        toastr.success(response.data.message);
+        toastr.success('Collaborators successfully added');
         dispatch(addCollaboratorSuccess(response.data.message));
       })
       .catch((err) => {
