@@ -1,8 +1,8 @@
 import chai from 'chai';
 import supertest from 'supertest';
 import mongoose from 'mongoose';
-import app from '../app';
-import User from '../models/Users';
+import app from '../../app';
+import User from '../../models/Users';
 
 const request = supertest(app);
 const { expect } = chai;
