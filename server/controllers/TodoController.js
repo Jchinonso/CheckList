@@ -111,7 +111,7 @@ const TodoController = {
     const newTaskForm = {
       text,
       priority,
-      completed
+      completed,
     };
     const newTask = new Task(newTaskForm);
     Todo.findById({ _id: todoId }).exec((err, todo) => {
@@ -247,7 +247,8 @@ const TodoController = {
           message: 'Internal server error'
         });
       }
-      const { completed, text } = req.body;
+      const { completed, text, dueDate } = req.body;
+      task.dueDate = dueDate;
       task.completed = completed !== undefined ? completed : task.completed;
       task.text = text || task.text;
       task.save((err, editedTask) => {
