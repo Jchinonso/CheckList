@@ -85,22 +85,6 @@ export function addTaskSuccess(task) {
     task
   };
 }
-
-/**
-* @desc async helper function: create task
-* @returns {function} asynchronous action
-*/
-
-export function createTask(todoId, taskObject) {
-  return dispatch => axios.post(`/api/v1/todos/${todoId}/task`, taskObject)
-    .then((response) => {
-      dispatch(addTaskSuccess(response.data.task));
-    })
-    .catch((error) => {
-      dispatch(addTaskFailure(error.response.data.message));
-      toastr.error(error.response.data.message);
-    });
-}
 /**
  * @desc receive Task action: receive a task success
  *
@@ -117,6 +101,40 @@ function receiveTasksSuccess(tasks) {
     tasks
   };
 }
+/**
+ * @desc update Task due date: update task due date success
+ *
+ * @function updateTaskDueDateSuccess
+ *
+ * @param {object} dueDate
+ *
+ * @returns {object} action: type and tasks
+ */
+
+function updateTaskDueDateSuccess(taskId, dueDate) {
+  return {
+    type: types.UPDATE_TASK_DUEDATE_SUCCESS,
+    taskId,
+    dueDate
+  };
+}
+
+/**
+* @desc async helper function: create task
+* @returns {function} asynchronous action
+*/
+
+export function createTask(todoId, taskObject) {
+  return dispatch => axios.post(`/api/v1/todos/${todoId}/task`, taskObject)
+    .then((response) => {
+      dispatch(addTaskSuccess(response.data.task));
+    })
+    .catch((error) => {
+      dispatch(addTaskFailure(error.response.data.message));
+      toastr.error(error.response.data.message);
+    });
+}
+
 /**
  * @desc receive Task action: receive a task failure
  *

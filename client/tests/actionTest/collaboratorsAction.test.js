@@ -13,7 +13,7 @@ const mockStore = configureMockStore(middlewares);
 describe('Collaborator synchronous actions', () => {
   describe('action add collaborators to todo', () => {
     it('should add collaborator to todo', () => {
-      const message = 'Collaborator successfully added to todo'
+      const message = 'Collaborator successfully added to todo';
       const expectedAction = {
         type: types.ADD_COLLABORATOR_SUCCESS,
         message
@@ -100,44 +100,62 @@ describe('collaborators asynchronous actions', () => {
       });
     });
   });
-  describe('action that add and fetche collaborators', () => {
+  describe('action that add and fetch collaborators', () => {
     it('should make a post request to add collaborator to todo ', async () => {
-      const collaborator = {
-        username: 'jchinonso',
-        name: 'johnson chinonso',
-        email: 'johnson.chinonso@example.com',
-        userId: '2937829782973'
-      };
+      const todoId = '2434234234';
+      const collaborator = ['tayo']
       const response = {
         status: 201,
         data: {
-          user: {
-            username: 'jchinonso',
-            name: 'johnson chinonso',
-            email: 'johnson.chinonso@example.com',
-            userId: '2937829782973'
-          }
+          message: 'Collaborators added successfully'
         }
       };
       const expectedAction = {
-        type: types.FETCH_COLLABORATOR_SUCCESS,
-        collaborator:
-          {
-            username: 'jchinonso',
-            name: 'johnson chinonso',
-            email: 'johnson.chinonso@example.com',
-            userId: '2937829782973'
-          }
+        type: types.ADD_COLLABORATOR_SUCCESS,
+        message: 'Collaborators added successfully'
       };
       axios.post = jest.fn(() => {
         return Promise.resolve(response);
       });
       const store = mockStore({ collaborator: {}, expectedAction });
-      await store.dispatch(actions.addCollaboratorSuccess(collaborator)).then(() => {
+      await store.dispatch(actions.addCollaboratorTodo(todoId, collaborator)).then(() => {
         const action = store.getActions();
         expect(action[0].type).toEqual(types.ADD_COLLABORATOR_SUCCESS);
         expect(action[0]).toEqual(expectedAction);
       });
     });
   });
+  it('should fetch all collaborators ', async () => {
+    const todoId = '238973274328479';
+    const response = {
+      status: 201,
+      data: {
+        collaborators: [{
+          username: 'jchinonso',
+          name: 'johnson chinonso',
+          email: 'johnson.chinonso@example.com',
+          userId: '2937829782973'
+        }]
+      }
+    };
+    const expectedAction = {
+      type: types.FETCH_COLLABORATOR_SUCCESS,
+      collaborators: [{
+        username: 'jchinonso',
+        name: 'johnson chinonso',
+        email: 'johnson.chinonso@example.com',
+        userId: '2937829782973'
+      }]
+    };
+    axios.get = jest.fn(() => {
+      return Promise.resolve(response);
+    });
+    const store = mockStore({ collaborator: {}, expectedAction });
+    await store.dispatch(actions.fetchCollaborators(todoId)).then(() => {
+      const action = store.getActions();
+      expect(action[0].type).toEqual(types.FETCH_COLLABORATOR_SUCCESS);
+      expect(action[0]).toEqual(expectedAction);
+    });
+  });
 });
+
