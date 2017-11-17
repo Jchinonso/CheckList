@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { updateUserProfilePics } from '../../../actions/authActions';
 
 
-class EditProfilePics extends React.Component {
+export class EditProfilePics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

@@ -45,7 +45,7 @@ describe('user synchronous actions', () => {
     });
   });
   describe('action update current user profile pics success', () => {
-    it('update current user', () => {
+    it('should update current user', () => {
       const user = {
         _id: '1234',
         username: 'jchinonso',
@@ -61,7 +61,7 @@ describe('user synchronous actions', () => {
     });
   });
   describe('action signout user success', () => {
-    it('should signout user', () => {
+    it('should signout current user', () => {
       const expectedAction = {
         type: types.SIGNOUT_USER_SUCCESS,
       };
@@ -72,7 +72,7 @@ describe('user synchronous actions', () => {
 
 describe('User asynchronous actions', () => {
   describe('Signup Action', () => {
-    it('Should make a post request to sign up users', async () => {
+    it('Should make a post request to sign up user', async () => {
       const userObject = {
         username: 'jchinonso',
         name: 'johnson chinonso',

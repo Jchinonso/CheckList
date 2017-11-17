@@ -134,6 +134,11 @@ export class TaskItem extends React.Component {
   }
   render() {
     const { task } = this.props;
+    const selectedDueDate = this.state.dueDate;
+    const selectedDueDateFormat = moment(selectedDueDate).format('DD-MM-YYYY');
+    const diffBtwMoments = moment(selectedDueDate).diff(moment(moment()));
+    const hours = Math.ceil(moment.duration(diffBtwMoments).asHours());
+    const days = Math.ceil(moment.duration(diffBtwMoments).asDays());
     return (
       <li
         key={task._id}
@@ -246,6 +251,26 @@ export class TaskItem extends React.Component {
                       inline
                     />
                   )
+                }
+              </div>
+
+              <div className="due-date col m12">
+                {
+                  diffBtwMoments > 0 && !task.completed ?
+                    <div>
+                      <span
+                        className="color grey-text due-date-reminder-hours"
+                      >
+                        {hours} hours left
+                      </span>
+                      <span
+                        className="color grey-text due-date-reminder-days"
+                      >
+                        {days} day(s) left
+                      </span>
+                    </div>
+                    :
+                    null
                 }
               </div>
             </div>

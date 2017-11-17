@@ -3,8 +3,6 @@ import {
 } from '../constants/actionTypes';
 
 const intialState = {
-  successMsg: '',
-  errorMsg: '',
   users: [],
 };
 export default function userReducer(state = intialState, action) {

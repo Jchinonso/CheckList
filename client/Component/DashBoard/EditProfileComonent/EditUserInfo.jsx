@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EditUserInfo = ({
+export const EditUserInfo = ({
   handleOnClick,
   toggleDisabled,
   disabled,
