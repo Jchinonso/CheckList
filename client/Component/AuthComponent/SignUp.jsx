@@ -7,10 +7,15 @@ import
 { isValidEmail, isValidName, isValidPassword, isValidUsername } from '../../helper/clientSideValidation';
 import { signUp } from '../../actions/authActions';
 
-class SignUp extends React.Component {
+export class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      email: '',
+      name: '',
+      password: '',
+      username: ''
+    };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
@@ -149,7 +154,7 @@ class SignUp extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="center">Already have an account <a href="#?" onClick={showSignin}>Sign In</a></div>
+                <div className="center">Already have an account <a href="#?" id="go-to-login" onClick={showSignin}>Sign In</a></div>
               </form>
             </div>
           </div>

@@ -23,7 +23,7 @@ const CreateGroupModal = ({
           <button
             href="#!"
             onClick={handleOnClick}
-            className="modal-action modal-close waves-effect waves-green btn-flat right"
+            className="modal-action waves-effect waves-green btn-flat right"
           >
             Create
             <i className="material-icons right">send</i>

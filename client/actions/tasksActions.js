@@ -63,7 +63,7 @@ export function updateTaskStatusSuccess(taskId, completed) {
 * @returns {object} action: type and task
 */
 
-export function deleteTaskSuccess(taskId, deletedTask) {
+export function deleteTaskSuccess(taskId) {
   return {
     type: types.DELETE_TASK_SUCCESS,
     taskId
@@ -95,7 +95,7 @@ export function addTaskSuccess(task) {
  * @returns {object} action: type and tasks
  */
 
-function receiveTasksSuccess(tasks) {
+export function receiveTasksSuccess(tasks) {
   return {
     type: types.RECEIVE_TASKS_SUCCESS,
     tasks
@@ -183,7 +183,21 @@ export function updateTask(todoId, task) {
     });
 }
 /**
-* @desc async helper function: update task
+* @desc async helper function: update taskStatus
+* @returns {function} asynchronous action
+*/
+
+export function updateTaskDueDate(todoId, taskId, dueDate) {
+  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`, dueDate)
+    .then((response) => {
+      dispatch(updateTaskDueDate(taskId, dueDate));
+    })
+    .catch((error) => {
+      toastr.error(error.response.data.message);
+    });
+}
+/**
+* @desc async helper function: update taskStatus
 * @returns {function} asynchronous action
 */
 

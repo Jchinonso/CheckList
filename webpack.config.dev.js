@@ -1,6 +1,8 @@
 import webpack from 'webpack';
 import path from 'path';
 
+require('dotenv').config();
+
 export default {
   debug: true,
   devtool: 'cheap-module-eval-source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
@@ -24,7 +26,8 @@ export default {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
     }),
-    new webpack.optimize.OccurrenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.EnvironmentPlugin(Object.keys(process.env)),
   ],
   module: {
     loaders: [

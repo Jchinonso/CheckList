@@ -9,7 +9,7 @@ import SignUp from './SignUp.jsx';
  * @class Authentication
  * @extends React.Component
  */
-class Authentication extends React.Component {
+export class Authentication extends React.Component {
   /**
    * @constructor
    * @param {object} props

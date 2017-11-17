@@ -10,10 +10,13 @@ import
 import { signIn, googleSignIn } from '../../actions/authActions';
 
 
-class SignIn extends React.Component {
+export class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      email: '',
+      password: ''
+    };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -30,7 +33,6 @@ class SignIn extends React.Component {
    * @returns {function} a function that handles change event on inputs
    */
   handleInputChange(event) {
-    event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value
     });

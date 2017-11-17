@@ -21,7 +21,6 @@ if (token) {
   store.dispatch(setCurrentUser(jwtDecode(token)));
 }
 
-
 render(
   <Provider store={store}>
     <Router history={browserHistory} routes={routes} />
