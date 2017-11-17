@@ -6,13 +6,11 @@ import Adapter from 'enzyme-adapter-react-15';
 import { EditProfilePics }
   from '../../../Component/DashBoard/EditProfileComonent/EditProfilePics.jsx';
 
+jest.mock('cloudinary-react');
+
 const setup = () => {
   const props = {
-    handleOnClick: jest.fn(),
-    toggleDisabled: jest.fn(),
-    disabled: false,
-    handleOnChange: jest.fn(),
-    user: jest.fn(),
+    uploadWidget: jest.fn(),
   };
   const enzmeWrapper = mount(<EditProfilePics {...props} />);
   return {
@@ -21,11 +19,15 @@ const setup = () => {
   };
 };
 configure({ adapter: new Adapter() });
-describe('UpdateUserProfile Component', () => {
-  it('should render neccessary elements', () => {
-    const { enzmeWrapper } = setup();
-    expect(enzmeWrapper.find('div').length).toBe(7);
-    expect(enzmeWrapper.find('form').length).toBe(1);
-    expect(enzmeWrapper.find('input').length).toBe(3);
+describe('UpdateUserProfilePicture Component', () => {
+  it('should call uploadwidget onclick of the upload button', () => {
+    global.cloudinary = {
+      openUploadWidget: (params, cb) => {
+        cb(null);
+      },
+    };
+    const { enzmeWrapper, props } = setup();
+    enzmeWrapper.find('.btn-floating').simulate('click');
+    expect(props.uploadWidget.mock.calls.length).toBe(1);
   });
 });

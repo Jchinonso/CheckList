@@ -113,7 +113,7 @@ export class SignIn extends React.Component {
               </div>
             </div>
             <div className="row " style={{ paddingTop: '10px' }}>
-              <form className="col s12" onSubmit={this.handleOnSubmit}>
+              <form className="col s12" id="my-form" onSubmit={this.handleOnSubmit}>
                 <div className="row">
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">email</i>
