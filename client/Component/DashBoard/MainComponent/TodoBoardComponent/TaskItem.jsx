@@ -8,6 +8,7 @@ import moment from 'moment';
 import
 { updateTask, updateTaskStatus, deleteTask }
   from '../../../../actions/tasksActions';
+import { checkStateDueDate } from '../../../../helper/clientSideValidation';
 
 export class TaskItem extends React.Component {
   constructor(props) {
@@ -134,7 +135,7 @@ export class TaskItem extends React.Component {
   }
   render() {
     const { task } = this.props;
-    const selectedDueDate = this.state.dueDate;
+    const selectedDueDate = checkStateDueDate(this.state.dueDate, this.props.task.dueDate);
     const selectedDueDateFormat = moment(selectedDueDate).format('DD-MM-YYYY');
     const diffBtwMoments = moment(selectedDueDate).diff(moment(moment()));
     const hours = Math.ceil(moment.duration(diffBtwMoments).asHours());
@@ -194,15 +195,38 @@ export class TaskItem extends React.Component {
           })}
           >
             <div className="col s8 m8">
-              <span
-                htmlFor="task1"
-                className={classNames({
-                  newspan: true,
-                  strikethrough: task.completed
-                })}
-              >
-                {task.text}
-              </span>
+              <div className="row">
+                <span
+                  htmlFor="task1"
+                  className={classNames({
+                    newspan: true,
+                    strikethrough: task.completed
+                  })}
+                >
+                  {task.text}
+                </span>
+              </div>
+              <div className="row">
+                <div className="due-date">
+                  {
+                    diffBtwMoments > 0 && !task.completed ?
+                      <div>
+                        <span
+                          className="color grey-text due-date-reminder-hours"
+                        >
+                          {hours} hours left
+                        </span>
+                        <span
+                          className="color grey-text due-date-reminder-days"
+                        >
+                          {days} day(s) left
+                        </span>
+                      </div>
+                      :
+                      null
+                  }
+                </div>
+              </div>
             </div>
             <div className="col s12 m4 tas-btn ">
               <div className="task-cat right" style={{ marginBottom: '10px' }}>
@@ -247,6 +271,7 @@ export class TaskItem extends React.Component {
                     <DatePicker
                       selected={this.state.dueDate}
                       onChange={this.handleDateChange}
+                      minDate={moment()}
                       withPortal
                       inline
                     />
@@ -254,25 +279,7 @@ export class TaskItem extends React.Component {
                 }
               </div>
 
-              <div className="due-date col m12">
-                {
-                  diffBtwMoments > 0 && !task.completed ?
-                    <div>
-                      <span
-                        className="color grey-text due-date-reminder-hours"
-                      >
-                        {hours} hours left
-                      </span>
-                      <span
-                        className="color grey-text due-date-reminder-days"
-                      >
-                        {days} day(s) left
-                      </span>
-                    </div>
-                    :
-                    null
-                }
-              </div>
+
             </div>
           </div>
         </form>
