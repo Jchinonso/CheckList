@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
+import Dotenv from 'dotenv-webpack';
 
-require('dotenv').config();
 
 export default {
   debug: true,
@@ -27,7 +27,7 @@ export default {
       'window.jQuery': 'jquery',
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.EnvironmentPlugin(Object.keys(process.env)),
+    new Dotenv({ systemvars: true }),
   ],
   module: {
     loaders: [
