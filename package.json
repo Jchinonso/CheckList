@@ -57,6 +57,7 @@
     "cookie-parser": "^1.4.3",
     "css-loader": "^0.28.7",
     "dotenv": "^4.0.0",
+    "dotenv-webpack": "^1.5.4",
     "eslint-plugin-react": "^7.4.0",
     "eventsource-polyfill": "^0.9.6",
     "expect": "^21.2.1",
