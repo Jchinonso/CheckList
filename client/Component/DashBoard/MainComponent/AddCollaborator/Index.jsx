@@ -7,7 +7,7 @@ const AddCollaborator = () =>
       <div className="fixed-action-btn vertical">
         <a
           href="#add-user"
-          className="btn-floating blue btn tooltipped modal-trigger"
+          className="collaborator btn-floating blue btn tooltipped modal-trigger"
           data-position="left"
           data-delay="50"
           id="collaborator"

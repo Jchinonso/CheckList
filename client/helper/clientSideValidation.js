@@ -122,3 +122,16 @@ export const isValidUsername = (username) => {
   }
   return true;
 };
+
+/**
+ * Update task item with date from state and props
+ * @param {obj} stateDueDate date object set in the state
+ * @param {obj} propsDueDate date object from the props
+ * @return {obj} object represent either state date or props date if available
+ */
+export const checkStateDueDate = (stateDueDate, propsDueDate) => {
+  if (stateDueDate) {
+    return stateDueDate;
+  }
+  return propsDueDate;
+};

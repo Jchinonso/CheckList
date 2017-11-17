@@ -20,7 +20,7 @@ const setup = () => {
 };
 configure({ adapter: new Adapter() });
 describe('UpdateUserProfilePicture Component', () => {
-  it('should call uploadwidget onclick of the upload button', () => {
+  it.skip('should call uploadwidget onclick of the upload button', () => {
     global.cloudinary = {
       openUploadWidget: (params, cb) => {
         cb(null);
