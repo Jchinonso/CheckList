@@ -9,7 +9,7 @@ import { forgotPassword } from '../../actions/authActions';
  * @class SignIn
  * @extends React.Component
  */
-class ForgetPassword extends React.Component {
+export class ForgetPassword extends React.Component {
   /**
    * @constructor
    * @extends React.Component
@@ -67,17 +67,17 @@ class ForgetPassword extends React.Component {
             <a href="#?" className="brand-logo center">Work List</a>
           </div>
         </nav>
-        <div className="card auth">
+        <div className="card auth auth-container-board">
           <div className="col s12 m12 l6">
             <div className="card-panel">
-              <h4 className="header2 center" style={{ paddingBottom: '20px' }}>Forgot Password</h4>
+              <h4 className="header-home center" style={{ paddingBottom: '20px' }}>Forgot Password</h4>
               <div className="row">
-                <form className="col s12 m12 l12 center" onSubmit={this.handleOnSubmit}>
+                <form className="col s12 m12 l12 auth-form center" onSubmit={this.handleOnSubmit}>
                   <div className="row">
                     <div className="input-field col s12" style={{ margin: 0 }}>
                       <i className="material-icons prefix">email</i>
                       <input
-                        id="email4"
+                        id="email"
                         type="email"
                         name="email"
                         onChange={this.handleInputChange}
@@ -91,6 +91,7 @@ class ForgetPassword extends React.Component {
                     <div className="row">
                       <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
                         <button
+                          id="forgot-btn"
                           className="btn indigo waves-effect waves-light left"
                           type="submit"
                           name="action"

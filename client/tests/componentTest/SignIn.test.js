@@ -2,6 +2,7 @@ import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import React from 'react';
 import expect from 'expect';
+import sinon from 'sinon';
 
 import { SignIn } from '../../Component/AuthComponent/SignIn.jsx';
 
@@ -10,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const setup = () => {
   const props = {
-    handleOnSubmit: jest.fn(),
+    handleOnSubmit: sinon.stub(SignIn.prototype, 'handleOnSubmit').returns(true),
     showSignup: jest.fn(),
     googleSignIn: jest.fn(),
     signIn: jest.fn(),
@@ -44,9 +45,8 @@ describe('components', () => {
       expect(enzymeWrapper.state('password')).toBe('123456');
     });
     it('should call onSubmit when submit button is clicked', () => {
-      const form = enzymeWrapper.find('form');
-      form.simulate('submit');
-      expect(props.handleOnSubmit.mock.calls.length).toBe(1);
+      enzymeWrapper.find('#my-form').simulate('submit', {});
+      expect(props.handleOnSubmit.callCount).toBe(1);
     });
     it('should call showSignup when the signup link is clicked',
       () => {

@@ -28,4 +28,8 @@ describe('UpdateUserProfile Component', () => {
     expect(enzmeWrapper.find('form').length).toBe(1);
     expect(enzmeWrapper.find('input').length).toBe(3);
   });
+  it('should submit form if button is clicked', () => {
+    const { enzmeWrapper } = setup();
+    expect(enzmeWrapper.find('button').length).toBe(2);
+  });
 });
