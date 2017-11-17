@@ -3,7 +3,7 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { SignUp } from
-'../../Component/AuthComponent/SignUp.jsx'
+  '../../Component/AuthComponent/SignUp.jsx'
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -52,9 +52,9 @@ describe('components', () => {
       expect(enzymeWrapper.find('div').length).toBe(16);
     });
     it('should call showLogin when the login link is clicked',
-    () => {
-      enzymeWrapper.find('#go-to-login').simulate('click');
-      expect(props.showSignin.mock.calls.length).toBe(1);
-    });
+      () => {
+        enzymeWrapper.find('#go-to-login').simulate('click');
+        expect(props.showSignin.mock.calls.length).toBe(1);
+      });
   });
 });

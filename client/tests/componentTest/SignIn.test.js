@@ -44,7 +44,8 @@ describe('components', () => {
       expect(enzymeWrapper.state('password')).toBe('123456');
     });
     it('should call onSubmit when submit button is clicked', () => {
-      const form = enzymeWrapper.find('form').simulate('submit');
+      const form = enzymeWrapper.find('form');
+      form.simulate('submit');
       expect(props.handleOnSubmit.mock.calls.length).toBe(1);
     });
     it('should call showSignup when the signup link is clicked',
