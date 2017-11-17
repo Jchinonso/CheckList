@@ -65,6 +65,7 @@ class Dashboard extends React.Component {
    * @returns {function} a function that handles onClick event on inputs
    */
   handleOnClick(event) {
+    event.preventDefault();
     const { text } = this.state;
     if (text !== undefined) {
       const newText = text.trim();
