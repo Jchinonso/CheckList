@@ -1,16 +1,18 @@
 import axios from 'axios';
 import toastr from 'toastr';
+
 import * as types from '../constants/actionTypes';
 
 
 /**
- * @desc create action: add collaborators to todo
+ * @description action creator that adds
+ * collaborators to a todo
  *
  * @function addCollaboratorSuccess
  *
  * @param {object} message
  *
- * @returns {object} action: type and message
+ * @returns {object} type and message
  */
 export function addCollaboratorSuccess(message) {
   return {
@@ -20,11 +22,12 @@ export function addCollaboratorSuccess(message) {
 }
 
 /**
- * get action: fetch all users
+ * @description action creator that
+ * fetches all users
  *
  * @function fetchUserSuccess
  *
- * @param {object} users
+ * @param {array} users
  *
  * @returns {object} action: type and users
  */
@@ -36,13 +39,14 @@ export function fetchUserSuccess(users) {
 }
 
 /**
- * @desc get action: fetch all todo collaborators
+ * @description action creator that
+ * fetches todo collaborators
  *
  * @function fetchCollaboratorSuccess
  *
- * @param {object} collaborators
+ * @param {array} collaborators
  *
- * @returns {object} action: type and members
+ * @returns {object} action: type and collaborators
  */
 export function fetchCollaboratorSuccess(collaborators) {
   return {
@@ -51,7 +55,8 @@ export function fetchCollaboratorSuccess(collaborators) {
   };
 }
 /**
- * @desc create action: failure action for add collaborator
+ * @description action creator
+ * that is dispatch when adding collaborator fails
  *
  * @function addCollaboratorFailure
  *
@@ -67,17 +72,19 @@ export function addCollaboratorFailure(error) {
 }
 
 /**
- * @desc async helper function: add Collaborator to Todo
+ * @description asynchronous function that
+ *  add Collaborators to Todo
  *
  * @function addCollaboratorTodo
  *
  * @param{integer} todoId,
  * @param{array} collaborator,
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatches an object
  */
 export function addCollaboratorTodo(todoId, collaborator) {
   return (dispatch) => {
+    $('.modal').modal('close');
     return axios.post(`/api/v1/todos/${todoId}/collaborator`, collaborator)
       .then((response) => {
         toastr.success('Collaborators successfully added');
@@ -91,11 +98,12 @@ export function addCollaboratorTodo(todoId, collaborator) {
 }
 
 /**
- * @desc async helper function: add Members to Group
+ * @description asynchronous function that fetches
+ * all users
  *
  * @function fetchUsers
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatches an object
  */
 export function fetchUsers() {
   return (dispatch) => {
@@ -110,12 +118,13 @@ export function fetchUsers() {
 }
 
 /**
- * @desc async helper function: fetches all collaborator in Todo
+ * @description asynchronous function that
+ * fetches all collaborator from Todo
  *
  * @function fetchCollaborators
- * @param{integer} todoId
+ * @param {integer} todoId
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatches an object
  */
 export function fetchCollaborators(todoId) {
   return (dispatch) => {

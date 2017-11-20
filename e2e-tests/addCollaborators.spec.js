@@ -1,5 +1,5 @@
 module.exports = {
-  'Add Todo collaborators': function (browser) {
+  'Add collaborators to todo': function (browser) {
     browser
       .url('localhost:5000')
       .waitForElementVisible('body', 1000)
@@ -12,7 +12,6 @@ module.exports = {
       .click('.collaborator')
       .pause(3000)
       .waitForElementVisible('#add-user', 1000)
-      .setValue('#email', 'jdoe@gmail.com')
       .end();
   },
 };

@@ -29,7 +29,8 @@ describe('Todo Controller', () => {
   after((done) => {
     mongoose.connection.db.dropDatabase(done);
   });
-  it('should send an error message if there are no todos to be retrieved', (done) => {
+  it('should send a message if there are' +
+  'no todos to be retrieved', (done) => {
     request.get('/api/v1/todo')
       .set('x-access-token', token)
       .set('Accept', 'application/json')
@@ -55,7 +56,7 @@ describe('Todo Controller', () => {
         return done();
       });
   });
-  it('should validate text input', (done) => {
+  it('should send an error message if text field is empty', (done) => {
     request.post('/api/v1/todo')
       .send()
       .set('x-access-token', token)
@@ -78,7 +79,7 @@ describe('Todo Controller', () => {
       });
   });
 
-  it('should add tasks to todo', (done) => {
+  it('should add task to todo', (done) => {
     request.post(`/api/v1/todos/${todoId}/task`)
       .send({
         text: 'myTask'
@@ -93,7 +94,7 @@ describe('Todo Controller', () => {
         return done();
       });
   });
-  it('should retrieve all tasks that belong to todo', (done) => {
+  it('should retrieve all tasks that belongs to todo', (done) => {
     request.get(`/api/v1/todos/${todoId}/task`)
       .set('x-access-token', token)
       .set('Accept', 'application/json')
@@ -128,7 +129,7 @@ describe('Todo Controller', () => {
         return done();
       });
   });
-  it('should vadidate text input', (done) => {
+  it('should send error message if text field is empty', (done) => {
     request.post(`/api/v1/todos/${todoId}/task`)
       .send()
       .set('x-access-token', token)
@@ -199,7 +200,7 @@ describe('Todo Controller', () => {
         return done();
       });
   });
-  it('should update a task status ', (done) => {
+  it('should update a task completed status ', (done) => {
     request.put(`/api/v1/todos/${todoId}/task/${taskId}`)
       .send({
         completed: true,

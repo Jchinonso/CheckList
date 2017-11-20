@@ -1,10 +1,12 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import toastr from 'toastr';
+
 import * as types from '../constants/actionTypes';
 
 /**
- * @desc create action: select a Todo
+ * @description action creator that dipatch a todoId
+ * based on the todo selected
  *
  * @function selectTodo
  *
@@ -19,7 +21,7 @@ export function selectTodo(todoId) {
   };
 }
 /**
- * @desc create action: create a todo: success
+ * @description action creator that creates a todo
  *
  * @function createTodoSuccess
  *
@@ -35,7 +37,8 @@ export function createTodoSuccess(todo) {
   };
 }
 /**
- * @desc create action: create todo failure
+ * @description action creator that dispatches an
+ *  error message when creating a todo fails
  *
  * @function createTodoFailure
  *
@@ -51,18 +54,19 @@ export function createTodoFailure(error) {
 }
 
 /**
- * @desc async helper function: create a todo
+ * @description asychronous function that create a todo
  *
  * @function createTodo
  *
- * @param {string} name
+ * @param {string} text
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatch an object
  */
 
 export function createTodo(text) {
   return dispatch => axios.post('/api/v1/todo', { text })
     .then((response) => {
+      $('.modal').modal('close');
       dispatch(createTodoSuccess(response.data.todo));
       toastr.success('Todo Successfully Created');
     })
@@ -73,7 +77,7 @@ export function createTodo(text) {
 }
 
 /**
- * @desc receive Todos action: receive a todo success
+ * @description asynchronous function that fetch todos
  *
  * @function receiveTodosSuccess
  *
@@ -89,11 +93,12 @@ export function receiveTodosSuccess(todos) {
   };
 }
 /**
- * @desc receive Todos action: receive a todo failure
+ * @description action creator that is dispatch
+ * an error message when a todo is being fetched
  *
  * @function receiveTodosFailure
  *
- * @param {object} todos
+ * @param {string} error
  *
  * @returns {object} action: type and error
  */
@@ -106,8 +111,12 @@ export function receiveTodosFailure(error) {
 }
 
 /**
- * @desc async helper function: fetches all todos
- * @returns {function} asynchronous action
+ * @description asynchronous function that
+ * fetches all todos
+ *
+ * @function fetchTodos
+ *
+ * @returns {object} dispatches an object
  */
 
 export function fetchTodos() {

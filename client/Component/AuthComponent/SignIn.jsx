@@ -6,7 +6,9 @@ import { Link, browserHistory } from 'react-router';
 import GoogleLogin from 'react-google-login';
 
 import
-{ isValidEmail, isValidName, isValidPassword, isValidUsername } from '../../helper/clientSideValidation';
+{
+  isValidEmail, isValidName, isValidPassword, isValidUsername
+} from '../../helper/clientSideValidation';
 import { signIn, googleSignIn } from '../../actions/authActions';
 
 
@@ -55,7 +57,8 @@ export class SignIn extends React.Component {
     if (!isValidEmail(email)) {
       toastr.error('Invalid Email');
     } else if (!isValidPassword(password)) {
-      toastr.error('Password should contain at least 8 characters including one number and alphabet');
+      toastr.error('Password should contain at least 8' +
+        'characters including one number and alphabet');
     } else {
       const userObj = {
         password,
@@ -69,14 +72,17 @@ export class SignIn extends React.Component {
    *
    * @method responseGoogle
    *
-   * @member Authentication
+   * @member SignIn
    *
    * @param {object} response
    *
-   * @returns {function} a function that sign's in a user with their google account
+   * @returns {function} a function that
+   *  sign's in a user with their google account
    */
   responseGoogle(response) {
-    const { email, givenName, familyName, name, imageUrl } = response.profileObj;
+    const {
+      email, givenName, familyName, name, imageUrl
+    } = response.profileObj;
     const userObj = {
       username: givenName,
       email,
@@ -93,7 +99,12 @@ export class SignIn extends React.Component {
       <div className="card auth">
         <div className="col s12 m12 l6">
           <div className="card-panel">
-            <h4 className="header2 center" style={{ fontFamily: 'Bree Serif' }}>Sign In</h4>
+            <h4
+              className="header2 center"
+              style={{ fontFamily: 'Bree Serif' }}
+            >
+            Sign In
+            </h4>
             <div className="row">
               <div className="col s12 m12 l12 center">
                 <div className="container" id="google-button">
@@ -105,15 +116,27 @@ export class SignIn extends React.Component {
                     style={{ width: '100%', }}
                     className="btn red waves-effect waves-light left"
                   >
-                    <i className="fa fa-google-plus-official fa-4x" aria-hidden="true" />
+                    <i
+                      className="fa fa-google-plus-official fa-4x"
+                      aria-hidden="true"
+                    />
                     <span> Login with Google</span>
                   </GoogleLogin>
                 </div>
-                <div className="col s12 m12 l12 center" style={{ paddingTop: '10px' }}> Or </div>
+                <div
+                  className="col s12 m12 l12 center"
+                  style={{ paddingTop: '10px' }}
+                >
+                 Or
+                </div>
               </div>
             </div>
             <div className="row " style={{ paddingTop: '10px' }}>
-              <form className="col s12" id="my-form" onSubmit={this.handleOnSubmit}>
+              <form
+                className="col s12"
+                id="my-form"
+                onSubmit={this.handleOnSubmit}
+              >
                 <div className="row">
                   <div className="input-field col s12" style={{ margin: 0 }}>
                     <i className="material-icons prefix">email</i>
@@ -146,7 +169,12 @@ export class SignIn extends React.Component {
                 </div>
                 <div className="row">
                   <div className="row">
-                    <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
+                    <div
+                      className="input-field col s8"
+                      style={{
+                        paddingLeft: '60px', margin: '0 auto', width: 'auto'
+                      }}
+                    >
                       <button
                         className="btn indigo waves-effect waves-light left"
                         type="submit"
@@ -157,10 +185,33 @@ export class SignIn extends React.Component {
                         Submit
                       </button>
                     </div>
-                    <div className="col s4" style={{ marginLeft: '8%', width: 'auto', marginTop: '8px' }}> <Link to="/forgot-password">Forgot Password</Link></div>
+                    <div
+                      className="col s4"
+                      style={{
+                        marginLeft: '8%', width: 'auto', marginTop: '8px'
+                      }}
+                    >
+                      <Link
+                        href="#?"
+                        to="/forgot-password"
+                      >
+                        Forgot Password
+                      </Link>
+                    </div>
                   </div>
                 </div>
-                <div className="center">Don&apos;t have a WorkList account? <a href="#?" id="toggle-signup" onClick={showSignup}>Sign Up</a></div>
+                <div
+                  className="center"
+                >
+                Don&apos;t have a WorkList account?
+                  <a
+                    href="#?"
+                    id="toggle-signup"
+                    onClick={showSignup}
+                  >
+                  Sign Up
+                  </a>
+                </div>
               </form>
             </div>
           </div>

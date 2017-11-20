@@ -7,7 +7,10 @@ const TodoListItem = (props) => {
   return (
     <ul>
       {todos.length !== 0 && todos.map(todo =>
-        (<li key={todo._id} id="dashboard">
+        (<li
+          key={todo._id}
+          id="dashboard"
+        >
           <a
             id={todo._id}
             className={classNames({
@@ -18,8 +21,9 @@ const TodoListItem = (props) => {
             href="#?"
           ><span>{ todo.text}</span>
           </a>
-        </li>)
-      )}
+        </li>
+        ))
+      }
     </ul>
   );
 };

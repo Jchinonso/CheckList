@@ -14,8 +14,8 @@ window.localStorage = localStorageMock;
 router.browserHistory = { push: () => {} };
 
 describe('user synchronous actions', () => {
-  describe('action set current user', () => {
-    it('should set the current user', () => {
+  describe('setCurrentUser Action', () => {
+    it('should authorize the current user ', () => {
       const user = {
         _id: '1234',
         username: 'jchinonso',
@@ -29,8 +29,8 @@ describe('user synchronous actions', () => {
       expect(actions.setCurrentUser(user)).toEqual(expectedAction);
     });
   });
-  describe('action update current user success', () => {
-    it('update current user', () => {
+  describe('updateCurrentUser Action', () => {
+    it('should update current user', () => {
       const user = {
         _id: '1234',
         username: 'jchinonso',
@@ -44,24 +44,27 @@ describe('user synchronous actions', () => {
       expect(actions.updateCurrentUserSuccess(user)).toEqual(expectedAction);
     });
   });
-  describe('action update current user profile pics success', () => {
-    it('should update current user', () => {
+  describe('updateCurrentUserPicturesuccess Action', () => {
+    it('should update current user profile picture', () => {
       const user = {
         _id: '1234',
         username: 'jchinonso',
         name: 'johnson smason',
         email: 'jchinonso@gmail.com',
-        imageUrl: 'http://res.cloudinary.com/dbczzmftw/image/upload/v1509127904/pojdk9ajmdgase3esgg2.png'
+        imageUrl:
+        'http://res.cloudinary.com/dbczzmftw/image/upload/v1509127904/pojdk9ajmdgase3esgg2.png'
       };
       const expectedAction = {
         type: types.UPDATE_CURRENT_USER_PICTURE,
         user
       };
-      expect(actions.updateCurrentUserPicSuccess(user)).toEqual(expectedAction);
+      expect(actions
+        .updateCurrentUserPictureSuccess(user))
+        .toEqual(expectedAction);
     });
   });
-  describe('action signout user success', () => {
-    it('should signout current user', () => {
+  describe('signOutSuccess Action', () => {
+    it('should signout the current user', () => {
       const expectedAction = {
         type: types.SIGNOUT_USER_SUCCESS,
       };
@@ -72,7 +75,7 @@ describe('user synchronous actions', () => {
 
 describe('User asynchronous actions', () => {
   describe('Signup Action', () => {
-    it('Should make a post request to sign up user', async () => {
+    it('Should make a post request to sign up a user', async () => {
       const userObject = {
         username: 'jchinonso',
         name: 'johnson chinonso',
@@ -115,7 +118,7 @@ describe('User asynchronous actions', () => {
     });
   });
   describe('Signin Action', () => {
-    it('Should make a post request to sign in user', async () => {
+    it('Should make a post request to sign in a user', async () => {
       const userObject = {
         email: 'johnsonchinonso@gmail.com',
         password: 'poly12'
@@ -155,7 +158,7 @@ describe('User asynchronous actions', () => {
       });
     });
   });
-  describe('Update User Action', () => {
+  describe('updateUser Action', () => {
     it('Should make a put request to update user', async () => {
       const userObject = {
         username: 'jchinonso',
@@ -197,7 +200,7 @@ describe('User asynchronous actions', () => {
       });
     });
   });
-  describe('Update User Profile Action', () => {
+  describe('updateUserProfilePicture Action', () => {
     it('Should make a put request to update user profile picture', async () => {
       const userObject = {
         imageUrl: 'http://res.cloudinary.com/dbczzmftw/image/upload/v1509127904/pojdk9ajmdgase3esgg2.png',
@@ -232,15 +235,17 @@ describe('User asynchronous actions', () => {
         return Promise.resolve(response);
       });
       const store = mockStore({ user: {}, expectedAction });
-      await store.dispatch(actions.updateUserProfilePics(userObject)).then(() => {
+      await store.dispatch(actions.updateUserProfilePicture(userObject)).then(() => {
         const action = store.getActions();
         expect(action[0].type).toEqual(types.UPDATE_CURRENT_USER_PICTURE);
         expect(action[0]).toEqual(expectedAction);
       });
     });
   });
-  describe('Google Sigin in', () => {
-    it('Should signin with google', async () => {
+  describe('googleSignIn action', () => {
+    it('Should make a post request that' +
+    'signs in a user with google account',
+    async () => {
       const userObject = {
         email: 'jchinonso@gmail.com',
         name: 'johnson smason',
@@ -280,6 +285,7 @@ describe('User asynchronous actions', () => {
         expect(action[0].type).toEqual(types.SET_CURRENT_USER);
         expect(action[0]).toEqual(expectedAction);
       });
-    });
+    }
+    );
   });
 });

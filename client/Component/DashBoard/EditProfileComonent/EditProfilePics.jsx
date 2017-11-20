@@ -37,8 +37,9 @@ export class EditProfilePics extends React.Component {
     );
   }
 
- /**
+  /**
    * @method render
+   * @memberof  EditProfilePics
    * @returns {object} EditProfilePics Component
    */
   render() {
@@ -76,4 +77,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updateUserProfilePics })(EditProfilePics);
+export default
+connect(mapStateToProps, { updateUserProfilePics })(EditProfilePics);

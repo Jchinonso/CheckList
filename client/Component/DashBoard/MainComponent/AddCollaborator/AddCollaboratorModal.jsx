@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Chips from 'react-chips';
+
 import { addCollaboratorTodo } from '../../../../actions/collaboratorsAction';
 
 /**
@@ -28,7 +29,7 @@ class AddCollaboratorModal extends React.Component {
    *
    * @method handleOnChange
    *
-   * @member SignUp
+   * @member AddCollaboratorModal
    *
    * @param {object} chips
    *
@@ -53,8 +54,10 @@ class AddCollaboratorModal extends React.Component {
   handleOnClick(event) {
     event.preventDefault();
     if (this.state.members.length > 0) {
-      this.props.addCollaboratorTodo(this.props.activeTodo, this.state.members);
-      this.setState({ members: [] });
+      this.props.addCollaboratorTodo(this.props.activeTodo, this.state.members)
+        .then(() => {
+          this.setState({ members: [] });
+        });
     }
   }
   /**
@@ -76,7 +79,13 @@ class AddCollaboratorModal extends React.Component {
         .map(user => user.username);
     }
     return (
-      <div id="add-user" className="modal modal-fixed-footer" style={{ zIndex: 1051, opacity: 1, transform: 'scaleX(1)', top: '10%' }}>
+      <div
+        id="add-user"
+        className="modal modal-fixed-footer"
+        style={{
+          zIndex: 1051, opacity: 1, transform: 'scaleX(1)', top: '10%'
+        }}
+      >
         <div className="modal-content">
           <h4>Add Members</h4>
           <form>
@@ -87,19 +96,20 @@ class AddCollaboratorModal extends React.Component {
                   onChange={this.handleOnChange}
                   suggestions={allUsernames}
                   placeholder="Enter Username"
+                  fromSuggestionsOnly
                 />
               </div>
             </div>
+            <div className="modal-footer">
+              <button
+                onClick={this.handleOnClick}
+                className="modal-action waves-effect waves-green btn-flat"
+              >
+              Add
+                <i className="material-icons right">send</i>
+              </button>
+            </div>
           </form>
-        </div>
-        <div className="modal-footer">
-          <a
-            href="#!"
-            onClick={this.handleOnClick}
-            className="modal-action modal-close waves-effect waves-green btn-flat"
-          >
-            Add
-          </a>
         </div>
       </div>
     );
@@ -119,12 +129,14 @@ AddCollaboratorModal.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    activeTodo: state.activeTodoReducer,
+    activeTodo: state.activeTodoReducer.todoId,
     allUsers: state.userReducer.users,
     collaborators: state.collaboratorReducer.collaborators
   };
 }
 
 
-export default connect(mapStateToProps,
-  { addCollaboratorTodo })(AddCollaboratorModal);
+export default connect(
+  mapStateToProps,
+  { addCollaboratorTodo }
+)(AddCollaboratorModal);

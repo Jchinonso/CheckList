@@ -70,7 +70,8 @@ const TodoController = {
       .populate({ path: 'collaborators', select: ['username', 'name'] })
       .populate({ path: 'tasks' })
       .exec((err, todos) => {
-        const newTodo = todos.filter(todo => todo.collaborators.some(collab => collab._id == userId));
+        const newTodo = todos.filter(todo => todo.collaborators
+          .some(collab => collab._id == userId));
         if (todos.length === 0) {
           res.status(404).json({
             success: false,
@@ -101,7 +102,7 @@ const TodoController = {
    */
   addTask(req, res) {
     const { todoId } = req.params;
-    const { text, priority, completed } = req.body;
+    const { text, priority, dueDate, completed } = req.body;
     if (text === undefined || text === '') {
       return res.status(400).json({
         success: false,
@@ -112,6 +113,7 @@ const TodoController = {
       text,
       priority,
       completed,
+      dueDate
     };
     const newTask = new Task(newTaskForm);
     Todo.findById({ _id: todoId }).exec((err, todo) => {
@@ -242,26 +244,31 @@ const TodoController = {
   updateTask(req, res) {
     const id = req.params.taskId;
     Task.findById({ _id: id }).exec((err, task) => {
-      if (err) {
+      if (task) {
+        const { completed, text, dueDate } = req.body;
+        task.dueDate = dueDate !== undefined ? dueDate : task.dueDate;
+        task.completed = completed !== undefined ? completed : task.completed;
+        task.text = text || task.text;
+        task.save((err, editedTask) => {
+          if (err) {
+            res.status(500).json({
+              message: 'Internal server error'
+            });
+          } else {
+            res.status(201).json({
+              editedTask
+            });
+          }
+        });
+      } else if (!task) {
+        res.status(404).json({
+          message: 'No task found'
+        });
+      } else {
         res.status(500).json({
           message: 'Internal server error'
         });
       }
-      const { completed, text, dueDate } = req.body;
-      task.dueDate = dueDate;
-      task.completed = completed !== undefined ? completed : task.completed;
-      task.text = text || task.text;
-      task.save((err, editedTask) => {
-        if (err) {
-          res.status(500).json({
-            message: 'Internal server error'
-          });
-        } else {
-          res.status(201).json({
-            editedTask
-          });
-        }
-      });
     });
   },
   /** retrieveAllTasks
@@ -285,6 +292,7 @@ const TodoController = {
         if (todo) {
           const { tasks } = todo;
           res.status(200).json({
+            message: 'Task successfully retrieved',
             tasks
           });
         } else if (todo === null) {

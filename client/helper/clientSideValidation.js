@@ -18,7 +18,7 @@ export const isValidPassword = (password) => {
 
 /**
  * @description checks if the string pass in is a digit.
- * Means all the charcters are digit
+ * Means all the characters are digit
  *
  * @param  {string} str the string to be checked
  *
@@ -115,6 +115,14 @@ export const isValidName = (name) => {
   }
   return false;
 };
+
+/**
+* @description checks if the username is valid.
+*
+* @param  {string} username
+*
+* @return {boolean} true or false
+*/
 export const isValidUsername = (username) => {
   if (isDigit(username) ||
     isDigit(username[0]) || username.length < 2) {
@@ -125,8 +133,10 @@ export const isValidUsername = (username) => {
 
 /**
  * Update task item with date from state and props
+ *
  * @param {obj} stateDueDate date object set in the state
  * @param {obj} propsDueDate date object from the props
+ *
  * @return {obj} object represent either state date or props date if available
  */
 export const checkStateDueDate = (stateDueDate, propsDueDate) => {

@@ -17,7 +17,15 @@ class MainComponent extends React.Component {
   componentDidUpdate() {
     this.scrollToBottom();
   }
-
+  /**
+   * method that handles the todo board scrollbar
+   *
+   * @method scrollToBottom
+   *
+   * @member MainComponent
+   *
+   * @returns {void} void
+   */
   scrollToBottom() {
     const { messageList } = this;
     const scrollHeight = messageList.scrollHeight;
@@ -28,8 +36,11 @@ class MainComponent extends React.Component {
 
   /**
    * render component
+   *
    * @method render
+   *
    * @member MainComponent
+   *
    * @returns {object} component
    */
   render() {
@@ -63,7 +74,7 @@ class MainComponent extends React.Component {
 function mapStateToProps(state) {
   return {
     showTodos: state.todosReducer.todos.length > 0,
-    activeTodo: state.activeTodoReducer,
+    activeTodo: state.activeTodoReducer.todoId,
   };
 }
 

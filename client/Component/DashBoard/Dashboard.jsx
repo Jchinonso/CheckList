@@ -47,9 +47,13 @@ class Dashboard extends React.Component {
   }
   /**
    * Handle onChange events on form inputs
+   *
    * @method handleInputChange
+   *
    * @member Dashboard
+   *
    * @param {object} event
+   *
    * @returns {function} a function that handles change event on inputs
    */
   handleOnChange(event) {
@@ -58,11 +62,15 @@ class Dashboard extends React.Component {
     });
   }
   /**
-   * Handle onClick events on form inputs
+   * Method that handles onClick event on inputs
+   *
    * @method handleOnClick
+   *
    * @member Dashboard
+   *
    * @param {object} event
-   * @returns {function} a function that handles onClick event on inputs
+   *
+   * @returns {function} dispatches createTodo action
    */
   handleOnClick(event) {
     event.preventDefault();
@@ -80,11 +88,16 @@ class Dashboard extends React.Component {
     }
   }
   /**
-  * Handle Change Todo
-  * @method handleChangeGroup
+  * method that set todo to active
+  *
+  * @method handleChangeTodo
+  *
   * @member Dashboard
+  *
   * @param {object} todoId
-  * @returns {function} a function that changes group and dispatches some actions
+  *
+  * @returns {function} a function that
+  * changes todo and dispatches some actions
   */
   handleChangeTodo(todoId) {
     this.props.selectTodo((todoId));
@@ -94,9 +107,13 @@ class Dashboard extends React.Component {
 
   /**
    * Handle signout event
+   *
    * @method handleOnChange
+   *
    * @member Dashboard
+   *
    * @param {object} event
+   *
    * @returns {function} a function that dispatch signOut action
    */
   handleSignOut(event) {
@@ -106,8 +123,11 @@ class Dashboard extends React.Component {
 
   /**
    * render component
+   *
    * @method render
+   *
    * @member Dashbaord
+   *
    * @returns {object} component
    */
   render() {
@@ -118,7 +138,11 @@ class Dashboard extends React.Component {
           <NavComponent signOut={this.handleSignOut} />
           <SideBarComponent handleChangeTodo={this.handleChangeTodo} />
         </header>
-        <CreateTodoModal handleOnChange={this.handleOnChange} handleOnClick={this.handleOnClick} text={this.state.text} />
+        <CreateTodoModal
+          handleOnChange={this.handleOnChange}
+          handleOnClick={this.handleOnClick}
+          text={this.state.text}
+        />
         <EditProfileComponent />
         <MainComponent />
       </div>

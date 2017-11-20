@@ -52,7 +52,7 @@ const Auth = {
       name: user.name,
       email: user.email,
       imageUrl: user.imageUrl
-    }, secret, { expiresIn: 60 * 60 * 24 });
+    }, secret, { expiresIn: '24h' });
   },
   /**
    * validate signup input field
@@ -95,7 +95,7 @@ const Auth = {
    */
   validateSigninInputField(req, res, next) {
     const { email, password, username, name } = req.body;
-    if(email === undefined) {
+    if (email === undefined) {
       return res.status(400).json({
         message: 'email is required'
       });

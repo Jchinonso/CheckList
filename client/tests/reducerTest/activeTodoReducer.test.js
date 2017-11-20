@@ -11,6 +11,6 @@ describe('active Todo Reducer', () => {
     const todoId = 'eowrueioruwier892378927';
     const action = actions.selectTodo(todoId);
     const newState = activeTodoReducer(initialState, action);
-    expect(newState).toEqual('eowrueioruwier892378927');
+    expect(newState).toEqual({ todoId: 'eowrueioruwier892378927' });
   });
 });

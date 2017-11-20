@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { connect } from 'react-redux';
+
 import { createTask } from '../../../../actions/tasksActions';
 import TaskInputBox from './TaskInputBox.jsx';
 import PriorityComponent from './PriorityComponent.jsx';
@@ -44,14 +45,13 @@ class CreateTaskComponent extends Component {
 
   /**
    *
-   * @method handleSubmitMessage
+   * @method handleOnSubmit
    *
    * @returns {void}
    *
    * @memberof CreateTaskComponent
    *
    * @param {any} event
-   * @param {Function} callback
    */
   handleOnSubmit(event) {
     event.preventDefault();
@@ -67,7 +67,7 @@ class CreateTaskComponent extends Component {
 
   /**
    *
-   * @method handleInputChange
+   * @method handleOnChange
    *
    * @memberof CreateTaskComponent
    *
@@ -105,7 +105,7 @@ class CreateTaskComponent extends Component {
     return (
       <div>
         {this.props.activeTodo ?
-          <div className="container" style={{marginLeft: 91 }}>
+          <div className="container" style={{ marginLeft: 91 }}>
             <div className="message-input" style={{ paddingTop: '2%', minWidth: '70vw' }}>
               <form>
                 <div className="row input-cover">
@@ -123,6 +123,7 @@ class CreateTaskComponent extends Component {
                     <button
                       className="btn indigo waves-effect waves-light create-btn left"
                       type="submit"
+                      id="create-task"
                       onClick={this.handleOnSubmit}
                       name="action"
                     >
@@ -143,7 +144,7 @@ class CreateTaskComponent extends Component {
 
 function mapStateToProps(state) {
   return {
-    activeTodo: state.activeTodoReducer,
+    activeTodo: state.activeTodoReducer.todoId,
     tasks: state.tasksReducer.tasks
   };
 }
@@ -155,4 +156,7 @@ CreateTaskComponent.propTypes = {
   createTask: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { createTask })(CreateTaskComponent);
+export default connect(
+  mapStateToProps,
+  { createTask }
+)(CreateTaskComponent);

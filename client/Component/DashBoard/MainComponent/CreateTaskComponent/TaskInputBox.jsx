@@ -4,7 +4,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 
 
-const TaskInputBox = (props) => {
+export const TaskInputBox = (props) => {
   const { text, handleOnChange, handleDateChange } = props;
   return (
     <div className="input-field">

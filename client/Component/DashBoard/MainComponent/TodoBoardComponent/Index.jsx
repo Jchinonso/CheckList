@@ -8,7 +8,13 @@ import TaskItem from './TaskItem.jsx';
 
 export const TodoBoardComponent = ({ tasks, activeTodo }) => (
   <div>
-    {tasks.map(task => <TaskItem key={task._id} task={task} todoId={activeTodo} />)}
+    {
+      tasks.map(task => (<TaskItem
+        key={task._id}
+        task={task}
+        todoId={activeTodo}
+      />))
+    }
   </div>
 );
 
@@ -24,7 +30,7 @@ TodoBoardComponent.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    activeTodo: state.activeTodoReducer,
+    activeTodo: state.activeTodoReducer.todoId,
     tasks: state.tasksReducer.tasks,
   };
 }

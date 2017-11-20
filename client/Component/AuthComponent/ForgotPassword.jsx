@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
+
 import { Link, browserHistory } from 'react-router';
 import { forgotPassword } from '../../actions/authActions';
 
 /**
- * @class SignIn
+ * @class ForgetPassword
  * @extends React.Component
  */
 export class ForgetPassword extends React.Component {
@@ -25,10 +26,14 @@ export class ForgetPassword extends React.Component {
   }
 
   /**
-   * Handle onChange events on form inputs
+   * Handle Input change event on form inputs
+   *
    * @method handleInputChange
-   * @member SignIn
+   *
+   * @member ForgetPassword
+   *
    * @param {object} event
+   *
    * @returns {function} a function that handles change event on inputs
    */
   handleInputChange(event) {
@@ -39,9 +44,13 @@ export class ForgetPassword extends React.Component {
   }
   /**
    * Handle onSubmit events on form inputs
+   *
    * @method handleOnSubmit
-   * @member SignUp
+   *
+   * @member  ForgetPassword
+   *
    * @param {object} event
+   *
    * @returns {function} a function that handles submit event on inputs
    */
 
@@ -55,8 +64,11 @@ export class ForgetPassword extends React.Component {
 
   /**
    * render component
+   *
    * @method render
-   * @member SignIn
+   *
+   * @member ForgetPassword
+   *
    * @returns {object} component
    */
   render() {
@@ -70,9 +82,17 @@ export class ForgetPassword extends React.Component {
         <div className="card auth auth-container-board">
           <div className="col s12 m12 l6">
             <div className="card-panel">
-              <h4 className="header-home center" style={{ paddingBottom: '20px' }}>Forgot Password</h4>
+              <h4
+                className="header-home center"
+                style={{ paddingBottom: '20px' }}
+              >
+              Forgot Password
+              </h4>
               <div className="row">
-                <form className="col s12 m12 l12 auth-form center" onSubmit={this.handleOnSubmit}>
+                <form
+                  className="col s12 m12 l12 auth-form center"
+                  onSubmit={this.handleOnSubmit}
+                >
                   <div className="row">
                     <div className="input-field col s12" style={{ margin: 0 }}>
                       <i className="material-icons prefix">email</i>
@@ -89,7 +109,12 @@ export class ForgetPassword extends React.Component {
                   </div>
                   <div className="row">
                     <div className="row">
-                      <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
+                      <div
+                        className="input-field col s8"
+                        style={{
+                          paddingLeft: '60px', margin: '0 auto', width: 'auto'
+                        }}
+                      >
                         <button
                           id="forgot-btn"
                           className="btn indigo waves-effect waves-light left"
@@ -102,7 +127,12 @@ export class ForgetPassword extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="center">Don&apos;t have a WorkList account? <Link to="/">Sign In</Link></div>
+                  <div
+                    className="center"
+                  >
+                    Don&apos;t have a WorkList account?
+                    <Link href="#?" to="/">Sign In</Link>
+                  </div>
                 </form>
               </div>
             </div>
