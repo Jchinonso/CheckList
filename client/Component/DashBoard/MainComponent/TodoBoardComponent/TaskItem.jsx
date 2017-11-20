@@ -140,6 +140,7 @@ export class TaskItem extends React.Component {
       dueDate: date,
       isOpen: !this.state.isOpen
     });
+    this.props.updateTaskDueDate(todoId, task._id, date._d);
   }
   /**
   *  Return to application screen from calendar modal

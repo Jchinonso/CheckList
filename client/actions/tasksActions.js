@@ -222,7 +222,7 @@ export function updateTask(todoId, task) {
 
 export function updateTaskDueDate(todoId, taskId, dueDate) {
   return dispatch => axios
-    .put(`/api/v1/todos/${todoId}/task/${taskId}`, { dueDate: dueDate._d })
+    .put(`/api/v1/todos/${todoId}/task/${taskId}`, { dueDate })
     .then((response) => {
       dispatch(updateTaskDueDateSuccess(taskId, dueDate));
     })
