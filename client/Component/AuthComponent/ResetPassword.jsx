@@ -28,8 +28,11 @@ export class ResetPassword extends React.Component {
 
   /**
    * Handle onChange events on form inputs
+   *
    * @method handleInputChange
-   * @member SignIn
+   *
+   * @member ResetPassword
+   *
    * @param {object} event
    * @returns {function} a function that handles change event on inputs
    */
@@ -40,9 +43,13 @@ export class ResetPassword extends React.Component {
   }
   /**
    * Handle onSubmit events on form inputs
+   *
    * @method handleOnSubmit
-   * @member SignUp
+   *
+   * @member ResetPassword
+   *
    * @param {object} event
+   *
    * @returns {function} a function that handles submit event on inputs
    */
 
@@ -57,8 +64,11 @@ export class ResetPassword extends React.Component {
 
   /**
    * render component
+   *
    * @method render
-   * @member SignIn
+   *
+   * @member ResetPassword
+   *
    * @returns {object} component
    */
   render() {
@@ -72,9 +82,16 @@ export class ResetPassword extends React.Component {
         <div className="card auth auth-container-board">
           <div className="col s12 m12 l6">
             <div className="card-panel">
-              <h4 className="header-home center" style={{ paddingBottom: '20px' }}>Reset Password</h4>
+              <h4
+                className="header-home center"
+                style={{ paddingBottom: '20px' }}
+              >Reset Password
+              </h4>
               <div className="row">
-                <form className="col s12 m12 l12 auth-form center" onSubmit={this.handleOnSubmit}>
+                <form
+                  className="col s12 m12 l12 auth-form center"
+                  onSubmit={this.handleOnSubmit}
+                >
                   <div className="row">
                     <div className="input-field col s12" style={{ margin: 0 }}>
                       <i className="material-icons prefix">lock_outline</i>
@@ -104,7 +121,12 @@ export class ResetPassword extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
+                    <div
+                      className="input-field col s8"
+                      style={{
+                        paddingLeft: '60px', margin: '0 auto', width: 'auto'
+                      }}
+                    >
                       <button
                         className="btn indigo waves-effect waves-light left"
                         type="submit"
@@ -116,7 +138,17 @@ export class ResetPassword extends React.Component {
                       </button>
                     </div>
                   </div>
-                  <div className="center">Don&apos;t have a WorkList account? <Link to="/">Sign In</Link></div>
+                  <div
+                    className="center"
+                  >
+                  Don&apos;t have a WorkList account?
+                    <Link
+                      href="#?"
+                      to="/"
+                    >
+                    Sign In
+                    </Link>
+                  </div>
                 </form>
               </div>
             </div>

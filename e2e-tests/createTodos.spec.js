@@ -1,5 +1,5 @@
 module.exports = {
-  'Create Todo': function (browser) {
+  'Users should be able to Create Todo': function (browser) {
     browser
     .url('localhost:5000')
     .waitForElementVisible('body', 1000)

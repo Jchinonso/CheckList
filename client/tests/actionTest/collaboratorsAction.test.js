@@ -11,7 +11,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('Collaborator synchronous actions', () => {
-  describe('action add collaborators to todo', () => {
+  describe('addCollaboratorSuccess action', () => {
     it('should add collaborator to todo', () => {
       const message = 'Collaborator successfully added to todo';
       const expectedAction = {
@@ -29,7 +29,7 @@ describe('Collaborator synchronous actions', () => {
       expect(actions.addCollaboratorFailure(error)).toEqual(expectedAction);
     });
   });
-  describe('action that fetches all users and Collaborators', () => {
+  describe('fetchUserSuccess actions', () => {
     it('should fetch all users', () => {
       const users = [
         {
@@ -43,27 +43,33 @@ describe('Collaborator synchronous actions', () => {
         type: types.FETCH_USERS_SUCCESS,
         users
       };
-      expect(actions.fetchUserSuccess(users)).toEqual(expectedAction);
+      expect(actions
+        .fetchUserSuccess(users))
+        .toEqual(expectedAction);
     });
-    it('should fetch all collaborators ', () => {
-      const collaborators = [
-        {
-          username: 'jchinonso',
-          name: 'johnson chinonso',
-          email: 'johnson.chinonso@example.com',
-        }
-      ];
-      const expectedAction = {
-        type: types.FETCH_COLLABORATOR_SUCCESS,
-        collaborators
-      };
-      expect(actions.fetchCollaboratorSuccess(collaborators)).toEqual(expectedAction);
+    describe('fetchCollaboratorSuccess', () => {
+      it('should fetch all collaborators ', () => {
+        const collaborators = [
+          {
+            username: 'jchinonso',
+            name: 'johnson chinonso',
+            email: 'johnson.chinonso@example.com',
+          }
+        ];
+        const expectedAction = {
+          type: types.FETCH_COLLABORATOR_SUCCESS,
+          collaborators
+        };
+        expect(actions
+          .fetchCollaboratorSuccess(collaborators))
+          .toEqual(expectedAction);
+      });
     });
   });
 });
 
 describe('collaborators asynchronous actions', () => {
-  describe('action that fetches all users', () => {
+  describe('fetchUsers action', () => {
     it('should make a get request to fetch all users ', async () => {
       const response = {
         status: 200,
@@ -100,7 +106,7 @@ describe('collaborators asynchronous actions', () => {
       });
     });
   });
-  describe('action that add and fetch collaborators', () => {
+  describe('addCollaboratorTodo actions', () => {
     it('should make a post request to add collaborator to todo ', async () => {
       const todoId = '2434234234';
       const collaborator = ['tayo']
@@ -125,37 +131,42 @@ describe('collaborators asynchronous actions', () => {
       });
     });
   });
-  it('should fetch all collaborators ', async () => {
-    const todoId = '238973274328479';
-    const response = {
-      status: 201,
-      data: {
+  describe('fetchCollaborators', () => {
+    it('should make a get request that' +
+    'fetches all collaborators in a todo',
+    async () => {
+      const todoId = '238973274328479';
+      const response = {
+        status: 201,
+        data: {
+          collaborators: [{
+            username: 'jchinonso',
+            name: 'johnson chinonso',
+            email: 'johnson.chinonso@example.com',
+            userId: '2937829782973'
+          }]
+        }
+      };
+      const expectedAction = {
+        type: types.FETCH_COLLABORATOR_SUCCESS,
         collaborators: [{
           username: 'jchinonso',
           name: 'johnson chinonso',
           email: 'johnson.chinonso@example.com',
           userId: '2937829782973'
         }]
-      }
-    };
-    const expectedAction = {
-      type: types.FETCH_COLLABORATOR_SUCCESS,
-      collaborators: [{
-        username: 'jchinonso',
-        name: 'johnson chinonso',
-        email: 'johnson.chinonso@example.com',
-        userId: '2937829782973'
-      }]
-    };
-    axios.get = jest.fn(() => {
-      return Promise.resolve(response);
-    });
-    const store = mockStore({ collaborator: {}, expectedAction });
-    await store.dispatch(actions.fetchCollaborators(todoId)).then(() => {
-      const action = store.getActions();
-      expect(action[0].type).toEqual(types.FETCH_COLLABORATOR_SUCCESS);
-      expect(action[0]).toEqual(expectedAction);
-    });
+      };
+      axios.get = jest.fn(() => {
+        return Promise.resolve(response);
+      });
+      const store = mockStore({ collaborator: {}, expectedAction });
+      await store.dispatch(actions.fetchCollaborators(todoId)).then(() => {
+        const action = store.getActions();
+        expect(action[0].type).toEqual(types.FETCH_COLLABORATOR_SUCCESS);
+        expect(action[0]).toEqual(expectedAction);
+      });
+    }
+    );
   });
 });
 

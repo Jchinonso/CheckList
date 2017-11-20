@@ -2,10 +2,13 @@ import React from 'react';
 import Proptypes from 'prop-types';
 
 
-const PriorityComponent = (props) => {
+export const PriorityComponent = (props) => {
   const { defaultPriority, setPriority } = props;
   return (
-    <div className="select-priority-2" style={{ paddingLeft: 50, paddingRight: '8%', float: 'right' }}>
+    <div
+      className="select-priority-2"
+      style={{ paddingLeft: 50, paddingRight: '8%', float: 'right' }}
+    >
       <span>
         <input
           name="group1"

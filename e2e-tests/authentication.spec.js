@@ -1,5 +1,5 @@
 module.exports = {
-  'sign up a user': function (browser) {
+  'Users should be able to sign up': function (browser) {
     browser
       .url('localhost:5000')
       .waitForElementVisible('body', 1000)
@@ -15,7 +15,7 @@ module.exports = {
       .pause(1000)
       .end();
   },
-  'sign in a user': function (browser) {
+  'Users should be able to sign in a user': function (browser) {
     browser
       .url('localhost:5000')
       .waitForElementVisible('body', 1000)
@@ -25,5 +25,19 @@ module.exports = {
       .click('#btn-click')
       .pause(1000)
       .end();
-  }
+  },
+  'Users should be able to log out': function (browser) {
+    browser
+      .url('localhost:5000')
+      .waitForElementVisible('body', 1000)
+      .setValue('#email', 'jdoe@gmail.com')
+      .setValue('#password', 'password1234')
+      .waitForElementVisible('#btn-click', 1000)
+      .click('#btn-click')
+      .waitForElementVisible('.caption', 1000)
+      .click('.sign-out')
+      .pause(1000)
+      .end();
+  },
+
 };

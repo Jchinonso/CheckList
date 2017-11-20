@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AddCollaborator = () =>
+export const AddCollaborator = () =>
   (
     <div>
       <div className="fixed-action-btn vertical">

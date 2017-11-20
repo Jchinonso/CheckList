@@ -2,11 +2,12 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 import jwtDecode from 'jwt-decode';
+
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import * as types from '../constants/actionTypes';
 
 /**
- * @desc create action:set current user
+ * @description action to set current user
  *
  * @function setCurrentUser
  *
@@ -21,7 +22,7 @@ export function setCurrentUser(user) {
   };
 }
 /**
- * @desc update action: update current user
+ * @description action to update current user information
  *
  * @function updateCurrentUserSuccess
  *
@@ -36,28 +37,29 @@ export function updateCurrentUserSuccess(user) {
   };
 }
 /**
- * @desc update action: update current user pics
+ * @description action to update current user profile picture
  *
- * @function updateCurrentUserPicSuccess
+ * @function updateCurrentUserPictureSuccess
  *
  * @param {object} user
  *
- * @returns {object} action: type and imageUrl
+ * @returns {object} action: type and user
  */
-export function updateCurrentUserPicSuccess(user) {
+export function updateCurrentUserPictureSuccess(user) {
   return {
     type: types.UPDATE_CURRENT_USER_PICTURE,
     user
   };
 }
+
 /**
-* @desc create action:signout user success
+* @description action to signout user
 *
 * @function signOutSuccess
 *
 * @param {viod}
 *
-* @returns {void}
+* @returns {string} type
 */
 
 export function signOutSuccess() {
@@ -65,12 +67,13 @@ export function signOutSuccess() {
     type: types.SIGNOUT_USER_SUCCESS,
   };
 }
+
 /**
- * @desc async helper function: log out user
+ * @description asyncronous function that logs out a user
  *
- * @function logOutUser
+ * @function signOut
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatch an object
  */
 export function signOut() {
   return (dispatch) => {
@@ -83,16 +86,13 @@ export function signOut() {
 }
 
 /**
-* @desc async helper function: sign up user
+* @description asyncronous function that signs up a user
 *
-* @function signUpUser
-*
-* @param {string} username
-* @param {string} password
-* @param {string} email
-* @param {string} phone number
-*
-* @returns {function} asynchronous action
+* @function signUp
+
+* @param {object} user
+
+* @returns {object} dispatch an object
 */
 
 export function signUp(user) {
@@ -114,14 +114,13 @@ export function signUp(user) {
 }
 
 /**
- * @desc async helper function: sign in user
+ * @description asynchronous function that signs in a user
  *
- * @function signInUser
+ * @function signIn
  *
- * @param {string} username
- * @param {string} password
+ * @param {object} user
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatch object
  */
 
 export function signIn(user) {
@@ -140,15 +139,13 @@ export function signIn(user) {
   );
 }
 /**
- * @desc async helper function: update a user
+ * @description asynchronous function that updates user information
  *
- * @function UpdateUser
+ * @function updateUser
  *
- * @param {string} username
- * @param {string} password
- * @param {string} name
+ * @param {object} user
  *
- * @returns {function} asynchronous action
+ * @returns {dispatch} an object
  */
 
 export function updateUser(user) {
@@ -164,21 +161,21 @@ export function updateUser(user) {
   );
 }
 /**
- * @desc async helper function: update a user profile pics
+ * @description asynchronous function that updates a user profile pics
  *
- * @function UpdateUserProfilePics
+ * @function updateUserProfilePics
  *
  * @param {string} imageUrl
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatches an object
  */
 
-export function updateUserProfilePics(imageUrl) {
+export function updateUserProfilePicture(imageUrl) {
   return (dispatch => axios.put('api/v1/user/updateProfile', { imageUrl })
     .then((response) => {
       const { token } = response.data;
       setAuthorizationToken(token);
-      dispatch(updateCurrentUserPicSuccess(response.data.updatedUser));
+      dispatch(updateCurrentUserPictureSuccess(response.data.updatedUser));
       toastr.success('Profile updated');
     }).catch((err) => {
       toastr.error(err.response.data.message);
@@ -187,13 +184,14 @@ export function updateUserProfilePics(imageUrl) {
 }
 
 /**
- * @desc async helper function: sign in user
+ * @description asynchronous function that
+ * signs in a user with google
  *
  * @function googleSignIn
  *
- * @param {string} user
+ * @param {object} user
  *
- * @returns {function} asynchronous action
+ * @returns {object} dispatches an object
  */
 export function googleSignIn(user) {
   return (dispatch => axios.post('api/v1/user/googleLogin', user)
@@ -210,13 +208,14 @@ export function googleSignIn(user) {
 }
 
 /**
- * @desc async helper function: sign in user
+ * @description asynchronous function
+ * that helps reset user password when forgotten
  *
  * @function forgotPassword
  *
  * @param {object} email
  *
- * @returns {function} asynchronous action
+ * @returns {string} dispatch success message
  */
 export function forgotPassword(email) {
   return (dispatch => axios.post('/api/v1/user/forgotPassword', { email })
@@ -229,16 +228,19 @@ export function forgotPassword(email) {
   );
 }
 /**
- * @desc async helper function: sign in user
+ * @desc asynchronous function that reset users password
  *
- * @function forgotPassword
+ * @function resetPassword
  *
- * @param {object} email
+ * @param {string} newPassword
+ * @param {string} retypePassword
+ * @param {string} token
  *
- * @returns {function} asynchronous action
+ * @returns {sting} dispatch success message
  */
 export function resetPassword({ newPassword, retypePassword, token }) {
-  return (dispatch => axios.post('/api/v1/user/resetPassword', { newPassword, retypePassword, token })
+  return (dispatch => axios
+    .post('/api/v1/user/resetPassword', { newPassword, retypePassword, token })
     .then((response) => {
       toastr.success(response.data.message);
       browserHistory.push('/');

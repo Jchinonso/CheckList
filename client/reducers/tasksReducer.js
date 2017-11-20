@@ -5,7 +5,8 @@ import {
   RECEIVE_TASKS_SUCCESS,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_STATUS,
-  DELETE_TASK_SUCCESS
+  DELETE_TASK_SUCCESS,
+  UPDATE_TASK_DUEDATE_SUCCESS
 } from '../constants/actionTypes';
 
 const intialState = {
@@ -41,6 +42,15 @@ export default function tasksReducer(state = intialState, action) {
     const updatedTasks = tasks.map((task) => {
       if (task._id !== taskId) return task;
       return { ...task, completed };
+    });
+    return { ...state, tasks: updatedTasks };
+  }
+  case UPDATE_TASK_DUEDATE_SUCCESS: {
+    const { tasks } = state;
+    const { dueDate, taskId } = action;
+    const updatedTasks = tasks.map((task) => {
+      if (task._id !== taskId) return task;
+      return { ...task, dueDate };
     });
     return { ...state, tasks: updatedTasks };
   }

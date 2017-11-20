@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const NavComponent = ({ signOut }) => (
+export const NavComponent = ({ signOut }) => (
   <div className="navbar-fixed" style={{ padding: 0, margin: 0 }}>
     <nav className="indigo top-nav">
       <div className="header-flex">
         <div className="container">
-          <a href="#?" data-activates="nav-mobile" className="button-collapse top-nav full hide-on-large-only">
+          <a
+            href="#?"
+            data-activates="nav-mobile"
+            className="button-collapse top-nav full hide-on-large-only"
+          >
             <i className="material-icons">menu</i>
           </a>
         </div>
@@ -22,7 +26,14 @@ const NavComponent = ({ signOut }) => (
           className="dropdown-content"
           id="user_dropdown"
         >
-          <li><a className="indigo-text modal-trigger" href="#modal2">Edit Profile</a></li>
+          <li>
+            <a
+              className="indigo-text modal-trigger"
+              href="#modal2"
+            >
+            Edit Profile
+            </a>
+          </li>
           <li>
             <a
               href="#?"

@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 import
-{ isValidEmail, isValidName, isValidPassword, isValidUsername } from '../../helper/clientSideValidation';
+{
+  isValidEmail, isValidName, isValidPassword, isValidUsername
+} from '../../helper/clientSideValidation';
 import { signUp } from '../../actions/authActions';
 
 export class SignUp extends React.Component {
@@ -24,7 +26,7 @@ export class SignUp extends React.Component {
    *
    * @method handleInputChange
    *
-   * @member SignIn
+   * @member SignUp
    *
    * @param {object} event
    *
@@ -48,16 +50,21 @@ export class SignUp extends React.Component {
    * @returns {function} a function that handles submit event on inputs
    */
   handleOnSubmit(event) {
-    const { name, email, username, password } = this.state;
+    const {
+      name, email, username, password
+    } = this.state;
     event.preventDefault();
     if (!isValidName(name)) {
-      toastr.error('Name should be in letters and should contain at least 5 characters');
+      toastr.error('Name should be in letters and should' +
+        'contain at least 5 characters');
     } else if (!isValidEmail(email)) {
       toastr.error('Invalid Email');
     } else if (!isValidUsername(username)) {
-      toastr.error('username must contain an alphabet and must not begin with a number');
+      toastr.error('username must contain an alphabet and must' +
+        'not begin with a number');
     } else if (!isValidPassword(password)) {
-      toastr.error('Password should contain at least 8 characters including one number and alphabet');
+      toastr.error('Password should contain at least 8 characters including' +
+        'one number and alphabet');
     } else {
       const userObj = {
         password,
@@ -69,7 +76,9 @@ export class SignUp extends React.Component {
     }
   }
   render() {
-    const { email, password, name, username } = this.state;
+    const {
+      email, password, name, username
+    } = this.state;
     const { showSignin } = this.props;
     return (
       <div className="card auth">
@@ -142,7 +151,12 @@ export class SignUp extends React.Component {
                 </div>
                 <div className="row">
                   <div className="row">
-                    <div className="input-field col s8" style={{ paddingLeft: '60px', margin: '0 auto', width: 'auto' }}>
+                    <div
+                      className="input-field col s8"
+                      style={{
+                        paddingLeft: '60px', margin: '0 auto', width: 'auto'
+                      }}
+                    >
                       <button
                         className="btn indigo waves-effect waves-light left"
                         type="submit"
@@ -154,13 +168,24 @@ export class SignUp extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="center">Already have an account <a href="#?" id="go-to-login" onClick={showSignin}>Sign In</a></div>
+                <div
+                  className="center"
+                >
+                Already have an account
+                  <a
+                    href="#?"
+                    id="go-to-login"
+                    onClick={showSignin}
+                  >
+                  Sign In
+                  </a>
+                </div>
               </form>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

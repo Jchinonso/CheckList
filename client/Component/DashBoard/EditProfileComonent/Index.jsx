@@ -56,15 +56,15 @@ class EditProfileComponent extends Component {
    * @param {Function} callback
    */
   handleOnClick(event) {
-    const { username, name, email } = this.state;
+    const { name, email } = this.state;
     if (!isValidEmail(email)) {
       toastr.error('Email is Invalid');
     } else if (!isValidName(name)) {
       toastr
-        .error('Name should be in letters and must be 5 to 30 characters and must contain first name and last name');
+        .error('Name should be in letters and must be 5' +
+        'to 30 characters and must contain first name and last name');
     } else {
       const userObject = {
-        username,
         name,
         email
       };

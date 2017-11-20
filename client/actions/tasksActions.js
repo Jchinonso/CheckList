@@ -1,14 +1,16 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import toastr from 'toastr';
+
 import * as types from '../constants/actionTypes';
 
 /**
-* @desc receive tasks action: add task failure
+* @description action creator that dipatches error
+messages when adding task fails
 *
 * @function addTaskFailure
 *
-* @param {object} error
+* @param {string} error
 *
 * @returns {object} action: type and error
 */
@@ -20,7 +22,7 @@ export function addTaskFailure(error) {
   };
 }
 /**
-* @desc update tasks success action
+* @description action creator that updates a single task
 *
 * @function updateTaskSuccess
 *
@@ -37,7 +39,8 @@ export function updateTaskSuccess(taskId, userObject) {
   };
 }
 /**
-* @desc update task status success action
+* @description action creator that updates
+task completed status of a single task
 *
 * @function updateTaskStatusSuccess
 *
@@ -54,13 +57,13 @@ export function updateTaskStatusSuccess(taskId, completed) {
   };
 }
 /**
-* @desc delete task success action
+* @description action creator that delete task from todo
 *
 * @function deleteTaskSuccess
 *
-* @param {object} task
+* @param {string} taskId
 *
-* @returns {object} action: type and task
+* @returns {object} action: type and taskId
 */
 
 export function deleteTaskSuccess(taskId) {
@@ -70,7 +73,7 @@ export function deleteTaskSuccess(taskId) {
   };
 }
 /**
-* @desc add tasks action: add task success
+* @description action creator that add task to Todo
 *
 * @function addTaskSuccess
 *
@@ -86,7 +89,8 @@ export function addTaskSuccess(task) {
   };
 }
 /**
- * @desc receive Task action: receive a task success
+ * @description action creator that fetches
+ * tasks that belong to Todo
  *
  * @function receiveTasksSuccess
  *
@@ -102,13 +106,13 @@ export function receiveTasksSuccess(tasks) {
   };
 }
 /**
- * @desc update Task due date: update task due date success
+ * @description action creator that updates Task due date:
  *
  * @function updateTaskDueDateSuccess
  *
  * @param {object} dueDate
  *
- * @returns {object} action: type and tasks
+ * @returns {object} action: type, taskId and dueDate
  */
 
 function updateTaskDueDateSuccess(taskId, dueDate) {
@@ -120,12 +124,19 @@ function updateTaskDueDateSuccess(taskId, dueDate) {
 }
 
 /**
-* @desc async helper function: create task
-* @returns {function} asynchronous action
+* @description asynchronous function that creates task
+*
+* @function createTask
+*
+* @param {string} todoId
+* @param {object} taskObject
+*
+* @returns {object} dispatch an object
 */
 
 export function createTask(todoId, taskObject) {
-  return dispatch => axios.post(`/api/v1/todos/${todoId}/task`, taskObject)
+  return dispatch => axios
+    .post(`/api/v1/todos/${todoId}/task`, taskObject)
     .then((response) => {
       dispatch(addTaskSuccess(response.data.task));
     })
@@ -136,11 +147,12 @@ export function createTask(todoId, taskObject) {
 }
 
 /**
- * @desc receive Task action: receive a task failure
+ * @description asynchronous action that
+ *  dispatch an error message when fetching a task fails
  *
  * @function receiveTasksFailure
  *
- * @param {object} tasks
+ * @param {string} error
  *
  * @returns {object} action: type and error
  */
@@ -153,12 +165,19 @@ export function receiveTasksFailure(error) {
 }
 
 /**
- * @desc async helper function: fetches all tasks
- * @returns {function} asynchronous action
+ * @description asynchronous function that
+ * fetches all tasks from todo
+ *
+ * @function fetchTasks
+ *
+ * @param {string} todoId
+ *
+ * @returns {object} dispatches an object
  */
 
 export function fetchTasks(todoId) {
-  return dispatch => axios.get(`/api/v1/todos/${todoId}/task`)
+  return dispatch => axios
+    .get(`/api/v1/todos/${todoId}/task`)
     .then((response) => {
       dispatch(receiveTasksSuccess(response.data.tasks));
     })
@@ -169,12 +188,19 @@ export function fetchTasks(todoId) {
 }
 
 /**
-* @desc async helper function: update task
-* @returns {function} asynchronous action
+* @description asynchronous function that updates a task
+*
+* @function updateTask
+*
+* @param {string} todoId
+* @param {object} task
+*
+* @returns {object} dispatches an object
 */
 
 export function updateTask(todoId, task) {
-  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${task._id}`, task)
+  return dispatch => axios
+    .put(`/api/v1/todos/${todoId}/task/${task._id}`, task)
     .then((response) => {
       dispatch(updateTaskSuccess(task._id, response.data.editedTask));
     })
@@ -183,26 +209,43 @@ export function updateTask(todoId, task) {
     });
 }
 /**
-* @desc async helper function: update taskStatus
-* @returns {function} asynchronous action
+* @description asynchronous function that updates task Status
+*
+* @function updateTaskDueDate
+*
+* @param {string} todoId
+* @param {string} taskId
+* @param {object} dueDate
+*
+* @returns {object} dispatch object
 */
 
 export function updateTaskDueDate(todoId, taskId, dueDate) {
-  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${taskId}`, dueDate)
+  return dispatch => axios
+    .put(`/api/v1/todos/${todoId}/task/${taskId}`, { dueDate: dueDate._d })
     .then((response) => {
-      dispatch(updateTaskDueDate(taskId, dueDate));
+      dispatch(updateTaskDueDateSuccess(taskId, dueDate));
     })
     .catch((error) => {
       toastr.error(error.response.data.message);
     });
 }
 /**
-* @desc async helper function: update taskStatus
-* @returns {function} asynchronous action
+* @description asynchronous function that
+* update task completed Status
+*
+* @function updateTaskStatus
+*
+* @param {string} todoId
+* @param {object} task
+*
+* @returns {object} dispatch an object
 */
 
 export function updateTaskStatus(todoId, task) {
-  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${task._id}`, { completed: !task.completed })
+  return dispatch => axios.put(`/api/v1/todos/${todoId}/task/${task._id}`, {
+    completed: !task.completed
+  })
     .then((response) => {
       dispatch(updateTaskStatusSuccess(task._id, !task.completed));
     })
@@ -211,8 +254,15 @@ export function updateTaskStatus(todoId, task) {
     });
 }
 /**
-* @desc async helper function: delete task
-* @returns {function} asynchronous action
+* @description asynchronous function that
+* delete task from todo
+*
+* @function deleteTask
+*
+* @param {string} todoId
+* @param {string} taskId
+*
+* @returns {object} dispatch an object
 */
 
 export function deleteTask(todoId, taskId) {

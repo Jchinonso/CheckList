@@ -9,8 +9,8 @@ import * as types from '../../constants/actionTypes';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('Todo Action synchronous test', () => {
-  describe('action add task to todo', () => {
+describe('Todo synchronous action', () => {
+  describe('createTodoSuccess action', () => {
     it('should create todo successfully', () => {
       const todo = {
         text: 'new todo'
@@ -21,6 +21,8 @@ describe('Todo Action synchronous test', () => {
       };
       expect(actions.createTodoSuccess(todo)).toEqual(expectedAction);
     });
+  });
+  describe('receiveTodosSuccess action', () => {
     it('should receive todos successfully', () => {
       const todos = [{
         text: 'new todo'
@@ -31,7 +33,9 @@ describe('Todo Action synchronous test', () => {
       };
       expect(actions.receiveTodosSuccess(todos)).toEqual(expectedAction);
     });
-    it('should create todo failure action', () => {
+  });
+  describe('createTodoFailure action', () => {
+    it('should not create todo if an error occur', () => {
       const error = 'internal server error';
       const expectedAction = {
         type: types.CREATE_TODO_FAILURE,
@@ -41,8 +45,8 @@ describe('Todo Action synchronous test', () => {
     });
   });
   describe('Todo asynchronous actions', () => {
-    describe('action creates todo', () => {
-      it('should dispatch creatTodo action', async () => {
+    describe('createTodo action', () => {
+      it('should make a post request to create todo ', async () => {
         const response = {
           status: 201,
           data: {

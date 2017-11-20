@@ -86,7 +86,15 @@ const UserController = {
         }
       });
   },
-
+  /**
+   * @description User object
+   *
+   * @memberof Usercontroller
+   *
+   * @param {object} user object
+   *
+   * @returns {object} Returns user object
+   */
   userObject(user) {
     return {
       userId: user._id,
@@ -110,7 +118,7 @@ const UserController = {
    * @returns {object} Returns updated user
    */
   updateProfile(req, res) {
-    const { username, email, name } = req.body;
+    const { email, name } = req.body;
     const { userId } = req.decoded;
     User.findById(userId).select(['email', 'username', 'name', 'imageUrl'])
       .exec((err, user) => {
@@ -120,7 +128,7 @@ const UserController = {
           });
         } else if (user) {
           user.email = email;
-          user.username = username;
+          user.username = user.username;
           user.name = name;
           user.save((err, updatedUser) => {
             if (err) {
@@ -132,12 +140,15 @@ const UserController = {
               token: Auth.generateToken(updatedUser)
             });
           });
+        } else {
+          res.status(500).json({
+            message: 'Internal server error'
+          });
         }
       });
   },
   /**
- * @description: update profile picture through the route
- * PATCH: api/v1/users/:userId
+ * @description: update a user profile picture
  *
  * @param {Object} req request object
  * @param {Object} res response object
@@ -183,21 +194,22 @@ const UserController = {
    * @returns {object} Returns all users
    */
   retrieveAllUsers(req, res) {
-    User.find({}).select(['username', 'email', 'name']).exec((err, allUsers) => {
-      if (allUsers.length === 0) {
-        return res.status(404).json({
-          message: 'No user found'
+    User.find({}).select(['username', 'email', 'name'])
+      .exec((err, allUsers) => {
+        if (allUsers.length === 0) {
+          return res.status(404).json({
+            message: 'No user found'
+          });
+        } else if (allUsers.length > 0) {
+          return res.status(200).json({
+            message: 'Successfully retrieve all users',
+            allUsers
+          });
+        }
+        return res.status(500).json({
+          message: 'Internal Server error'
         });
-      } else if (allUsers.length > 0) {
-        return res.status(200).json({
-          success: true,
-          allUsers
-        });
-      }
-      return res.status(500).json({
-        message: 'Internal Server error'
       });
-    });
   },
   /**
  * forgotPassword
@@ -252,7 +264,9 @@ const UserController = {
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(newPassword, salt);
         User.findOneAndUpdate(
-          { email: decoded.email }, { password: hashedPassword }, { upsert: true },
+          { email: decoded.email },
+          { password: hashedPassword },
+          { upsert: true },
           (err, newRecord) => {
             if (err) throw err;
             if (newRecord) {

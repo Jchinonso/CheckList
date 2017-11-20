@@ -6,9 +6,11 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import
-{ updateTask, updateTaskStatus, deleteTask }
+{ updateTask, updateTaskStatus, updateTaskDueDate, deleteTask }
   from '../../../../actions/tasksActions';
-import { checkStateDueDate } from '../../../../helper/clientSideValidation';
+import {
+  checkStateDueDate
+} from '../../../../helper/clientSideValidation';
 
 export class TaskItem extends React.Component {
   constructor(props) {
@@ -29,6 +31,19 @@ export class TaskItem extends React.Component {
     this.toggleCalendar = this.toggleCalendar.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
   }
+  /**
+   *
+   * Enable the user to edit
+   * task by changing edited state to true
+   *
+   * @method toggleEdit
+   *
+   * @member TaskItem
+   *
+   * @param {event} event
+   *
+   * @returns {void} void
+   */
   toggleEdit(event) {
     this.setState({
       edited: true
@@ -109,12 +124,35 @@ export class TaskItem extends React.Component {
       });
     });
   }
+  /**
+   * Select the due date for task
+   * @method handleDateChange
+   *
+   * @member TaskItem
+   *
+   * @param {*} date the date selected in date picker
+   *
+   * @return {*} null
+   */
   handleDateChange(date) {
-    this.setState({ dueDate: date });
-    this.toggleCalendar();
+    const { task, todoId } = this.props;
+    this.setState({
+      dueDate: date,
+      isOpen: !this.state.isOpen
+    });
   }
+  /**
+  *  Return to application screen from calendar modal
+  * @method toggleCalender
+  *
+  * @member TaskItem
+  *
+  * @param {event}  event the date selected in date picker
+  *
+  * @return {void} void
+  */
   toggleCalendar(event) {
-    event && event.preventDefault();
+    event.preventDefault();
     this.setState({ isOpen: !this.state.isOpen });
   }
   /**
@@ -135,7 +173,10 @@ export class TaskItem extends React.Component {
   }
   render() {
     const { task } = this.props;
-    const selectedDueDate = checkStateDueDate(this.state.dueDate, this.props.task.dueDate);
+    const selectedDueDate = checkStateDueDate(
+      this.state.dueDate,
+      this.props.task.dueDate
+    );
     const selectedDueDateFormat = moment(selectedDueDate).format('DD-MM-YYYY');
     const diffBtwMoments = moment(selectedDueDate).diff(moment(moment()));
     const hours = Math.ceil(moment.duration(diffBtwMoments).asHours());
@@ -151,7 +192,12 @@ export class TaskItem extends React.Component {
           'priority-critical': task.priority === 'critical',
         })}
         style={{
-          touchAction: 'pan-y', WebkitUserDrag: 'none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)', padding: '10px 15px'
+          touchAction:
+          'pan-y',
+          WebkitUserDrag: 'none',
+          WebkitTapHighlightColor:
+          'rgba(0, 0, 0, 0)',
+          padding: '10px 15px'
         }}
       >
         <form>
@@ -293,5 +339,9 @@ TaskItem.propTypes = {
   deleteTask: PropTypes.func.isRequired,
   todoId: PropTypes.string.isRequired
 };
-export default
-connect(null, { updateTask, updateTaskStatus, deleteTask })(TaskItem);
+export default connect(
+  null,
+  {
+    updateTask, updateTaskStatus, updateTaskDueDate, deleteTask
+  }
+)(TaskItem);

@@ -2,10 +2,14 @@ import {
   SELECT_TODO
 } from '../constants/actionTypes';
 
-export default function activeTodoReducer(state = '', action) {
+const initialState = {
+  todoId: ''
+};
+
+export default function activeTodoReducer(state = initialState, action) {
   switch (action.type) {
   case SELECT_TODO: {
-    return action.todoId;
+    return { ...state, todoId: action.todoId };
   }
   default:
     return state;

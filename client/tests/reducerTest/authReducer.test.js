@@ -25,7 +25,7 @@ describe('auth reducer', () => {
     expect(newState.isAuthenticated).toEqual(true);
   });
   it('should update a user when UPDATE_CURRENT_USER is passed', () => {
-    const action = actions.updateCurrentUserPicSuccess(user);
+    const action = actions.updateCurrentUserSuccess(user);
     const newState = authReducer(initialState, action);
     expect(newState.user).toEqual({
       name: 'john doe',
@@ -34,14 +34,16 @@ describe('auth reducer', () => {
     });
     expect(newState.isAuthenticated).toEqual(true);
   });
-  it('should update current user profile pics when UPDATE_CURRENT_USER_PICTURE is passed', () => {
+  it('should update current user profile pics' +
+  'when UPDATE_CURRENT_USER_PICTURE is passed',
+  () => {
     const userObject = {
       name: 'john doe',
       email: 'jodoe@gmail.com',
       username: 'jdoe',
       imageUrl: 'http//pics.example.com'
     };
-    const action = actions.updateCurrentUserPicSuccess(userObject);
+    const action = actions.updateCurrentUserPictureSuccess(userObject);
     const newState = authReducer(initialState, action);
     expect(newState.user).toEqual({
       name: 'john doe',

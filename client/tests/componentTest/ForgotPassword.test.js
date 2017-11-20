@@ -4,7 +4,10 @@ import React from 'react';
 import expect from 'expect';
 import sinon from 'sinon';
 
-import { ForgetPassword } from '../../Component/AuthComponent/ForgotPassword.jsx';
+import
+{
+  ForgetPassword
+} from '../../Component/AuthComponent/ForgotPassword.jsx';
 
 Enzyme.configure({ adapter: new Adapter() });
 
