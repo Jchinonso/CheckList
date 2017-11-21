@@ -77,4 +77,7 @@ function mapStateToProps(state) {
 }
 
 export default
-connect(mapStateToProps, { updateUserProfilePics })(EditProfilePics);
+connect(
+  mapStateToProps,
+  { updateUserProfilePics }
+)(EditProfilePics);

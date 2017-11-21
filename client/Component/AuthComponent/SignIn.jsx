@@ -57,8 +57,8 @@ export class SignIn extends React.Component {
     if (!isValidEmail(email)) {
       toastr.error('Invalid Email');
     } else if (!isValidPassword(password)) {
-      toastr.error('Password should contain at least 8' +
-        'characters including one number and alphabet');
+      toastr.error(`Password should contain at least 8
+        characters including one number and alphabet`);
     } else {
       const userObj = {
         password,

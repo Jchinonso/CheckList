@@ -171,11 +171,14 @@ export function updateUser(user) {
  */
 
 export function updateUserProfilePicture(imageUrl) {
-  return (dispatch => axios.put('api/v1/user/updateProfile', { imageUrl })
+  return (dispatch => axios
+    .put('api/v1/user/updateProfile', { imageUrl })
     .then((response) => {
       const { token } = response.data;
       setAuthorizationToken(token);
-      dispatch(updateCurrentUserPictureSuccess(response.data.updatedUser));
+      dispatch(updateCurrentUserPictureSuccess(
+        response.data.updatedUser
+      ));
       toastr.success('Profile updated');
     }).catch((err) => {
       toastr.error(err.response.data.message);
@@ -194,7 +197,8 @@ export function updateUserProfilePicture(imageUrl) {
  * @returns {object} dispatches an object
  */
 export function googleSignIn(user) {
-  return (dispatch => axios.post('api/v1/user/googleLogin', user)
+  return (dispatch => axios
+    .post('api/v1/user/googleLogin', user)
     .then((response) => {
       const { token } = response.data;
       setAuthorizationToken(token);
@@ -218,7 +222,8 @@ export function googleSignIn(user) {
  * @returns {string} dispatch success message
  */
 export function forgotPassword(email) {
-  return (dispatch => axios.post('/api/v1/user/forgotPassword', { email })
+  return (dispatch => axios
+    .post('/api/v1/user/forgotPassword', { email })
     .then((response) => {
       toastr.success(response.data.message);
       browserHistory.push('/');
@@ -240,7 +245,9 @@ export function forgotPassword(email) {
  */
 export function resetPassword({ newPassword, retypePassword, token }) {
   return (dispatch => axios
-    .post('/api/v1/user/resetPassword', { newPassword, retypePassword, token })
+    .post('/api/v1/user/resetPassword',
+      { newPassword, retypePassword, token }
+    )
     .then((response) => {
       toastr.success(response.data.message);
       browserHistory.push('/');

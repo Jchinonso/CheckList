@@ -174,10 +174,7 @@ export class TaskItem extends React.Component {
   }
   render() {
     const { task } = this.props;
-    const selectedDueDate = checkStateDueDate(
-      this.state.dueDate,
-      this.props.task.dueDate
-    );
+    const selectedDueDate = this.props.task.dueDate;
     const selectedDueDateFormat = moment(selectedDueDate).format('DD-MM-YYYY');
     const diffBtwMoments = moment(selectedDueDate).diff(moment(moment()));
     const hours = Math.ceil(moment.duration(diffBtwMoments).asHours());

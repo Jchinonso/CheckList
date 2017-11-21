@@ -87,4 +87,7 @@ MainComponent.propTypes = {
   activeTodo: PropTypes.string,
 };
 
-export default connect(mapStateToProps, null)(MainComponent);
+export default connect(
+  mapStateToProps,
+  null
+)(MainComponent);

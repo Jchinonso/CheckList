@@ -35,4 +35,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(TodoBoardComponent);
+export default connect(
+  mapStateToProps,
+  null
+)(TodoBoardComponent);
