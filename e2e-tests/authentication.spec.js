@@ -12,6 +12,8 @@ module.exports = {
       .setValue('#password', 'password1234')
       .waitForElementVisible('.btn', 1000)
       .click('.btn')
+      .assert.urlEquals(`${'http://localhost:5000/dashboard'}`)
+      .assert.value('input[name=name', 'tayo akande')
       .pause(1000)
       .end();
   },
@@ -23,6 +25,8 @@ module.exports = {
       .setValue('#password', 'password1234')
       .waitForElementVisible('#btn-click', 1000)
       .click('#btn-click')
+      .assert.urlEquals(`${'http://localhost:5000/dashboard'}`)
+      .assert.value('input[name=email', 'jdoe@gmail.com')
       .pause(1000)
       .end();
   },
@@ -36,6 +40,7 @@ module.exports = {
       .click('#btn-click')
       .waitForElementVisible('.caption', 1000)
       .click('.sign-out')
+      .assert.urlEquals(`${'http://localhost:5000'}`)
       .pause(1000)
       .end();
   },

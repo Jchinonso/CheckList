@@ -8,7 +8,10 @@ export const TaskInputBox = (props) => {
   const { text, handleOnChange, handleDateChange } = props;
   return (
     <div className="input-field">
-      <div className="input-box " style={{ paddingLeft: '2%', display: 'block' }}>
+      <div
+        className="input-box "
+        style={{ paddingLeft: '2%', display: 'block' }}
+      >
         <input
           type="text"
           onChange={handleOnChange}
