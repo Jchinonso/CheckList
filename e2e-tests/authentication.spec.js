@@ -40,6 +40,7 @@ module.exports = {
       .waitForElementVisible('.caption', 1000)
       .click('.sign-out')
       .assert.urlEquals(`${'http://localhost:5000'}`)
+      .assert.containsText('.brand-log', 'Work List')
       .pause(1000)
       .end();
   },
