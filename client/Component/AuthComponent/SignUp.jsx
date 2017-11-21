@@ -55,15 +55,15 @@ export class SignUp extends React.Component {
     } = this.state;
     event.preventDefault();
     if (!isValidName(name)) {
-      toastr.error('Name should be in letters and should' +
-        'contain at least 5 characters');
+      toastr.error('Name should be in letters and should ' +
+        'contain at least 5 characters first name and last name');
     } else if (!isValidEmail(email)) {
       toastr.error('Invalid Email');
     } else if (!isValidUsername(username)) {
-      toastr.error('username must contain an alphabet and must' +
+      toastr.error('username must contain an alphabet and must ' +
         'not begin with a number');
     } else if (!isValidPassword(password)) {
-      toastr.error('Password should contain at least 8 characters including' +
+      toastr.error('Password should contain at least 8 characters including ' +
         'one number and alphabet');
     } else {
       const userObj = {
