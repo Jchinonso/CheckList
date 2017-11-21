@@ -159,6 +159,11 @@ Dashboard.propTypes = {
 };
 
 export default connect(
-  null,
-  { signOut, fetchTasks, fetchCollaborators, selectTodo, createTodo }
+  null, {
+    signOut,
+    fetchTasks,
+    fetchCollaborators,
+    selectTodo,
+    createTodo
+  }
 )(Dashboard);

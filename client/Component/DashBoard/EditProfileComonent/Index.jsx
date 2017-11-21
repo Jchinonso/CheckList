@@ -61,8 +61,8 @@ class EditProfileComponent extends Component {
       toastr.error('Email is Invalid');
     } else if (!isValidName(name)) {
       toastr
-        .error('Name should be in letters and must be 5' +
-        'to 30 characters and must contain first name and last name');
+        .error(`Name should be in letters and must be 5
+        to 30 characters and must contain first name and last name`);
     } else {
       const userObject = {
         name,
@@ -134,4 +134,7 @@ EditProfileComponent.propTypes = {
   updateUser: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { updateUser })(EditProfileComponent);
+export default connect(
+  mapStateToProps,
+  { updateUser }
+)(EditProfileComponent);
