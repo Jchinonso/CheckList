@@ -13,7 +13,6 @@ module.exports = {
       .waitForElementVisible('.btn', 1000)
       .click('.btn')
       .assert.urlEquals(`${'http://localhost:5000/dashboard'}`)
-      .assert.value('input[name=name', 'tayo akande')
       .pause(1000)
       .end();
   },
