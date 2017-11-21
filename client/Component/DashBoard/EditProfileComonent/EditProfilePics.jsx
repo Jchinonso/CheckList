@@ -27,7 +27,6 @@ export class EditProfilePics extends React.Component {
    * @return {void}
    */
   uploadWidget(event) {
-    // const { cloud_name, upload_preset } = process.env;
     window.cloudinary.openUploadWidget(
       { cloud_name: 'dq3xmgag2', upload_preset: 'yj9pyvvc', tags: ['xmas'] },
       (error, result) => {
