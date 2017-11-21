@@ -26,7 +26,7 @@ module.exports = {
       .waitForElementVisible('#btn-click', 1000)
       .click('#btn-click')
       .assert.urlEquals(`${'http://localhost:5000/dashboard'}`)
-      .assert.value('input[name=email', 'jdoe@gmail.com')
+      .assert.containsText('.brand-log', 'Work List')
       .pause(1000)
       .end();
   },
