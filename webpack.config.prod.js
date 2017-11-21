@@ -1,5 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
+import Dotenv from 'dotenv-webpack';
+
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
@@ -25,7 +27,8 @@ export default {
     }),
     new ExtractTextPlugin('styles.css'),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin(),
+    new Dotenv({ systemvars: true })
   ],
   module: {
     loaders: [
