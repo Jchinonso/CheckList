@@ -19,7 +19,7 @@ import routes from './routes';
 import './assets/css/todo.css';
 
 
-const secret = 'keepmysecret';
+const secret = process.env.JWT_SECRET_TOKEN;
 const token = window.localStorage.getItem('tokenize');
 if (token) {
   jwt.verify(token, secret, (error, decoded) => {
