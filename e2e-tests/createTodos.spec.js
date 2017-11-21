@@ -13,6 +13,7 @@ module.exports = {
     .waitForElementVisible('#modal1', 2000)
     .setValue('#group_name', 'new todo')
     .click('.btn-flat')
+    .assert.containsText('.card .indigo .lighten-5', 'new todo')
     .pause(3000)
     .end();
   },

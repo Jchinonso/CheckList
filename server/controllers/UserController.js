@@ -296,7 +296,7 @@ const UserController = {
    * @param {object} res
    *
    * @returns {function} Express function that
-   *
+   * sign's in user with google account
    */
   googleSignIn(req, res) {
     const {

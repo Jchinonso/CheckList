@@ -18,6 +18,7 @@ module.exports = {
       .click('#dashboard')
       .setValue('#left-input', 'new task')
       .click('#create-task')
+      .assert.containsText('.newSpan', 'new todo')
       .pause(2000)
       .end();
   },
