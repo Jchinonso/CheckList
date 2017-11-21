@@ -1,7 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
 import Dotenv from 'dotenv-webpack';
-
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
