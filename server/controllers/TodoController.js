@@ -23,6 +23,10 @@ const TodoController = {
       return res.status(400).json({
         message: 'text is required',
       });
+    } else if (typeof text !== 'string') {
+      return res.status(400).json({
+        message: 'text must be a string',
+      });
     }
     const formTodo = {
       text: req.body.text,
@@ -102,11 +106,17 @@ const TodoController = {
    */
   addTask(req, res) {
     const { todoId } = req.params;
-    const { text, priority, dueDate, completed } = req.body;
+    const {
+      text, priority, dueDate, completed
+    } = req.body;
     if (text === undefined || text === '') {
       return res.status(400).json({
         success: false,
         message: 'text is required',
+      });
+    } else if (typeof text !== 'string') {
+      return res.status(400).json({
+        message: 'text must be a string',
       });
     }
     const newTaskForm = {
@@ -165,10 +175,8 @@ const TodoController = {
           .populate({ path: 'collaborators', select: ['username'] })
           .exec((err, todo) => {
             if (todo) {
-              const collaborators = user.filter((newUser) => {
-                return !todo.collaborators.find((collab) => {
-                  return collab.username === newUser.username; });
-              });
+              const collaborators = user.filter(newUser =>
+                !todo.collaborators.find(collab => collab.username === newUser.username));
               todo.collaborators = [...todo.collaborators, ...collaborators];
               todo.save((err, newTodo) => {
                 if (err) throw err;
@@ -246,6 +254,11 @@ const TodoController = {
     Task.findById({ _id: id }).exec((err, task) => {
       if (task) {
         const { completed, text, dueDate } = req.body;
+        if (typeof text !== 'string') {
+          return res.status(400).json({
+            message: 'text must be a string',
+          });
+        }
         task.dueDate = dueDate !== undefined ? dueDate : task.dueDate;
         task.completed = completed !== undefined ? completed : task.completed;
         task.text = text || task.text;

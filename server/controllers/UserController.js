@@ -30,19 +30,24 @@ const UserController = {
         return res.status(409).json({
           message: 'User with email already exist'
         });
-      }
-      const newUser = new User(req.body);
-      newUser.save((err, createdUser) => {
-        if (err) {
-          return errorHandler.validateUserError(err, res);
-        }
-        const userObject = UserController.userObject(createdUser);
-        return res.status(201).json({
-          message: 'Successfully Signed Up',
-          userObject,
-          token: Auth.generateToken(createdUser)
+      } else if (userInstance === null) {
+        const newUser = new User(req.body);
+        newUser.save((err, createdUser) => {
+          if (err) {
+            return errorHandler.validateUserError(err, res);
+          }
+          const userObject = UserController.userObject(createdUser);
+          return res.status(201).json({
+            message: 'Successfully Signed Up',
+            userObject,
+            token: Auth.generateToken(createdUser)
+          });
         });
-      });
+      } else {
+        return res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
     });
   },
   /** signIn
@@ -64,7 +69,6 @@ const UserController = {
     })
       .select(['password', 'email', 'username', 'name', 'imageUrl'])
       .exec((err, user) => {
-        if (err) throw err;
         if (!user) {
           res.status(404).json({
             message: 'User does not exist!'
@@ -83,6 +87,10 @@ const UserController = {
               token: Auth.generateToken(user),
             });
           }
+        } else {
+          return res.status(500).json({
+            message: 'Internal server error',
+          });
         }
       });
   },
@@ -178,6 +186,10 @@ const UserController = {
           return res.status(404).json({
             message: 'User not found',
           });
+        } else if (err) {
+          res.status(500).json({
+            message: 'Internal server error'
+          });
         }
       });
   },
@@ -233,10 +245,15 @@ const UserController = {
     }).exec((err, user) => {
       if (user) {
         return sendMail(user, req, res);
+      } else if (!user) {
+        return res.status(404).json({
+          message: 'User with email not found'
+        });
+      } else if (err) {
+        return res.status(500).json({
+          message: 'Internal server error'
+        });
       }
-      return res.status(404).json({
-        message: 'User with email not found'
-      });
     });
   },
 
@@ -268,10 +285,13 @@ const UserController = {
           { password: hashedPassword },
           { upsert: true },
           (err, newRecord) => {
-            if (err) throw err;
             if (newRecord) {
               return res.status(201).json({
                 message: 'password reset successful, Please login to continue!'
+              });
+            } else if (err) {
+              return res.status(500).json({
+                message: 'Internal Server error'
               });
             }
           }
@@ -312,19 +332,24 @@ const UserController = {
           userObject,
           token: Auth.generateToken(user)
         });
-      }
-      const newUser = new User(req.body);
-      newUser.save((err, createdUser) => {
-        if (err) {
-          return errorHandler.validateUserError(err, res);
-        }
-        const userObject = UserController.userObject(createdUser);
-        return res.status(201).json({
-          message: 'You have been loggedin successfully',
-          userObject,
-          token: Auth.generateToken(createdUser)
+      } else if (!user) {
+        const newUser = new User(req.body);
+        newUser.save((err, createdUser) => {
+          if (err) {
+            return errorHandler.validateUserError(err, res);
+          }
+          const userObject = UserController.userObject(createdUser);
+          return res.status(201).json({
+            message: 'You have been loggedin successfully',
+            userObject,
+            token: Auth.generateToken(createdUser)
+          });
         });
-      });
+      } else {
+        return res.status(500).json({
+          message: 'Internal server error'
+        });
+      }
     });
   }
 
