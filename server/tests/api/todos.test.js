@@ -200,7 +200,7 @@ describe('Todo Controller', () => {
         return done();
       });
   });
-  it('should update a task completed status ', (done) => {
+  it.skip('should update a task completed status ', (done) => {
     request.put(`/api/v1/todos/${todoId}/task/${taskId}`)
       .send({
         completed: true,
