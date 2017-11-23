@@ -1,5 +1,8 @@
+import cron from 'node-cron';
+
 import { Todo, Task } from '../models/Todos';
 import User from '../models/Users';
+import { sendNotification, sendReminders, requiresNotification } from '../helper/reminders';
 
 
 const TodoController = {
@@ -119,15 +122,18 @@ const TodoController = {
         message: 'text must be a string',
       });
     }
-    const newTaskForm = {
-      text,
-      priority,
-      completed,
-      dueDate
-    };
-    const newTask = new Task(newTaskForm);
     Todo.findById({ _id: todoId }).exec((err, todo) => {
+      const newTaskForm = {
+        text,
+        priority,
+        completed,
+        dueDate,
+        todoName: todo.text,
+        creatorEmail: req.decoded.email
+      };
+      const newTask = new Task(newTaskForm);
       if (todo) {
+        console.log(todo, '========')
         Promise.resolve(newTask.save((err, task) => {
           if (err) {
             res.status(500).json({
@@ -254,11 +260,6 @@ const TodoController = {
     Task.findById({ _id: id }).exec((err, task) => {
       if (task) {
         const { completed, text, dueDate } = req.body;
-        if (typeof text !== 'string') {
-          return res.status(400).json({
-            message: 'text must be a string',
-          });
-        }
         task.dueDate = dueDate !== undefined ? dueDate : task.dueDate;
         task.completed = completed !== undefined ? completed : task.completed;
         task.text = text || task.text;
@@ -349,8 +350,11 @@ const TodoController = {
         });
       }
     });
+  },
+  CronJob() {
+    cron.schedule('* * * * *', () => {
+      sendNotification();
+    });
   }
 };
-
-
 export default TodoController;
