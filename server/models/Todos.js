@@ -37,6 +37,12 @@ const TaskSchema = new Schema({
     type: String,
     default: 'normal'
   },
+  todoName: {
+    type: String,
+  },
+  creatorEmail: {
+    type: String,
+  },
   dueDate: {
     type: Date,
     default: Date.now()

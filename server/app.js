@@ -7,6 +7,9 @@ import bodyParser from 'body-parser';
 import multer from 'multer';
 import mongoose from 'mongoose';
 import compression from 'compression';
+
+import TodoController from './controllers/TodoController';
+
 import config from './../webpack.config.dev';
 import Routes from './routes/index';
 
@@ -48,6 +51,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 Routes(router);
+TodoController.CronJob();
 
 // prefix /api for all routes
 app.use('/api/v1', router);

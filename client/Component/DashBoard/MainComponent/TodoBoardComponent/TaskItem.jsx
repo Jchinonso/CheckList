@@ -18,7 +18,7 @@ export class TaskItem extends React.Component {
     this.state = {
       isOpen: false,
       edited: false,
-      dueDate: moment(),
+      dueDate: '',
       date: '',
       text: this.props.task.text
     };
@@ -178,7 +178,7 @@ export class TaskItem extends React.Component {
     const selectedDueDateFormat = moment(selectedDueDate).format('DD-MM-YYYY');
     const diffBtwMoments = moment(selectedDueDate).diff(moment(moment()));
     const hours = Math.ceil(moment.duration(diffBtwMoments).asHours());
-    const days = Math.ceil(moment.duration(diffBtwMoments).asDays());
+    const minutes = Math.ceil(moment.duration(diffBtwMoments).asMinutes());
     return (
       <li
         key={task._id}
@@ -257,13 +257,9 @@ export class TaskItem extends React.Component {
                       <div>
                         <span
                           className="color grey-text due-date-reminder-hours"
+                          style={{ paddingRight: '5px' }}
                         >
-                          {hours} hours left
-                        </span>
-                        <span
-                          className="color grey-text due-date-reminder-days"
-                        >
-                          {days} day(s) left
+                          {minutes} minutes left
                         </span>
                       </div>
                       :
@@ -308,15 +304,23 @@ export class TaskItem extends React.Component {
                   className="task-cat btn right"
                   onClick={this.toggleCalendar}
                 >
-                  {this.state.dueDate.format('DD-MM-YYYY')}
+                  {
+                    this.props.dueDate ?
+                      this.state.dueDate.format('DD-MM-YYYY') :
+                      'Select Due Date'
+                  }
                 </button>
                 {
                   this.state.isOpen && (
                     <DatePicker
                       selected={this.state.dueDate}
                       onChange={this.handleDateChange}
+                      showTimeSelect
                       minDate={moment()}
+                      timeIntervals={15}
                       withPortal
+                      placeholderText
+                      dateFormat="LLL"
                       inline
                     />
                   )
