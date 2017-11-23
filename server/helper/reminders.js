@@ -26,7 +26,8 @@ export const sendReminders = (email, taskName, todoName) => {
     from: `Worklist <${process.env.EMAIL}`,
     to: email,
     subject: 'Worklist',
-    html: `<p>Your task with task name <h6>${taskName}</h6> </br>in todo with todo name <h6>${todoName}</h6>
+    html: `<p>Your task with task name <h6>${taskName}</h6>
+    </br>in todo with todo name <h6>${todoName}</h6>
     on <a href="http://${process.env.SITE_URL}">
     WorkList App </a> is Overdue. Please Complete this
     task in earnest </p>`
