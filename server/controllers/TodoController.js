@@ -133,6 +133,7 @@ const TodoController = {
       };
       const newTask = new Task(newTaskForm);
       if (todo) {
+        console.log(todo, '========')
         Promise.resolve(newTask.save((err, task) => {
           if (err) {
             res.status(500).json({
