@@ -2,7 +2,7 @@ import cron from 'node-cron';
 
 import { Todo, Task } from '../models/Todos';
 import User from '../models/Users';
-import { sendNotification, sendReminders, requiresNotification } from '../helper/reminders';
+import { sendNotification } from '../helper/reminders';
 
 
 const TodoController = {
@@ -350,6 +350,11 @@ const TodoController = {
       }
     });
   },
+  /**
+ * @description: starts cron job
+ *
+ * @return {void}
+ */
   CronJob() {
     cron.schedule('* * * * *', () => {
       sendNotification();
