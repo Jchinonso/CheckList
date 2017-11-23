@@ -256,7 +256,7 @@ const TodoController = {
    */
   updateTask(req, res) {
     const id = req.params.taskId;
-    Task.findById({ _id: id }).exegitc((err, task) => {
+    Task.findById({ _id: id }).exec((err, task) => {
       if (task) {
         const { completed, text, dueDate } = req.body;
         task.dueDate = dueDate !== undefined ? dueDate : task.dueDate;
