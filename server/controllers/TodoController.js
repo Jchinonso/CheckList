@@ -133,7 +133,6 @@ const TodoController = {
       };
       const newTask = new Task(newTaskForm);
       if (todo) {
-        console.log(todo, '========')
         Promise.resolve(newTask.save((err, task) => {
           if (err) {
             res.status(500).json({
@@ -153,7 +152,7 @@ const TodoController = {
             }
           });
         });
-      } else if (!todo) {
+      } else if (todo === null) {
         res.status(404).json({
           message: 'Todo does not exist'
         });
